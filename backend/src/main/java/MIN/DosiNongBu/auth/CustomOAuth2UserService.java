@@ -1,7 +1,7 @@
 package MIN.DosiNongBu.auth;
 
 
-import MIN.DosiNongBu.auth.dto.OAuthAttributes;
+import MIN.DosiNongBu.auth.dto.OAuth2UserInfo;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +26,16 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     private final UserRepository userRepository;
 
-
     /*
     * 사용자 정보 가져오기
     * AccessToken 까지 얻은 다음 실행
     * */
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        /*
+        * 리소스 서버에서 유저 정보 가져오기 attribute
+        *
+        * */
         OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserServices = new DefaultOAuth2UserService();
         OAuth2User oAuth2User = oAuth2UserServices.loadUser(userRequest);
 
@@ -46,23 +49,22 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         * */
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
-        OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
+        OAuth2UserInfo oAuth2UserInfo = OAuth2UserInfo.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
         // 사용자가 새로운 사용자이거나, 변경 사항이 있는 경우
-        User user = registrateOrUpdate(attributes);
-
-
+        User user = registrateOrUpdate(oAuth2UserInfo);
 
         return new DefaultOAuth2User(
-                Collections.singleton(new SimpleGrantedAuthority(user.getRoleType().getKey())), attributes.getAttributes(), attributes.getNameAttributeKey());
-        );
+                Collections.singleton(new SimpleGrantedAuthority(user.getRoleType().getKey())),
+                oAuth2UserInfo.getAttributes(),
+                oAuth2UserInfo.getNameAttributeKey());
     }
 
     /*
     * findByEmail 로 사용자가 존재한다면 update
     * 없다면 toEntity 로 새로 만들기
     * */
-    private User registrateOrUpdate(OAuthAttributes attributes) {
+    private User registrateOrUpdate(OAuth2UserInfo attributes) {
         User user = userRepository.findByEmail(attributes.getEmail()).map(entity -> entity.update(attributes.getName(), attributes.getProfileImage()))
                 .orElse(attributes.toEntity());
         return userRepository.save(user);

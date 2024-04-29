@@ -7,8 +7,12 @@ import lombok.Getter;
 
 import java.util.Map;
 
+/*
+* 어떤 소셜 플랫폼인지 체크하고
+* 그에 맞는 dto 를 생성
+* */
 @Getter
-public class OAuthAttributes {
+public class OAuth2UserInfo {
     // 이건 뭐지
     private Map<String, Object> attributes;
 
@@ -21,7 +25,7 @@ public class OAuthAttributes {
     private String profileImage;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profileImage) {
+    public OAuth2UserInfo(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profileImage) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
@@ -34,17 +38,32 @@ public class OAuthAttributes {
     * 인증요청 플랫폼을 구분하여 각각의 사용자 정보 형태에 맞는 OAuthAttributes 객체를 가져옴
     * Google, Naver
     * */
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+    public static OAuth2UserInfo of(String registrationId, String userNameAttributeName, Map<String, Object> attributes){
+
+        if("naver".equals(registrationId)){
+            return ofNaver("id", attributes);
+        }
+
         return ofGoogle(userNameAttributeName, attributes);
     }
 
-    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
-        return OAuthAttributes.builder()
+    private static OAuth2UserInfo ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
+        return OAuth2UserInfo.builder()
                 .attributes(attributes)
                 .nameAttributeKey(userNameAttributeName)
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileImage((String) attributes.get("picture"))
+                .build();
+    }
+
+    private static OAuth2UserInfo ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+        return OAuth2UserInfo.builder()
+                .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .name((String) attributes.get("name"))
+                .email((String) attributes.get("email"))
+                .profileImage((String) attributes.get("profile_image"))
                 .build();
     }
 
