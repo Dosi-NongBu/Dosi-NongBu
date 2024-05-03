@@ -29,18 +29,18 @@ public class UserPlace {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "placeType", nullable = false)
-    private PlaceType placeType;
+    private PlaceType place;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "directionType", nullable = false)
-    private DirectionType directionType;
+    private DirectionType direction;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "lightType", nullable = false)
-    private LightType lightType;
+    private LightType light;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "quantityType", nullable = false)
-    private QuantityType quantityType;
+    @Column(name = "Quantity", nullable = false)
+    private QuantityType quantity;
 
 }

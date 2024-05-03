@@ -1,6 +1,7 @@
 package MIN.DosiNongBu.domain.user;
 
 import MIN.DosiNongBu.domain.BaseTimeEntity;
+import MIN.DosiNongBu.domain.user.constant.ProviderType;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -19,39 +20,45 @@ public class User extends BaseTimeEntity {
     private Long userId;
 
     /* 속성 */
-    @Column(name = "name", nullable = false)
+    @Column(name = "email", nullable = false, unique = true)
+    private String email;
+
+    @Column(name="password")
+    private String password;
+
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "nickname", nullable = false)
+    @Lob
+    @Column(name = "profile_image", nullable = true)
+    private String profileImage;
+
+    @Column(name = "nickname", nullable = true)
     private String nickname;
 
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Column(name = "address", nullable = true)
+    private String currentAddress;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
-    private RoleType roleType;
+    private RoleType role;
 
-    @Lob
-    @Column(name = "profile_image")
-    private String profileImage;
+    @Column(name = "provider", nullable = true)
+    @Enumerated(EnumType.STRING)
+    private ProviderType provider;
 
-    @Column(name = "phone", nullable = false)
-    private String phone;
-
-    @Column(name = "address")
-    private String currentAddress;
 
     /* 생성자 */
     @Builder
-    public User(String name, String nickname, String email, String profileImage, String phone, String currentAddress, RoleType roleType) {
-        this.name = name;
-        this.nickname = nickname;
+    public User(String email, String password, String name, String profileImage, RoleType role, ProviderType provider, String nickname, String currentAddress) {
         this.email = email;
+        this.password = password;
+        this.name = name;
         this.profileImage = profileImage;
-        this.phone = phone;
+        this.role = role;
+        this.provider = provider;
+        this.nickname = nickname;
         this.currentAddress = currentAddress;
-        this.roleType = roleType;
     }
 
     public User update(String name, String profileImage){

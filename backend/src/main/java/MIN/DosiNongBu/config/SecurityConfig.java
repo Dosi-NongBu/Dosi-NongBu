@@ -1,8 +1,10 @@
 package MIN.DosiNongBu.config;
 
 import MIN.DosiNongBu.auth.CustomOAuth2UserService;
-import MIN.DosiNongBu.domain.user.constant.RoleType;
+import MIN.DosiNongBu.auth.filter.JwtAuthenticationFilter;
+import MIN.DosiNongBu.auth.handler.CustomOAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -17,50 +20,52 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final CustomOAuth2UserService customOAuth2UserService;
-    //private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
 
-    private SecurityFilterChain filterChain(
+    //private final CustomAuthSuccessHandler customAuthSuccessHandler;
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+
+    @Bean
+    public SecurityFilterChain filterChain(
             HttpSecurity http
     ) throws Exception{
         http
 
                 //csrf 보호 비활성화
                 .csrf(AbstractHttpConfigurer::disable)
-                .headers(option -> option.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
-                // 기본 인증 로그인 비활성화
+                .cors(AbstractHttpConfigurer::disable)
+                .formLogin(AbstractHttpConfigurer::disable)
+                .logout(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable)
+                .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
+
                 // 세션을 사용하지 않고, 각 요청마다 인증을 새로 수행함 (JWT)
                 .sessionManagement(securitySessionManagementConfigurer ->
                         securitySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
-
                 //HTTP 요청 접근 제한
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/h2-console/**").permitAll()
-                        .requestMatchers("/api/**").hasRole(RoleType.ADMIN.name())
-                        .anyRequest().authenticated()
+                        //.requestMatchers("/api/**", "/hello").permitAll()
+                        //.requestMatchers("/", "/h2-console/**").permitAll()
+                        .anyRequest().permitAll()
                 )
 
-                //.authenticationProvider(authenticationProvider)
 
-
-                // 소셜 로그인 후, 엑세스 토큰 + 사용자 프로필 정보 받아오기
+                // oauth2 로그인 기능에 대한 설정 진입점
                 .oauth2Login(oAuth2LoginConfigurer ->
-                        oAuth2LoginConfigurer.userInfoEndpoint(userInfoEndpointConfig ->
-                                userInfoEndpointConfig.userService(customOAuth2UserService)))
+                        // oauth2 로그인 성공 이후 사용자 정보 가져오기
+                        oAuth2LoginConfigurer
+                                .successHandler(customOAuth2SuccessHandler)
+                                .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService)))
 
                 // JWT 필터 설정
-                //.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-
-
-                // 로그아웃 시 이동 URL
-                .logout(httpSecurityLogoutConfigurer ->
-                        httpSecurityLogoutConfigurer.logoutSuccessUrl("/"));
-
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 
 
         return http.build();
     }
+
 
 
 }
