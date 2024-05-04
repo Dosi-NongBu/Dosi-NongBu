@@ -1,4 +1,4 @@
-package MIN.DosiNongBu;
+package MIN.DosiNongBu.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -10,4 +10,6 @@ public class Controller {
     public String test(){
         return "테스트";
     }
+
+
 }
