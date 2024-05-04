@@ -10,6 +10,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -31,6 +33,7 @@ public class AuthController {
 
     @PostMapping("/auth/join")
     public ResponseEntity<?> createNewUser(@RequestBody @Valid JoinRequestDto joinRequestDto){
+        log.info("회원가입");
         userAuthService.join(joinRequestDto);
 
         return ResponseEntity.ok("Success");
@@ -38,6 +41,7 @@ public class AuthController {
 
     @PostMapping("/auth/login")
     public ResponseEntity<?> login(@RequestBody @Valid LoginRequestDto loginRequestDto, HttpServletResponse response){
+        log.info("로그인");
         // 회원 유무
         User user = userAuthService.findByEmail(loginRequestDto.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
@@ -72,6 +76,7 @@ public class AuthController {
 
     @PostMapping("/auth/logout")
     public String logout(HttpServletResponse response){
+        log.info("로그아웃");
         // 로그아웃 시 refresh_token 삭제
         Cookie cookie = new Cookie("refresh_token", null);
         cookie.setMaxAge(0);

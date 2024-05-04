@@ -7,6 +7,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.util.function.Function;
 * Jwt 토큰 발급 & 토큰 유효성 검증
 * Access  Token & Refresh Token
 * */
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtUtil {
@@ -79,7 +81,6 @@ public class JwtUtil {
     }
 
     public boolean isTokenValid(String token){
-        String userName = extractUsername(token);
         return !isTokenExpired(token);
     }
 

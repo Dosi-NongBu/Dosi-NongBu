@@ -47,9 +47,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
 
-
 	// 개발용
-
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'

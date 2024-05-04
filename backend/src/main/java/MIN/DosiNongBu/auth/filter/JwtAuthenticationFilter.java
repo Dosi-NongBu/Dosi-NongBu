@@ -5,6 +5,7 @@ import MIN.DosiNongBu.auth.jwt.JwtUtil;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
 import MIN.DosiNongBu.service.user.UserAuthService;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -12,10 +13,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,7 +27,7 @@ import java.util.List;
 * jwt access token 및 refresh token 을 이용한 인증 절차
 * 유효성 검사 & 재발급
 * */
-
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
@@ -36,7 +35,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserAuthService userAuthService;
     private final UserDetailsService userDetailsService;
 
-    // 토큰이 필요한 API URI
     @Value("${jwt.active.url}")
     List<String> activeToken;
 
@@ -47,42 +45,43 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String s = request.getRequestURI();
-
-        // 토큰이 필요하지 않은 API URL 의 경우 다음 필터로 이동
-        if(!activeToken.contains(request.getRequestURI())){
+        if (!activeToken.contains(request.getRequestURI())) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Client 에서 API 를 요청 할 때 로컬 스토리지 확인
+        log.info("권한이 필요한 요청");
+
         String accessToken = request.getHeader("Authorization");
 
-        System.out.println(accessToken);
+        if (accessToken != null && AccessTokenAuthentication(request, response, filterChain, accessToken)) {
+            return;
+        }
 
-        // Local Storage 에 Access Token 이 있는 경우
-        if(accessToken != null){
-            // Access Token 이 유효하는 경우
-            if (AccessTokenAuthentication(request, response, filterChain, accessToken)) return;
+        throw new IllegalStateException("다시 로그인 하세요 : 토큰이 없습니다.");
+    }
 
-            // Access Token 이 유효하지 않는 경우, Refresh Token 을 이용하여 재 발급
-            // Refresh Token 찾기
-            Cookie[] cookies = request.getCookies();
-            String refreshToken = null;
-            if(cookies != null){
-                for(Cookie cookie : cookies){
-                    if("refresh_token".equals(cookie.getName())){
-                        refreshToken = cookie.getValue();
-                        break;
-                    }
+    private boolean AccessTokenAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String accessToken) throws IOException, ServletException {
+        try {
+            if (jwtUtil.isTokenValid(accessToken)) {
+                String loginId = jwtUtil.extractUsername(accessToken);
+                if (loginId != null && userAuthService.findByEmail(loginId).isPresent()) {
+                    filterChain.doFilter(request, response);
+                    return true;
+                } else {
+                    throw new IllegalStateException("해당 사용자가 없습니다.");
                 }
             }
+        } catch (ExpiredJwtException e) {
 
-            // Refresh Token 유효한가?
-            if(refreshToken != null & jwtUtil.isTokenValid(refreshToken)){
+            log.info("accessToken 만료");
 
-                String email = jwtUtil.extractClaim(accessToken, Claims::getSubject);
-                RoleType role = jwtUtil.extractClaim(accessToken, claims -> claims.get("role", RoleType.class));
+            String refreshToken = findRefreshToken(request);
+            if (refreshToken != null && jwtUtil.isTokenValid(refreshToken)) {
+                Claims claims = e.getClaims();
+
+                String email = claims.getSubject();
+                RoleType role = RoleType.valueOf(claims.get("role", String.class));
 
                 JwtRequestDto jwtRequestDto = JwtRequestDto.builder()
                         .email(email)
@@ -90,42 +89,25 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         .build();
 
                 accessToken = jwtUtil.RegenerateAccessToken(jwtRequestDto);
+                response.addHeader("Authorization", "Bearer " + accessToken);
 
-                // Access Token 이 유효하는 경우
-                if (AccessTokenAuthentication(request, response, filterChain, accessToken)) return;
-
-            }
-            else {
-                throw new IllegalStateException("다시 로그인 하세요 : 토큰이 유효하지 않습니다.");
-            }
-
-        }
-        // Access Token 이 없거나 Refresh Token 이 없거나
-        else {
-            throw new IllegalStateException("다시 로그인 하세요 : 토큰이 없습니다.");
-        }
-    }
-
-    private boolean AccessTokenAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain, String accessToken) throws IOException, ServletException {
-        if(jwtUtil.isTokenValid(accessToken)){
-            // 사용자 아이디 추출
-            String loginId = jwtUtil.extractUsername(accessToken);
-
-            // 사용자 아이디가 존재하는 경우
-            if(loginId != null && userAuthService.findByEmail(loginId).isPresent()){
-
-                //제공
-                UserDetails userDetails = userDetailsService.loadUserByUsername(loginId);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-
-                filterChain.doFilter(request, response);
+                AccessTokenAuthentication(request, response, filterChain, accessToken);
                 return true;
             }
-            else{
-                throw new IllegalStateException("해당 사용자가 없습니다.");
-            }
+            throw new IllegalStateException("다시 로그인 하세요 : 토큰이 유효하지 않습니다.");
         }
         return false;
+    }
+
+    private String findRefreshToken(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("refresh_token".equals(cookie.getName())) {
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
     }
 }
