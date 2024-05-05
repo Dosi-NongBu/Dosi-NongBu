@@ -1,11 +1,16 @@
 package MIN.DosiNongBu.controller.user;
 
 import MIN.DosiNongBu.auth.jwt.JwtUtil;
+import MIN.DosiNongBu.controller.user.dto.PlaceListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.PlaceSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.ProfileResponseDto;
+import MIN.DosiNongBu.controller.user.dto.ProfileUpdateRequestDto;
 import MIN.DosiNongBu.service.user.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,32 +22,32 @@ public class UserController {
 
     // 프로필 정보 조회
     @GetMapping("/users")
-    public void user(HttpServletRequest request){
-/*        String authorizationHeader = request.getHeader("Authorization");
-        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            userEmail = jwtUtil.extractClaim(authorizationHeader.substring(7), Claims::getSubject);
-        }
-        else{
-            throw new IllegalStateException("오류");
-        }*/
+    public ProfileResponseDto user(String userEmail, Model model){
+        ProfileResponseDto responseDto = userService.findProfile(userEmail);
+
+        model.addAttribute("profile", responseDto);
+        return responseDto;
     }
 
     //프로필 정보 수정
-    @PostMapping("/users")
-    public void updateUser(){
-
+    @PutMapping("/users")
+    public void updateUser(String userEmail, @RequestBody ProfileUpdateRequestDto requestDto){
+        userService.updateProfile(userEmail, requestDto);
     }
 
 
     //내 공간 목록 조회
     @GetMapping("/userplaces")
-    public void placeList(){
+    public void placeList(String userEmail, Model model){
+        List<PlaceListResponseDto> responseDto = userService.findPlaceAll(userEmail);
 
+        model.addAllAttributes(responseDto);
     }
 
     //공간 추가
     @PostMapping("/userplaces")
-    public void createPlace(){
+    public void createPlace(@RequestBody PlaceSaveRequestDto  requestDto){
+        userService.savePlace(requestDto);
 
     }
 

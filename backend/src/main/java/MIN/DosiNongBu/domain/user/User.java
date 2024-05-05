@@ -67,5 +67,11 @@ public class User extends BaseTimeEntity {
         return this;
     }
 
+    public void update(String nickname, String address, String profileImage){
+        this.nickname = nickname;
+        this.currentAddress = address;
+        this.profileImage = profileImage;
+    }
+
 
 }
