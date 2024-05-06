@@ -25,6 +25,7 @@ const CropBoxContainer = ({ type }) => {
       // response = mockData();
     } else if (type === "recommend") {
       response = await getRecommendCropList(page, size);
+      // response = mockData();
     }
     if (response) {
       setCropList(response);
@@ -63,6 +64,7 @@ const CropBoxContainer = ({ type }) => {
   const handleSearchButton = () => {
     const fetchData = async () => {
       const response = await getSearchCropList(searchTerm, 1);
+      // const response = mockData();
       if (response) {
         setCropList(response);
       }

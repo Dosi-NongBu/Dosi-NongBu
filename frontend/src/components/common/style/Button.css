@@ -2,8 +2,27 @@
   background-color: #454839;
   color: white;
   font-size: 1.2em;
-  width: 80px;
+  /* width: 80px; */
   height: 40px;
+  border: none;
   border-radius: 10px;
   cursor: pointer;
+}
+
+.large {
+  width: 230px;
+  height: 150px;
+}
+
+.green {
+  background-color: #c8e8cf;
+  color: black;
+}
+
+.positive {
+  background-color: #96c1fc;
+}
+
+.negative {
+  background-color: #ed988f;
 }
