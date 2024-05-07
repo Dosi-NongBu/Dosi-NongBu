@@ -1,5 +1,6 @@
 package MIN.DosiNongBu.domain.user;
 
+import MIN.DosiNongBu.domain.crop.Crop;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,6 +30,10 @@ public class UserCrop {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+    @JoinColumn(name = "crop_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Crop crop;
+
     /* 속성 */
     @Column(name = "name")
     private String name;
@@ -38,13 +43,22 @@ public class UserCrop {
 
     @CreatedDate
     @Column(name = "start_date")
-    private LocalDateTime createdDate;
+    private LocalDateTime startDate;
 
     @Column(name = "period")
     private Integer period;
 
     @Column(name = "previous_period")
     private Integer perPeriod;
+
+    @Column(name = "max_temperature")
+    private Integer maxTemperature;
+
+    @Column(name = "min_temperature")
+    private Integer minTemperature;
+
+    @Column(name = "humidity")
+    private Integer humidity;
 
     @ElementCollection
     @CollectionTable(name = "USERS_CROPS_IMAGES", joinColumns = @JoinColumn(name = "user_crop_id"))

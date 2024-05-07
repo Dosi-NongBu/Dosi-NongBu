@@ -16,7 +16,6 @@ public class UserCropManageController {
 
     private final UserCropManageService userCropManageService;
 
-
     public Long UserCookie(String cookie){
         Long userId = null;
         try {
@@ -32,10 +31,10 @@ public class UserCropManageController {
 
     //내 작물 목록 조회
     @GetMapping("/usercrops")
-    public List<UserCropListResponseDto> userCropList(@CookieValue(name = "User") String cookie, Pageable pageable){
+    public List<UserCropListResponseDto> userCropList(@CookieValue(name = "User") String cookie){
         Long userId = UserCookie(cookie);
 
-        return userCropManageService.findUserCropList(userId, pageable);
+        return userCropManageService.findUserCropList(userId);
     }
 
     //내 작물 조회
