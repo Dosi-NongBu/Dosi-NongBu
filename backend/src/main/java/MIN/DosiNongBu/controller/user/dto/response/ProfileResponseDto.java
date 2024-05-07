@@ -1,4 +1,4 @@
-package MIN.DosiNongBu.controller.user.dto;
+package MIN.DosiNongBu.controller.user.dto.response;
 
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.constant.ProviderType;

@@ -21,6 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/*
+* 자체 로그인 API
+* 회원가입, 로그인, 로그아웃
+* */
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -62,6 +66,12 @@ public class AuthController {
         cookie.setSecure(true);
         cookie.setPath("/");
         response.addCookie(cookie);
+
+        Cookie cookie2 = new Cookie("User", user.getUserId().toString());
+        cookie2.setHttpOnly(true);
+        cookie2.setSecure(true);
+        cookie2.setPath("/");
+        response.addCookie(cookie2);
 
         response.addHeader("Authorization", "Bearer " + accessToken);
 

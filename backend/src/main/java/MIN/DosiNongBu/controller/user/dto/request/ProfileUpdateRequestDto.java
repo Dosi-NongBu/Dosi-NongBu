@@ -1,4 +1,4 @@
-package MIN.DosiNongBu.controller.user.dto;
+package MIN.DosiNongBu.controller.user.dto.request;
 
 import lombok.Builder;
 import lombok.Getter;

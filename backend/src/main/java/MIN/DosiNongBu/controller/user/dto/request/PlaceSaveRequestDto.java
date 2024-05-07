@@ -1,4 +1,4 @@
-package MIN.DosiNongBu.controller.user.dto;
+package MIN.DosiNongBu.controller.user.dto.request;
 
 import MIN.DosiNongBu.domain.user.UserPlace;
 import MIN.DosiNongBu.domain.user.constant.DirectionType;

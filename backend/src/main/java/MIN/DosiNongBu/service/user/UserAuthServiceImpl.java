@@ -5,7 +5,7 @@ import MIN.DosiNongBu.controller.auth.dto.LoginRequestDto;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.constant.ProviderType;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
-import MIN.DosiNongBu.repository.user.UserRepository;
+import MIN.DosiNongBu.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

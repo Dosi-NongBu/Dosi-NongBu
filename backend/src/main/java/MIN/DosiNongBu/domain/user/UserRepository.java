@@ -1,4 +1,4 @@
-package MIN.DosiNongBu.repository.user;
+package MIN.DosiNongBu.domain.user;
 
 import MIN.DosiNongBu.domain.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;

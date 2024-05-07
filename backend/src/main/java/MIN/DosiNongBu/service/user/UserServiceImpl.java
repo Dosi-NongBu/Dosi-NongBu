@@ -1,14 +1,14 @@
 package MIN.DosiNongBu.service.user;
 
-import MIN.DosiNongBu.controller.user.dto.PlaceListResponseDto;
-import MIN.DosiNongBu.controller.user.dto.PlaceSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.ProfileResponseDto;
-import MIN.DosiNongBu.controller.user.dto.ProfileUpdateRequestDto;
-import MIN.DosiNongBu.domain.user.User;
-import MIN.DosiNongBu.domain.user.UserPlace;
-import MIN.DosiNongBu.repository.user.UserPlaceRepository;
-import MIN.DosiNongBu.repository.user.UserRepository;
+import MIN.DosiNongBu.controller.user.dto.request.PlaceSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.ProfileUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.response.*;
+import MIN.DosiNongBu.domain.post.Post;
+import MIN.DosiNongBu.domain.post.PostRepository;
+import MIN.DosiNongBu.domain.user.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,16 +19,10 @@ public class UserServiceImpl implements UserService{
 
     private final UserRepository userRepository;
     private final UserPlaceRepository userPlaceRepository;
+    private final UserCropRepository userCropRepository;
 
-    @Override
-    public List<User> findAll() {
-        return userRepository.findAll();
-    }
+    private final PostRepository postRepository;
 
-    @Override
-    public void deleteById(Long id) {
-        userRepository.deleteById(id);
-    }
 
     @Override
     public User findByEmail(String email) {
@@ -36,39 +30,58 @@ public class UserServiceImpl implements UserService{
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. email=" + email));
     }
 
+    /* USER PROFILE */
     @Override
-    public ProfileResponseDto findProfile(String email) {
-        User entity =  userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. email=" + email));
+    public ProfileResponseDto findProfile(Long userId) {
+        User entity =  userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
         return new ProfileResponseDto(entity);
     }
 
     @Override
-    public void updateProfile(String email, ProfileUpdateRequestDto requestDto) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다. email=" + email));
+    public Long updateProfile(Long userId, ProfileUpdateRequestDto requestDto) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
         user.update(requestDto.getNickname(), requestDto.getAddress(), requestDto.getProfileImage());
+        return userId;
+    }
+
+    /* USER PLACE */
+    @Override
+    public List<PlaceListResponseDto> findPlaceList(Long userId) {
+         User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
+
+        List<UserPlace> entity = user.getUserPlaces();
+        return entity.stream().map(PlaceListResponseDto::new).toList();
     }
 
     @Override
-    public List<PlaceListResponseDto> findPlaceAll(String email) {
-        return userPlaceRepository.findAll().stream()
-                .map(PlaceListResponseDto::new)
-                .toList();
-    }
-
-    @Override
-    public void savePlace(PlaceSaveRequestDto requestDto) {
+    public Long savePlace(Long userId, PlaceSaveRequestDto requestDto) {
         UserPlace userPlace = requestDto.toEntity();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
+        userPlace.setUser(user);
         userPlaceRepository.save(userPlace);
+
+        return userPlace.getUserPlaceId();
     }
 
     @Override
-    public void deletePlace(Long Id) {
+    public void deletePlace(Long placeId) {
+        userPlaceRepository.deleteById(placeId);
+    }
 
+
+    /* USER POST */
+    @Override
+    public List<UserPostListResponseDto> findUserPostList(Long userId, Pageable pageable) {
+        Page<Post> entity = postRepository.findAllByUser_UserId(userId, pageable);
+
+        return entity.stream().map(UserPostListResponseDto::new).toList();
     }
 
 

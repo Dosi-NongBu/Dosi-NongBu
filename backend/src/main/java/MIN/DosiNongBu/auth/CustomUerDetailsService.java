@@ -1,7 +1,7 @@
 package MIN.DosiNongBu.auth;
 
 import MIN.DosiNongBu.domain.user.User;
-import MIN.DosiNongBu.repository.user.UserRepository;
+import MIN.DosiNongBu.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

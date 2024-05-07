@@ -1,33 +1,28 @@
 package MIN.DosiNongBu.service.user;
 
-import MIN.DosiNongBu.controller.user.dto.PlaceListResponseDto;
-import MIN.DosiNongBu.controller.user.dto.PlaceSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.ProfileResponseDto;
-import MIN.DosiNongBu.controller.user.dto.ProfileUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.PlaceSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.ProfileUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.response.*;
 import MIN.DosiNongBu.domain.user.User;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface UserService {
 
-    List<User> findAll();
-
-    void deleteById(Long id);
-
     User findByEmail(String email);
 
-    ProfileResponseDto findProfile(String email);
+    /* 내 프로필 */
+    ProfileResponseDto findProfile(Long userId);
+    Long updateProfile(Long userId, ProfileUpdateRequestDto requestDto);
 
-    void updateProfile(String email, ProfileUpdateRequestDto requestDto);
+    /* 내 공간 */
+    List<PlaceListResponseDto> findPlaceList(Long userId);
+    Long savePlace(Long userId, PlaceSaveRequestDto placeSaveRequestDto);
+    void deletePlace(Long placeId);
 
-    List<PlaceListResponseDto> findPlaceAll(String email);
-
-    void savePlace(PlaceSaveRequestDto placeSaveRequestDto);
-
-    void deletePlace(Long id);
-
-
-
+    //내가 쓴 글 목록 조회
+    List<UserPostListResponseDto> findUserPostList(Long userId, Pageable pageable);
 
 
 }

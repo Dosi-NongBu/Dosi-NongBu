@@ -12,7 +12,7 @@ import lombok.Setter;
 
 @Getter @Setter
 @NoArgsConstructor
-@Table(name = "USERS_PLACE")
+@Table(name = "USERS_PLACES")
 @Entity
 public class UserPlace {
     /* PK */
@@ -51,5 +51,15 @@ public class UserPlace {
         this.direction = direction;
         this.light = light;
         this.quantity = quantity;
+    }
+
+    public void setUser(User user) {
+        if(user.getUserPlaces().size() <= 10){
+            this.user = user;
+            user.getUserPlaces().add(this);
+        }
+        else{
+            throw new IllegalStateException("사용자 공간은 최대 10개까지만 저장할 수 있습니다.");
+        }
     }
 }

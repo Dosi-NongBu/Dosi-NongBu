@@ -2,7 +2,7 @@ package MIN.DosiNongBu.auth;
 
 import MIN.DosiNongBu.auth.dto.OAuthAttributes;
 import MIN.DosiNongBu.domain.user.User;
-import MIN.DosiNongBu.repository.user.UserRepository;
+import MIN.DosiNongBu.domain.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
