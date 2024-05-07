@@ -120,10 +120,11 @@ export const postNewUserPlace = async (newPlace, JWT) => {
   }
 };
 
-export const postMyCrop = async (cropInfo, cropId) => {
+// 최종 사용자 작물 전송
+export const postMyCrop = async (cropInfo) => {
   try {
-    const response = await axios.post(`/api/v1/crops/${cropId}/add`, {
-      cropId: Number(cropId),
+    const response = await axios.post(`/api/v1/crops/${cropInfo.cropId}/add`, {
+      cropId: cropInfo.cropId,
       userPlaceId: Number(cropInfo.userPlaceId),
       name: cropInfo.name,
       nickname: cropInfo.nickname,
@@ -174,7 +175,7 @@ export const mockData3 = () => {
     feature: "특징",
     plant: "3,5,7",
     grow: " 본잎이 5-6장 정도 자란 모종을 심습니다. 잎이 병해충 피해나 상처가 없고, 뿌리는 하얗고 굵게 잘 자란 모종을 고릅니다.\n20x20cm 간격으로 모종의 뿌리부분이 들어갈 정도의 구멍을 만들고 모종을 넣습니다. 뿌리와 토양이 밀착되도록 심어줍니다.\n뿌리가 충분히 젖을 정도로 물을 줍니다. 물이 충분히 스며든 후에는 뿌리의 위쪽 표면이 살짝 보일 정도로 흙을 덮어줍니다.",
-    bug: "상추는 심은 후 대략 4-6주 내에 수확할 준비가 됩니다.\n\n잎이 부드럽고 싱싱하며 적당한 크기(20-30cm 정도)에 도달했을 때가 수확하기 가장 좋은 시기입니다.",
+    bug: "상추는 심은 후 대략 4-6주 내에 수확할 준비가 됩니다.\n\n잎이 부드럽고 싱싱하며 적당한 크기(20-30cm 정도)에 도달했을 때가 수확하기 가장 좋은 시기입니다.상추는 심은 후 대략 4-6주 내에 수확할 준비가 됩니다.\n\n잎이 부드럽고 싱싱하며 적당한 크기(20-30cm 정도)에 도달했을 때가 수확하기 가장 좋은 시기입니다.",
     tip: "상추에서 여름에 흔히 발생하는 잎 끝이나, 생장점이 타들어가는 듯 갈변하는 현상을 엽소현상(팁번)이라 합니다.\n주로 여름철 고온과 장일에 의한 생리장애로 칼슘이 부족할 때 생장점 부근의 어린 세포가 기계적으로 파괴되어 생기는 증상입니다.\n적절한 칼슘제나 칼슘보충제를 공급해주어야 합니다.",
     manage:
       "상추가 마르지 않도록 주기적으로 확인하고 필요한 경우, 키친타월을 촉촉하게 해서 수분을 조절해주세요.",

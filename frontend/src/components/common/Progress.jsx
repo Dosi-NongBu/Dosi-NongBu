@@ -6,8 +6,8 @@ const Progress = ({ curStep }) => {
   const [step, setStep] = useState([
     { order: 1, name: "작물 선택", done: true },
     { order: 2, name: "기본 설정", done: false },
-    { order: 3, name: "알림 설정", done: false },
-    { order: 4, name: "완료", done: false },
+    // { order: 3, name: "알림 설정", done: false },
+    { order: 3, name: "완료", done: false },
   ]);
 
   useEffect(() => {
