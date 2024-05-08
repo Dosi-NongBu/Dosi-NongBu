@@ -10,8 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -25,9 +27,13 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. email=" + email));
+    public Optional<User> findOne(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public Optional<User> findOne(Long userId) {
+        return userRepository.findById(userId);
     }
 
     /* USER PROFILE */
@@ -40,6 +46,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public Long updateProfile(Long userId, ProfileUpdateRequestDto requestDto) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
@@ -59,6 +66,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public Long savePlace(Long userId, PlaceSaveRequestDto requestDto) {
         UserPlace userPlace = requestDto.toEntity();
         User user = userRepository.findById(userId)
@@ -71,6 +79,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    @Transactional
     public void deletePlace(Long placeId) {
         userPlaceRepository.deleteById(placeId);
     }

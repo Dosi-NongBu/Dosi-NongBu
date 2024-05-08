@@ -23,10 +23,10 @@ public class User extends BaseTimeEntity {
     private Long userId;
 
     /* 연관 */
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UserPlace> userPlaces = new ArrayList<UserPlace>();
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UserCrop> userCrops = new ArrayList<UserCrop>();
 
     /* 속성 */

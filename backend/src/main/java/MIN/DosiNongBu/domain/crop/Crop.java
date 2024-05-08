@@ -32,7 +32,7 @@ public class Crop {
     @Column(name = "humidity")
     private Integer humidity;
 
-    @Column(name = "month")
+    @Column(name = "crop_month")
     private Integer month;
 
     @Builder

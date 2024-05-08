@@ -2,15 +2,21 @@ package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.PlaceSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.ProfileUpdateRequestDto;
-import MIN.DosiNongBu.controller.user.dto.response.*;
+import MIN.DosiNongBu.controller.user.dto.response.PlaceListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.ProfileResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserPostListResponseDto;
 import MIN.DosiNongBu.domain.user.User;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
-    User findByEmail(String email);
+    Optional<User> findOne(String email);
+
+    Optional<User> findOne(Long userId);
+
 
     /* 내 프로필 */
     ProfileResponseDto findProfile(Long userId);
