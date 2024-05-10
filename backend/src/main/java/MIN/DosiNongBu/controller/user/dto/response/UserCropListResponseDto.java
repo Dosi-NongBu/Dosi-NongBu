@@ -11,7 +11,11 @@ public class UserCropListResponseDto {
 
     public UserCropListResponseDto(UserCrop entity) {
         this.id = entity.getUserCropId();
-        this.imageUrl = entity.getImageUrls().get(0);
+        if (entity.getImageUrls() != null && !entity.getImageUrls().isEmpty()) {
+            this.imageUrl = entity.getImageUrls().get(0);
+        } else {
+            this.imageUrl = null;
+        }
         this.nickname = entity.getNickname();
     }
 }

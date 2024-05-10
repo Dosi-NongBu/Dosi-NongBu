@@ -67,11 +67,11 @@ class UserServiceImplTest {
 
     @AfterEach
     void clear(){
-/*        log.debug("debug log= DB 삭제");
+        log.debug("debug log= DB 삭제");
         userPlaceRepository.deleteAll();
         userRepository.deleteAll();
         userCropRepository.deleteAll();
-        postRepository.deleteAll();*/
+        postRepository.deleteAll();
     }
 
     @Test

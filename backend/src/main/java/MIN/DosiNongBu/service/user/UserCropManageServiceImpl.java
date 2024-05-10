@@ -24,7 +24,6 @@ public class UserCropManageServiceImpl implements UserCropManageService{
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
-        System.out.println(user.getUserCrops().get(0));
         List<UserCrop> entity = user.getUserCrops();
         return entity.stream().map(UserCropListResponseDto::new).toList();
     }
