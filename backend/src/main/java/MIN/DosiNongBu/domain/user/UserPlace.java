@@ -5,13 +5,14 @@ import MIN.DosiNongBu.domain.user.constant.LightType;
 import MIN.DosiNongBu.domain.user.constant.PlaceType;
 import MIN.DosiNongBu.domain.user.constant.QuantityType;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter @Setter
 @NoArgsConstructor
-@Table(name = "USERS_PLACE")
+@Table(name = "USERS_PLACES")
 @Entity
 public class UserPlace {
     /* PK */
@@ -28,19 +29,38 @@ public class UserPlace {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "placeType", nullable = false)
+    @Column(name = "place", nullable = false)
     private PlaceType place;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "directionType", nullable = false)
+    @Column(name = "direction", nullable = false)
     private DirectionType direction;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "lightType", nullable = false)
+    @Column(name = "light", nullable = false)
     private LightType light;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "Quantity", nullable = false)
+    @Column(name = "quantity", nullable = false)
     private QuantityType quantity;
 
+    @Builder
+    public UserPlace(String name, PlaceType place, DirectionType direction, LightType light, QuantityType quantity) {
+        this.name = name;
+        this.place = place;
+        this.direction = direction;
+        this.light = light;
+        this.quantity = quantity;
+    }
+
+
+    public void setUser(User user) {
+        if(user.getUserPlaces().size() < 10){
+            this.user = user;
+            user.getUserPlaces().add(this);
+        }
+        else{
+            throw new IllegalStateException("사용자 공간은 최대 10개까지만 저장할 수 있습니다.");
+        }
+    }
 }

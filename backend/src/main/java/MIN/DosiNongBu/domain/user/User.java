@@ -9,6 +9,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter @Setter
 @NoArgsConstructor
 @Table(name = "USERS")
@@ -19,6 +22,13 @@ public class User extends BaseTimeEntity {
     @Column(name = "user_id")
     private Long userId;
 
+    /* 연관 */
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserPlace> userPlaces = new ArrayList<UserPlace>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<UserCrop> userCrops = new ArrayList<UserCrop>();
+
     /* 속성 */
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -26,27 +36,26 @@ public class User extends BaseTimeEntity {
     @Column(name="password")
     private String password;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Lob
-    @Column(name = "profile_image", nullable = true)
+    @Column(name = "profile_image")
     private String profileImage;
 
-    @Column(name = "nickname", nullable = true)
+    @Column(name = "nickname")
     private String nickname;
 
-    @Column(name = "address", nullable = true)
+    @Column(name = "address")
     private String currentAddress;
 
     @Column(name = "role", nullable = false)
     @Enumerated(EnumType.STRING)
     private RoleType role;
 
-    @Column(name = "provider", nullable = true)
+    @Column(name = "provider")
     @Enumerated(EnumType.STRING)
     private ProviderType provider;
-
 
     /* 생성자 */
     @Builder
@@ -61,10 +70,18 @@ public class User extends BaseTimeEntity {
         this.currentAddress = currentAddress;
     }
 
+    // OAuth2 를 이용한 소셜 로그인을 위한 Profile Update
     public User update(String name, String profileImage){
         this.name = name;
         this.profileImage = profileImage;
         return this;
+    }
+
+    // 사용자의 요청에 의한 Profile Update
+    public void update(String nickname, String address, String profileImage){
+        this.nickname = nickname;
+        this.currentAddress = address;
+        this.profileImage = profileImage;
     }
 
 

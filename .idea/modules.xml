@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/Dosi-NongBu.iml" filepath="$PROJECT_DIR$/.idea/Dosi-NongBu.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/DosiNongBu.main.iml" filepath="$PROJECT_DIR$/.idea/modules/DosiNongBu.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/DosiNongBu.test.iml" filepath="$PROJECT_DIR$/.idea/modules/DosiNongBu.test.iml" />
     </modules>
   </component>
 </project>

@@ -3,6 +3,8 @@ package MIN.DosiNongBu.auth;
 import MIN.DosiNongBu.auth.dto.OAuthAttributes;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.repository.user.UserRepository;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
@@ -20,6 +22,7 @@ import java.util.Collections;
 public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequest, OAuth2User> {
 
     private final UserRepository userRepository;
+    private final HttpServletResponse response;
 
     /* 사용자가 로그인 했을 때 정보 가져오기
     */
@@ -41,6 +44,13 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
         // 신규 유저 등록 & 기존 유저 변경 사항 반영
         User user = registrateOrUpdate(attributes);
+
+        // 쿠키에 사용자 ID 설정
+        Cookie cookie = new Cookie("User", user.getUserId().toString());
+        cookie.setHttpOnly(true);
+        cookie.setSecure(true);
+        cookie.setPath("/");
+        response.addCookie(cookie);
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(user.getRole().name())),

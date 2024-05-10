@@ -11,9 +11,9 @@ public interface UserAuthService {
 
     Optional<User> findByEmail(String email);
 
-    Long join(JoinRequestDto joinRequestDto);
+    void join(JoinRequestDto joinRequestDto);
 
-    Long login(LoginRequestDto loginRequestDto);
+    void login(LoginRequestDto loginRequestDto);
 
 
 }

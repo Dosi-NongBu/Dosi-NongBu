@@ -1,6 +1,7 @@
 package MIN.DosiNongBu.auth.dto;
 
 import MIN.DosiNongBu.domain.user.User;
+import MIN.DosiNongBu.domain.user.constant.ProviderType;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,14 +17,16 @@ public class OAuthAttributes {
     private String name;
     private String email;
     private String profileImage;
+    private ProviderType provider;
 
     @Builder
-    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profileImage) {
+    public OAuthAttributes(Map<String, Object> attributes, String nameAttributeKey, String name, String email, String profileImage, ProviderType provider) {
         this.attributes = attributes;
         this.nameAttributeKey = nameAttributeKey;
         this.name = name;
         this.email = email;
         this.profileImage = profileImage;
+        this.provider = provider;
     }
 
     /* OAuth 2.0 Provider 에 따라 링크
@@ -44,6 +47,7 @@ public class OAuthAttributes {
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
                 .profileImage((String) attributes.get("picture"))
+                .provider(ProviderType.GOOGLE)
                 .build();
     }
 
@@ -56,6 +60,7 @@ public class OAuthAttributes {
                 .name((String) response.get("name"))
                 .email((String) response.get("email"))
                 .profileImage((String) response.get("profile_image"))
+                .provider(ProviderType.NAVER)
                 .build();
     }
 
@@ -65,6 +70,7 @@ public class OAuthAttributes {
                 .email(email)
                 .profileImage(profileImage)
                 .role(RoleType.USER)
+                .provider(provider)
                 .build();
     }
 }
