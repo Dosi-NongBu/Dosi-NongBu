@@ -5,7 +5,7 @@ import MIN.DosiNongBu.controller.auth.dto.LoginRequestDto;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.constant.ProviderType;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
-import MIN.DosiNongBu.domain.user.UserRepository;
+import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -25,7 +25,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public Long join(JoinRequestDto joinRequestDto) {
+    public void join(JoinRequestDto joinRequestDto) {
         validateDuplicateUser(joinRequestDto.getEmail());
 
         User user = User.builder()
@@ -41,7 +41,6 @@ public class UserAuthServiceImpl implements UserAuthService {
 
         userRepository.save(user);
 
-        return user.getUserId();
     }
 
     private void validateDuplicateUser(String email){
@@ -51,8 +50,7 @@ public class UserAuthServiceImpl implements UserAuthService {
     }
 
     @Override
-    public Long login(LoginRequestDto loginRequestDto) {
+    public void login(LoginRequestDto loginRequestDto) {
 
-        return null;
     }
 }

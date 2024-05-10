@@ -1,6 +1,19 @@
 package MIN.DosiNongBu.controller.admin;
 
+import MIN.DosiNongBu.controller.admin.dto.request.NewCropRequestDto;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v1")
 public class AdminController {
+
+    // 신규 작물 등록
+    @PostMapping("/admins/crops/add")
+    public void createNewCrop(NewCropRequestDto requestDto){
+
+    }
 
     // 사용자 정보 목록 조회
 

@@ -1,7 +1,7 @@
 package MIN.DosiNongBu.domain.user;
 
-import MIN.DosiNongBu.domain.crop.Crop;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,10 +29,6 @@ public class UserCrop {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
-    @JoinColumn(name = "crop_id")
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Crop crop;
 
     /* 속성 */
     @Column(name = "name")
@@ -65,9 +61,27 @@ public class UserCrop {
     @Column(name = "image_url")
     private List<String> imageUrls = new ArrayList<>();
 
+    @Builder
+    public UserCrop(String name, String nickname, LocalDateTime startDate, Integer period, Integer perPeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
+        this.name = name;
+        this.nickname = nickname;
+        this.startDate = startDate;
+        this.period = period;
+        this.perPeriod = perPeriod;
+        this.maxTemperature = maxTemperature;
+        this.minTemperature = minTemperature;
+        this.humidity = humidity;
+        this.imageUrls = imageUrls;
+    }
+
     public void setUser(User user) {
-        this.user = user;
-        user.getUserCrops().add(this);
+        if(user.getUserCrops().size() < 10){
+            this.user = user;
+            user.getUserCrops().add(this);
+        }
+        else{
+            throw new IllegalStateException("사용자 작물은 최대 10개까지만 저장할 수 있습니다.");
+        }
     }
 
     // 서비스 메서드

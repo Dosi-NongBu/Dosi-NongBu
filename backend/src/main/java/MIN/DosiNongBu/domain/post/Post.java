@@ -20,12 +20,17 @@ import java.util.List;
 public class Post extends BaseTimeEntity {
     /* PK */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "post_id")
     private Long postId;
 
     /* FK */
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+    /* 연관 */
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<Comment>();
 
     /* 속성 */
     @Column(name = "title", nullable = false)
@@ -52,9 +57,9 @@ public class Post extends BaseTimeEntity {
     @Column(name = "image_url")
     private List<String> imageUrls = new ArrayList<>();
 
+
     @Builder
-    public Post(User user, String title, String content, Long good, Long bad, PostType post, List<String> imageUrls) {
-        this.user = user;
+    public Post(String title, String content, Long good, Long bad, PostType post, List<String> imageUrls) {
         this.title = title;
         this.content = content;
         this.good = good;
@@ -62,6 +67,7 @@ public class Post extends BaseTimeEntity {
         this.post = post;
         this.imageUrls = imageUrls;
     }
+
 
     // 서비스 메서드
     public void addImageUrl(String imageUrl) {

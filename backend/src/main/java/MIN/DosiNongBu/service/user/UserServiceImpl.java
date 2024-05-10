@@ -4,8 +4,11 @@ import MIN.DosiNongBu.controller.user.dto.request.PlaceSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.ProfileUpdateRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.*;
 import MIN.DosiNongBu.domain.post.Post;
-import MIN.DosiNongBu.domain.post.PostRepository;
+import MIN.DosiNongBu.repository.post.PostRepository;
 import MIN.DosiNongBu.domain.user.*;
+import MIN.DosiNongBu.repository.user.UserCropRepository;
+import MIN.DosiNongBu.repository.user.UserPlaceRepository;
+import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -38,7 +41,7 @@ public class UserServiceImpl implements UserService{
 
     /* USER PROFILE */
     @Override
-    public ProfileResponseDto findProfile(Long userId) {
+    public ProfileResponseDto viewProfile(Long userId) {
         User entity =  userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
@@ -57,7 +60,7 @@ public class UserServiceImpl implements UserService{
 
     /* USER PLACE */
     @Override
-    public List<PlaceListResponseDto> findPlaceList(Long userId) {
+    public List<PlaceListResponseDto> viewPlaceList(Long userId) {
          User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
@@ -67,11 +70,12 @@ public class UserServiceImpl implements UserService{
 
     @Override
     @Transactional
-    public Long savePlace(Long userId, PlaceSaveRequestDto requestDto) {
+    public Long registerPlace(Long userId, PlaceSaveRequestDto requestDto) {
         UserPlace userPlace = requestDto.toEntity();
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
+        // 연관 관계 연결
         userPlace.setUser(user);
         userPlaceRepository.save(userPlace);
 
@@ -87,7 +91,7 @@ public class UserServiceImpl implements UserService{
 
     /* USER POST */
     @Override
-    public List<UserPostListResponseDto> findUserPostList(Long userId, Pageable pageable) {
+    public List<UserPostListResponseDto> viewUserPostList(Long userId, Pageable pageable) {
         Page<Post> entity = postRepository.findAllByUser_UserId(userId, pageable);
 
         return entity.stream().map(UserPostListResponseDto::new).toList();

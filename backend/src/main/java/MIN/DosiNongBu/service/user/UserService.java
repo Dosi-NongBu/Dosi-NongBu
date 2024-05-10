@@ -19,16 +19,16 @@ public interface UserService {
 
 
     /* 내 프로필 */
-    ProfileResponseDto findProfile(Long userId);
+    ProfileResponseDto viewProfile(Long userId);
     Long updateProfile(Long userId, ProfileUpdateRequestDto requestDto);
 
     /* 내 공간 */
-    List<PlaceListResponseDto> findPlaceList(Long userId);
-    Long savePlace(Long userId, PlaceSaveRequestDto placeSaveRequestDto);
+    List<PlaceListResponseDto> viewPlaceList(Long userId);
+    Long registerPlace(Long userId, PlaceSaveRequestDto placeSaveRequestDto);
     void deletePlace(Long placeId);
 
     //내가 쓴 글 목록 조회
-    List<UserPostListResponseDto> findUserPostList(Long userId, Pageable pageable);
+    List<UserPostListResponseDto> viewUserPostList(Long userId, Pageable pageable);
 
 
 }

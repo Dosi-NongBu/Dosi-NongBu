@@ -44,7 +44,7 @@ public class UserController {
     public ProfileResponseDto user(@CookieValue(name = "User") String cookie, Model model){
         Long userId = UserCookie(cookie);
 
-        ProfileResponseDto dto = userService.findProfile(userId);
+        ProfileResponseDto dto = userService.viewProfile(userId);
 
         model.addAttribute("profile", dto);
         return dto;
@@ -64,7 +64,7 @@ public class UserController {
     public List<PlaceListResponseDto> placeList(@CookieValue(name = "User") String cookie, Model model){
         Long userId = UserCookie(cookie);
 
-        List<PlaceListResponseDto> responseDto = userService.findPlaceList(userId);
+        List<PlaceListResponseDto> responseDto = userService.viewPlaceList(userId);
 
         model.addAllAttributes(responseDto);
 
@@ -76,7 +76,7 @@ public class UserController {
     public Long createPlace(@CookieValue(name = "User") String cookie, @RequestBody PlaceSaveRequestDto requestDto){
         Long userId = UserCookie(cookie);
 
-        return userService.savePlace(userId, requestDto);
+        return userService.registerPlace(userId, requestDto);
     }
 
     //내 공간 삭제
@@ -88,10 +88,10 @@ public class UserController {
 
     //내가 쓴 글 목록 조회
     @GetMapping("/userposts")
-    public List<UserPostListResponseDto> userPostLists(@CookieValue(name = "User") String cookie, Pageable pageable, Model model){
+    public List<UserPostListResponseDto> userPostList(@CookieValue(name = "User") String cookie, Pageable pageable, Model model){
         Long userId = UserCookie(cookie);
 
-        return userService.findUserPostList(userId, pageable);
+        return userService.viewUserPostList(userId, pageable);
     }
 
 

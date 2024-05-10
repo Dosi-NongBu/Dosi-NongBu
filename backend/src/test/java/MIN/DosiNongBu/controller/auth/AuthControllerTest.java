@@ -5,7 +5,7 @@ import MIN.DosiNongBu.controller.auth.dto.LoginRequestDto;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.constant.ProviderType;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
-import MIN.DosiNongBu.domain.user.UserRepository;
+import MIN.DosiNongBu.repository.user.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

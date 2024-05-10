@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        log.info("권한이 필요한 요청");
+        log.info("로그인이 필요한 요청");
 
         String accessToken = request.getHeader("Authorization").substring(7);
 

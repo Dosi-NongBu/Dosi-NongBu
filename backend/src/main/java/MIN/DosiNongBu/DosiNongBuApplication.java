@@ -1,5 +1,6 @@
 package MIN.DosiNongBu;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -9,10 +10,17 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @EnableJpaAuditing
 @SpringBootApplication
+@Slf4j
 public class DosiNongBuApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DosiNongBuApplication.class, args);
+		log.trace("trace");
+		log.debug("debug");
+
+		log.info("info");
+		log.warn("warn");
+		log.error("error");
 	}
 
 

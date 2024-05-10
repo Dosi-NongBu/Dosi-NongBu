@@ -4,7 +4,7 @@ package MIN.DosiNongBu.auth.handler;
 import MIN.DosiNongBu.auth.dto.JwtRequestDto;
 import MIN.DosiNongBu.auth.jwt.JwtUtil;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
-import MIN.DosiNongBu.domain.user.UserRepository;
+import MIN.DosiNongBu.repository.user.UserRepository;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;

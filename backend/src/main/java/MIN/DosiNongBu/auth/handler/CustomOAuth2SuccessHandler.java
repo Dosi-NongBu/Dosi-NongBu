@@ -64,7 +64,6 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         response.addCookie(cookie);
 
         response.addHeader("Authorization", "Bearer " + accessToken);
-
         response.sendRedirect("/");
     }
 }

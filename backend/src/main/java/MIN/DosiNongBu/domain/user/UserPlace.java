@@ -29,19 +29,19 @@ public class UserPlace {
     private String name;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "placeType", nullable = false)
+    @Column(name = "place", nullable = false)
     private PlaceType place;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "directionType", nullable = false)
+    @Column(name = "direction", nullable = false)
     private DirectionType direction;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "lightType", nullable = false)
+    @Column(name = "light", nullable = false)
     private LightType light;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "Quantity", nullable = false)
+    @Column(name = "quantity", nullable = false)
     private QuantityType quantity;
 
     @Builder
@@ -53,8 +53,9 @@ public class UserPlace {
         this.quantity = quantity;
     }
 
+
     public void setUser(User user) {
-        if(user.getUserPlaces().size() <= 10){
+        if(user.getUserPlaces().size() < 10){
             this.user = user;
             user.getUserPlaces().add(this);
         }
