@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.auth.dto;
 
 import MIN.DosiNongBu.domain.user.User;
@@ -26,9 +27,11 @@ public class OAuthAttributes {
         this.profileImage = profileImage;
     }
 
-    /* OAuth 2.0 Provider 에 따라 링크
-    * 사용자 프로필에 대한 응답 포맷에 각자 다르기 때문에
     */
+/* OAuth 2.0 Provider 에 따라 링크
+    * 사용자 프로필에 대한 응답 포맷에 각자 다르기 때문에
+    *//*
+
     public static OAuthAttributes of(String registrationId, String nameAttributeKey, Map<String, Object> attributes){
         if("naver".equals(registrationId)){
             return ofNaver(nameAttributeKey, attributes);
@@ -69,3 +72,4 @@ public class OAuthAttributes {
     }
 }
 
+*/
