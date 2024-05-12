@@ -1,10 +1,8 @@
 package MIN.DosiNongBu.service.crop;
 
+import MIN.DosiNongBu.controller.crop.dto.request.UserCropSaveRequestDto;
 import MIN.DosiNongBu.controller.crop.dto.response.*;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -26,6 +24,6 @@ public interface CropService {
     CropInfoResponseDto viewCropInfo(Long cropId);
 
     // 작물 키우기
-    CropManageResponseDto viewCropManage(Long cropId);
+    void registerUserCrop(UserCropSaveRequestDto requestDto);
 
 }

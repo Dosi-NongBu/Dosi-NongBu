@@ -1,8 +1,11 @@
 package MIN.DosiNongBu.service.crop;
 
+import MIN.DosiNongBu.controller.crop.dto.request.UserCropSaveRequestDto;
 import MIN.DosiNongBu.controller.crop.dto.response.*;
 import MIN.DosiNongBu.domain.crop.Crop;
 import MIN.DosiNongBu.domain.crop.CropInformation;
+import MIN.DosiNongBu.domain.crop.CropManage;
+import MIN.DosiNongBu.domain.crop.CropPeriod;
 import MIN.DosiNongBu.repository.crop.CropInformationRepository;
 import MIN.DosiNongBu.repository.crop.CropManageRepository;
 import MIN.DosiNongBu.repository.crop.CropPeriodRepository;
@@ -38,6 +41,9 @@ public class CropServiceImpl implements CropService{
         int month = LocalDate.now().getMonthValue();
         Page<Crop> entity = cropRepository.findByMonth(month, pageable);
 
+        if (entity == null || entity.isEmpty())
+            throw new IllegalArgumentException("추천 작물이 없습니다.");
+
         return entity.stream().map(CropListResponseDto::new).toList();
     }
 
@@ -46,27 +52,45 @@ public class CropServiceImpl implements CropService{
     public List<CropListResponseDto> viewCropSearchList(String keyword, Pageable pageable) {
         Page<Crop> entity = cropRepository.findByNameContaining(keyword, pageable);
 
+        if (entity == null || entity.isEmpty())
+            throw new IllegalArgumentException("검색 작물이 없습니다.");
+
         return entity.stream().map(CropListResponseDto::new).toList();
     }
 
     // 작물 기본 정보
     @Override
     public CropMainResponseDto viewCropMain(Long cropId) {
-        CropInformation entity = cropInformationRepository.findById(cropId)
+        // 작물 기본 정보 조회
+        Crop cropEntity = cropRepository.findById(cropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
 
-        return null;
+        // 작물 권장 관리 주기 조회
+/*        List<CropPeriod> periodEntity = cropPeriodRepository.findById(cropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));*/
+
+        return new CropMainResponseDto(cropEntity);
     }
 
     // 작물 상세 정보 및 관리법
     @Override
     public CropInfoResponseDto viewCropInfo(Long cropId) {
-        return null;
+        // 작물 상세정보, 관리법은 같이 조회될 가능성이 높으므로 같이 조회
+        // 작물 상세정보
+        CropInformation infoEntity = cropInformationRepository.findById(cropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
+
+        // 작물 관리법
+        CropManage manageEntity = cropManageRepository.findById(cropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
+
+        return new CropInfoResponseDto(infoEntity, manageEntity);
     }
 
     // 작물 키우기
     @Override
-    public CropManageResponseDto viewCropManage(Long cropId) {
-        return null;
+    public void registerUserCrop(UserCropSaveRequestDto requestDto) {
+
+
     }
 }
