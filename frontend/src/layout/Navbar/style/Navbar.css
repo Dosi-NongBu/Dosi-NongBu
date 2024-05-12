@@ -1,0 +1,173 @@
+.navbar-container {
+  padding: 20px 50px 20px 50px;
+  display: flex;
+  gap: 50px;
+  /* justify-content: space-between; */
+
+  border-bottom: 1px solid #dadada;
+}
+
+.navItem {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.navItem-container {
+  display: flex;
+  gap: 200px;
+}
+
+.each-navItem {
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+  align-items: center;
+}
+
+.each-navItem2 {
+  display: flex;
+  justify-content: space-between;
+  gap: 50px;
+  align-items: center;
+}
+
+.navbar .title {
+  font-size: 2em;
+  font-weight: bold;
+  color: #667c6b;
+}
+
+.alarm-bell {
+  position: relative;
+}
+
+.bell {
+  position: absolute;
+  bottom: 15px;
+  left: 15px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 1rem;
+  height: 1rem;
+
+  font-size: 0.5rem;
+  font-weight: bold;
+  color: #ffffff;
+
+  background-color: #d36262;
+
+  border: 2px solid #ffffff;
+  border-radius: 9999px;
+}
+
+.navbar {
+  display: flex;
+  flex-direction: column;
+}
+
+.menu-container {
+  cursor: pointer;
+  position: relative;
+}
+
+.lower-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: -50px;
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  width: 120px;
+  height: 120px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.lower-menu-item {
+  font-size: 1em;
+  margin: 10px;
+}
+
+.menu-container:hover .lower-menu {
+  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.menu-name {
+  text-decoration: none;
+  color: gray;
+}
+
+.menu-container:hover .menu-name {
+  color: black;
+  font-weight: bold;
+}
+
+.lower-menu-name {
+  color: black;
+  text-decoration: none;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    background-color: #c8e8cf;
+    border: 0.2px solid black;
+    border-radius: 5px;
+  }
+
+  .navItem-container {
+    display: none;
+  }
+
+  .each-navItem {
+    display: none;
+  }
+
+  .each-navItem2 {
+    display: none;
+  }
+
+  .mobile-menu-on {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    background-color: white;
+    position: fixed;
+    right: 20px;
+    top: 80px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-decoration: none;
+  }
+
+  .mobile a {
+    text-decoration: none;
+    color: black;
+  }
+}
