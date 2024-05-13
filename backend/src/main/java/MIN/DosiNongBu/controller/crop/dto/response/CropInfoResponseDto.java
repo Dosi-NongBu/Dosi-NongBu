@@ -1,8 +1,7 @@
 package MIN.DosiNongBu.controller.crop.dto.response;
 
-import MIN.DosiNongBu.domain.crop.Crop;
 import MIN.DosiNongBu.domain.crop.CropInformation;
-import MIN.DosiNongBu.domain.crop.CropManage;
+import MIN.DosiNongBu.domain.crop.CropManagement;
 import lombok.Getter;
 
 @Getter
@@ -17,7 +16,7 @@ public class CropInfoResponseDto {
     private String tip;
     private String harvest_manage;
 
-    public CropInfoResponseDto(CropInformation infoEntity, CropManage manageEntity) {
+    public CropInfoResponseDto(CropInformation infoEntity, CropManagement manageEntity) {
         this.classification = infoEntity.getClassification();
         this.origin = infoEntity.getOrigin();
         this.feature = infoEntity.getFeature();

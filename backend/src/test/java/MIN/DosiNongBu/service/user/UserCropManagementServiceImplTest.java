@@ -24,7 +24,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Slf4j
 @SpringBootTest
 @Transactional
-class UserCropManageServiceImplTest {
+class UserCropManagementServiceImplTest {
 
     @Autowired UserService userService;
     @Autowired UserCropManageService userCropManageService;
@@ -66,7 +66,7 @@ class UserCropManageServiceImplTest {
                 .name("상추")
                 .nickname("테스트")
                 .period(4)
-                .perPeriod(3)
+                .prePeriod(3)
                 .maxTemperature(15)
                 .minTemperature(25)
                 .humidity(50)

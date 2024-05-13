@@ -4,12 +4,16 @@ import MIN.DosiNongBu.controller.crop.dto.request.UserCropSaveRequestDto;
 import MIN.DosiNongBu.controller.crop.dto.response.*;
 import MIN.DosiNongBu.domain.crop.Crop;
 import MIN.DosiNongBu.domain.crop.CropInformation;
-import MIN.DosiNongBu.domain.crop.CropManage;
-import MIN.DosiNongBu.domain.crop.CropPeriod;
+import MIN.DosiNongBu.domain.crop.CropManagement;
+import MIN.DosiNongBu.domain.user.User;
+import MIN.DosiNongBu.domain.user.UserCrop;
+import MIN.DosiNongBu.domain.user.UserPlace;
 import MIN.DosiNongBu.repository.crop.CropInformationRepository;
 import MIN.DosiNongBu.repository.crop.CropManageRepository;
-import MIN.DosiNongBu.repository.crop.CropPeriodRepository;
 import MIN.DosiNongBu.repository.crop.CropRepository;
+import MIN.DosiNongBu.repository.user.UserCropRepository;
+import MIN.DosiNongBu.repository.user.UserPlaceRepository;
+import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,10 +26,13 @@ import java.util.List;
 @RequiredArgsConstructor
 public class CropServiceImpl implements CropService{
 
+    private final UserRepository userRepository;
+    private final UserPlaceRepository userPlaceRepository;
+    private final UserCropRepository userCropRepository;
+
     private final CropRepository cropRepository;
     private final CropInformationRepository cropInformationRepository;
     private final CropManageRepository cropManageRepository;
-    private final CropPeriodRepository cropPeriodRepository;
 
     // 작물 목록 조회
     @Override
@@ -58,16 +65,12 @@ public class CropServiceImpl implements CropService{
         return entity.stream().map(CropListResponseDto::new).toList();
     }
 
-    // 작물 기본 정보
+    // 작물 기본 정보, 권장 주기
     @Override
     public CropMainResponseDto viewCropMain(Long cropId) {
         // 작물 기본 정보 조회
         Crop cropEntity = cropRepository.findById(cropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
-
-        // 작물 권장 관리 주기 조회
-/*        List<CropPeriod> periodEntity = cropPeriodRepository.findById(cropId)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));*/
 
         return new CropMainResponseDto(cropEntity);
     }
@@ -81,7 +84,7 @@ public class CropServiceImpl implements CropService{
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
 
         // 작물 관리법
-        CropManage manageEntity = cropManageRepository.findById(cropId)
+        CropManagement manageEntity = cropManageRepository.findById(cropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
 
         return new CropInfoResponseDto(infoEntity, manageEntity);
@@ -89,8 +92,20 @@ public class CropServiceImpl implements CropService{
 
     // 작물 키우기
     @Override
-    public void registerUserCrop(UserCropSaveRequestDto requestDto) {
+    public Long registerUserCrop(Long userId, UserCropSaveRequestDto requestDto) {
+        UserCrop userCrop = requestDto.toEntity();
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
+
+        UserPlace userPlace = userPlaceRepository.findById(requestDto.getUserPlaceId())
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 공간입니다. userPlaceId=" + requestDto.getUserPlaceId()));
 
 
+        userCrop.setUser(user);
+        userCrop.setUserPlace(userPlace);
+        userCropRepository.save(userCrop);
+
+        return userCrop.getUserCropId();
     }
 }

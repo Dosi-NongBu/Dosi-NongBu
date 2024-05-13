@@ -14,7 +14,7 @@ import org.hibernate.mapping.Join;
 @Table(name = "CROPS_PERIODS")
 public class CropPeriod {
     /* PK */
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "crop_period_id")
     private Long cropPeriodId;
 

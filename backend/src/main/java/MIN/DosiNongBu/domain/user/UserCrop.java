@@ -31,7 +31,7 @@ public class UserCrop {
     private User user;
 
     /* 속성 */
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "nickname")
@@ -45,7 +45,7 @@ public class UserCrop {
     private Integer period;
 
     @Column(name = "previous_period")
-    private Integer perPeriod;
+    private Integer prePeriod;
 
     @Column(name = "max_temperature")
     private Integer maxTemperature;
@@ -62,12 +62,12 @@ public class UserCrop {
     private List<String> imageUrls = new ArrayList<>();
 
     @Builder
-    public UserCrop(String name, String nickname, LocalDateTime startDate, Integer period, Integer perPeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
+    public UserCrop(String name, String nickname, LocalDateTime startDate, Integer period, Integer prePeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
         this.name = name;
         this.nickname = nickname;
         this.startDate = startDate;
         this.period = period;
-        this.perPeriod = perPeriod;
+        this.prePeriod = prePeriod;
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.humidity = humidity;

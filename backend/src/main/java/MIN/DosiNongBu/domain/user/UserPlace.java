@@ -53,7 +53,6 @@ public class UserPlace {
         this.quantity = quantity;
     }
 
-
     public void setUser(User user) {
         if(user.getUserPlaces().size() < 10){
             this.user = user;

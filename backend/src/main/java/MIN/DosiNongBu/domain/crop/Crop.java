@@ -24,10 +24,10 @@ public class Crop {
     private CropInformation cropInformation;
 
     @OneToOne(mappedBy = "crop")
-    private CropManage cropManage;
+    private CropManagement cropManagement;
 
     @OneToMany(mappedBy = "crop", fetch = FetchType.LAZY)
-    private List<CropPeriod> cropPeriod;
+    private List<CropPeriod> cropPeriod= new ArrayList<>();
 
     /* 속성 */
     @Column(name = "name")

@@ -24,6 +24,6 @@ public interface CropService {
     CropInfoResponseDto viewCropInfo(Long cropId);
 
     // 작물 키우기
-    void registerUserCrop(UserCropSaveRequestDto requestDto);
+    Long registerUserCrop(Long userId, UserCropSaveRequestDto requestDto);
 
 }
