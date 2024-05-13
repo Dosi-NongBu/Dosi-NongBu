@@ -1,5 +1,6 @@
 package MIN.DosiNongBu.domain.user;
 
+import MIN.DosiNongBu.domain.crop.Crop;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -30,8 +31,12 @@ public class UserCrop {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
+/*    @JoinColumn(name = "crop_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Crop crop;*/
+
     /* 속성 */
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "nickname")
@@ -45,7 +50,7 @@ public class UserCrop {
     private Integer period;
 
     @Column(name = "previous_period")
-    private Integer perPeriod;
+    private Integer prePeriod;
 
     @Column(name = "max_temperature")
     private Integer maxTemperature;
@@ -62,12 +67,12 @@ public class UserCrop {
     private List<String> imageUrls = new ArrayList<>();
 
     @Builder
-    public UserCrop(String name, String nickname, LocalDateTime startDate, Integer period, Integer perPeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
+    public UserCrop(String name, String nickname, LocalDateTime startDate, Integer period, Integer prePeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
         this.name = name;
         this.nickname = nickname;
         this.startDate = startDate;
         this.period = period;
-        this.perPeriod = perPeriod;
+        this.prePeriod = prePeriod;
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.humidity = humidity;

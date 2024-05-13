@@ -44,10 +44,7 @@ public class UserController {
     public ProfileResponseDto user(@CookieValue(name = "User") String cookie, Model model){
         Long userId = UserCookie(cookie);
 
-        ProfileResponseDto dto = userService.viewProfile(userId);
-
-        model.addAttribute("profile", dto);
-        return dto;
+        return userService.viewProfile(userId);
     }
 
     //프로필 정보 수정
@@ -64,11 +61,7 @@ public class UserController {
     public List<PlaceListResponseDto> placeList(@CookieValue(name = "User") String cookie, Model model){
         Long userId = UserCookie(cookie);
 
-        List<PlaceListResponseDto> responseDto = userService.viewPlaceList(userId);
-
-        model.addAllAttributes(responseDto);
-
-        return responseDto;
+        return userService.viewPlaceList(userId);
     }
 
     //내 공간 추가
@@ -83,6 +76,7 @@ public class UserController {
     @DeleteMapping("/userplaces/{placeId}")
     public ResponseEntity<?> deletePlace(@PathVariable Long placeId){
         userService.deletePlace(placeId);
+
         return ResponseEntity.ok("User Place Delete Success");
     }
 

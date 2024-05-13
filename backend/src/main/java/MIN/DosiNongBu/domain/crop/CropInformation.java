@@ -28,6 +28,7 @@ public class CropInformation {
     @Column(name = "origin")
     private String origin;
 
+    @Lob
     @Column(name = "feature")
     private String feature;
 

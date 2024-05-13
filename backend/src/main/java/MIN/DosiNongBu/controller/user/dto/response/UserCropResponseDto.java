@@ -26,7 +26,7 @@ public class UserCropResponseDto {
         this.imageUrls = entity.getImageUrls();
         this.startDate = entity.getStartDate();
         this.period = entity.getPeriod();
-        this.prePeriod = entity.getPerPeriod();
+        this.prePeriod = entity.getPrePeriod();
         this.maxTemperature = entity.getMaxTemperature();
         this.minTemperature = entity.getMinTemperature();
         this.humidity = entity.getHumidity();
