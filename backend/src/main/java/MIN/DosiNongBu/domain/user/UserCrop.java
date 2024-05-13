@@ -1,5 +1,6 @@
 package MIN.DosiNongBu.domain.user;
 
+import MIN.DosiNongBu.domain.crop.Crop;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,6 +30,10 @@ public class UserCrop {
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+
+/*    @JoinColumn(name = "crop_id")
+    @OneToOne(fetch = FetchType.LAZY)
+    private Crop crop;*/
 
     /* 속성 */
     @Column(name = "name", nullable = false)
