@@ -1,0 +1,56 @@
+.selectContainer {
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #9eb0a2;
+
+  padding: 20px;
+}
+
+.header-container h3 {
+  color: white;
+}
+
+.header-container h1 {
+  font-size: 3em;
+  color: #3b4a3f;
+}
+.select-container {
+  display: flex;
+  justify-content: center;
+  margin: 50px;
+  gap: 50px;
+}
+
+.select {
+  width: 300px;
+  height: 300px;
+
+  background-color: #c8e8cf;
+  border-radius: 20px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  border: none;
+}
+
+.button-container-text {
+  text-align: center;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .select {
+    width: 100px;
+    height: 100px;
+  }
+}

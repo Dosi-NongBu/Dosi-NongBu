@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineBell } from "react-icons/ai";
 import { CiMenuBurger } from "react-icons/ci";
 import { useDispatch, useSelector } from "react-redux";
@@ -48,11 +48,16 @@ const notLoggedIn = [
 const loggedIn = [{ to: "/myPage", name: "마이페이지" }];
 
 const Navbar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.user?.isAuth);
   const [bell, setBell] = useState(5);
   const [menu, setMenu] = useState(false);
+
+  useEffect(() => {
+    setMenu(false);
+  }, [location]);
 
   const handleToggleMenu = () => {
     setMenu(!menu);
@@ -76,7 +81,14 @@ const Navbar = () => {
     <section className="navbar">
       <div className="navbar-container">
         <div className="navItem">
-          <div className="title">도시농부</div>
+          <div
+            className="title"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            도시농부
+          </div>
 
           <button className="mobile-menu-button" onClick={handleToggleMenu}>
             <CiMenuBurger />

@@ -1,0 +1,12 @@
+.cropBoxArea {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+}
+
+@media (max-width: 768px) {
+  .cropBoxArea {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}

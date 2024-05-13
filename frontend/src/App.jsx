@@ -10,8 +10,8 @@ import LoginPage from "./pages/LandingPage/LoginPage";
 import RegisterPage from "./pages/LandingPage/RegisterPage";
 import NotAuthRoutes from "./layout/NotAuthRoutes";
 import ProtectedRoutes from "./layout/ProtectedRoutes";
-// import SearchCropPage from "./pages/NewCropPage/SearchCropPage";
-// import CropDetailPage from "./pages/NewCropPage/CropDetailPage";
+import SearchCropPage from "./pages/NewCropPage/SearchCropPage";
+import CropDetailPage from "./pages/NewCropPage/CropDetailPage";
 // import MyPage from "./pages/MyPage/MyPage";
 // import MyCropPage from "./pages/MyCropPage/MyCropPage";
 // import MyCropDetailPage from "./pages/MyCropPage/MyCropDetailPage";
@@ -42,9 +42,9 @@ function App() {
           <Route index element={<LandingPage />} />
 
           {/* 공통 */}
-          {/* <Route path="/searchCrop" element={<SearchCropPage />} />
+          <Route path="/searchCrop" element={<SearchCropPage />} />
           <Route path="/searchCrop/:cropId" element={<CropDetailPage />} />
-          <Route path="/community" element={<CommunityPage />} />
+          {/* <Route path="/community" element={<CommunityPage />} />
           <Route
             path="/questionCommunity"
             element={<QuestionCommunityPage />}
