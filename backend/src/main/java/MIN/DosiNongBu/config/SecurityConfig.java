@@ -1,8 +1,6 @@
 package MIN.DosiNongBu.config;
 
-import MIN.DosiNongBu.auth.CustomOAuth2UserService;
 import MIN.DosiNongBu.auth.filter.JwtAuthenticationFilter;
-import MIN.DosiNongBu.auth.handler.CustomOAuth2SuccessHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,9 +17,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class SecurityConfig {
 
-    private final CustomOAuth2UserService customOAuth2UserService;
-    private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
-
+    //private final CustomOAuth2UserService customOAuth2UserService;
+    //private final CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
     //private final CustomAuthSuccessHandler customAuthSuccessHandler;
 
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
@@ -53,11 +50,11 @@ public class SecurityConfig {
 
 
                 // oauth2 로그인 기능에 대한 설정 진입점
-                .oauth2Login(oAuth2LoginConfigurer ->
+/*                .oauth2Login(oAuth2LoginConfigurer ->
                         // oauth2 로그인 성공 이후 사용자 정보 가져오기
                         oAuth2LoginConfigurer
                                 .successHandler(customOAuth2SuccessHandler)
-                                .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService)))
+                                .userInfoEndpoint(userInfoEndpointConfig -> userInfoEndpointConfig.userService(customOAuth2UserService)))*/
 
                 // JWT 필터 설정
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

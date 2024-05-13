@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.auth;
 
 import MIN.DosiNongBu.auth.dto.OAuthAttributes;
@@ -24,8 +25,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     private final UserRepository userRepository;
     private final HttpServletResponse response;
 
-    /* 사용자가 로그인 했을 때 정보 가져오기
     */
+/* 사용자가 로그인 했을 때 정보 가져오기
+    *//*
+
     @Override
     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
         OAuth2UserService<OAuth2UserRequest, OAuth2User> oAuth2UserServices = new DefaultOAuth2UserService();
@@ -34,9 +37,11 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         // 로그인 플랫폼 구분 Id
         String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-        /* OAuth 2.0 공급자의 설정에서 사용자 식별자를 가져오는 부분
-        * Google : sub, Naver : response
         */
+/* OAuth 2.0 공급자의 설정에서 사용자 식별자를 가져오는 부분
+        * Google : sub, Naver : response
+        *//*
+
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
         // User 에 저장 할 수 있도록 변환
@@ -66,3 +71,4 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 }
 
 
+*/

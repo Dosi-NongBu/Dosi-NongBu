@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.auth.handler;
 
 import MIN.DosiNongBu.auth.dto.JwtRequestDto;
@@ -17,10 +18,12 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.Map;
 
+*/
 /*
  * 소셜 로그인 성공
  * 토큰 생성
- * */
+ * *//*
+
 @Component
 @RequiredArgsConstructor
 public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler {
@@ -64,6 +67,12 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
         response.addCookie(cookie);
 
         response.addHeader("Authorization", "Bearer " + accessToken);
+<<<<<<< HEAD
         response.sendRedirect("/");
+=======
+
+        response.sendRedirect("http://localhost:5173/");
+>>>>>>> Create_Crop2
     }
 }
+*/

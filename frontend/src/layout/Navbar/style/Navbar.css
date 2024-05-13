@@ -1,15 +1,21 @@
 .navbar-container {
   padding: 20px 50px 20px 50px;
   display: flex;
-  justify-content: space-between;
-
+  gap: 50px;
+  /* justify-content: space-between; */
   border-bottom: 1px solid #dadada;
 }
 
 .navItem {
   display: flex;
-  justify-content: space-between;
+
+  justify-content: space-around;
   width: 100%;
+}
+
+.navItem-container {
+  display: flex;
+  gap: 200px;
 }
 
 .each-navItem {
@@ -107,4 +113,61 @@
 .lower-menu-name {
   color: black;
   text-decoration: none;
+}
+
+.mobile-menu-button {
+  display: none;
+}
+
+.mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mobile-menu-button {
+    display: block;
+    position: absolute;
+    right: 30px;
+    top: 30px;
+    background-color: #c8e8cf;
+    border: 0.2px solid black;
+    border-radius: 5px;
+  }
+
+  .navItem-container {
+    display: none;
+  }
+
+  .each-navItem {
+    display: none;
+  }
+
+  .each-navItem2 {
+    display: none;
+  }
+
+  .mobile-menu-on {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    background-color: white;
+    position: absolute;
+    right: 20px;
+    top: 80px;
+    padding: 20px;
+    border: 1px solid black;
+    border-radius: 10px;
+  }
+
+  .mobile {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-decoration: none;
+  }
+
+  .mobile a {
+    text-decoration: none;
+    color: black;
+  }
 }

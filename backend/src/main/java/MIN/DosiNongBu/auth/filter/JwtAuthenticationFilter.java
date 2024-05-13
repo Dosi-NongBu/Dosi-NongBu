@@ -33,7 +33,6 @@ import java.util.List;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
     private final UserAuthService userAuthService;
-    private final UserDetailsService userDetailsService;
 
     @Value("${jwt.active.url}")
     List<String> activeToken;

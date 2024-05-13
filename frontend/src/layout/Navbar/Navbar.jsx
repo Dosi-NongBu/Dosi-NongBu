@@ -1,7 +1,11 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AiOutlineBell } from "react-icons/ai";
+import { CiMenuBurger } from "react-icons/ci";
+import { useDispatch, useSelector } from "react-redux";
+
+import { logoutUser } from "../../store/thunkFunctions";
 
 import "./style/Navbar.css";
 
@@ -38,26 +42,90 @@ const common = [
 
 const notLoggedIn = [
   { to: "/login", name: "로그인", isMore: false },
-  { to: "/login", name: "회원가입", isMore: false },
+  { to: "/register", name: "회원가입", isMore: false },
 ];
 
 const loggedIn = [{ to: "/myPage", name: "마이페이지" }];
 
 const Navbar = () => {
+  const location = useLocation();
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(false);
+  const dispatch = useDispatch();
+  const isAuth = useSelector((state) => state.user?.isAuth);
   const [bell, setBell] = useState(5);
+  const [menu, setMenu] = useState(false);
+
+  useEffect(() => {
+    setMenu(false);
+  }, [location]);
+
+  const handleToggleMenu = () => {
+    setMenu(!menu);
+  };
 
   const handleBellClick = () => {
     setBell(0);
     navigate("/myPage");
   };
 
+  const handleLogout = () => {
+    const body = {
+      title: "none",
+      content: "none",
+    };
+    alert("로그아웃 되었습니다.");
+    dispatch(logoutUser(body));
+  };
+
   return (
     <section className="navbar">
       <div className="navbar-container">
         <div className="navItem">
-          <div className="title">도시농부</div>
+          <div
+            className="title"
+            onClick={() => {
+              navigate("/");
+            }}
+          >
+            도시농부
+          </div>
+
+          <button className="mobile-menu-button" onClick={handleToggleMenu}>
+            <CiMenuBurger />
+          </button>
+
+          <div className={`navItem-container ${menu ? "mobile-menu-on" : ""}`}>
+            <div className="mobile">
+              <>
+                <Link to={"/myCrop"}>내 텃밭 관리</Link>
+                <Link to={"/searchCrop"}>새 텃밭 생성</Link>
+                <Link to={"/community"}>자유게시판</Link>
+                <Link to={"/questionCommunity"}>질문게시판</Link>
+                <Link to={"/faq"}>FAQ</Link>
+                <Link to={"/request"}>1:1 문의</Link>
+                <Link to={"/notine"}>공지사항</Link>
+              </>
+              {isAuth && (
+                <>
+                  <Link to={"/myPage"}>마이페이지</Link>
+                  <Link to={"/"} onClick={handleLogout}>
+                    로그아웃
+                  </Link>
+                  <div className="alarm-bell" onClick={handleBellClick}>
+                    <AiOutlineBell />
+                    <span className="bell">{bell}</span>
+                  </div>
+                </>
+              )}
+              {!isAuth && (
+                <>
+                  <Link to={"/login"}>로그인</Link>
+                  <Link to={"/register"}>회원가입</Link>
+                </>
+              )}
+            </div>
+          </div>
+
           <div className="each-navItem">
             {common.map(({ to, name, isMore, lowerMenu }) => (
               <div key={name} className="menu-container">
@@ -99,6 +167,13 @@ const Navbar = () => {
                   </Link>
                 </div>
               ))}
+              {
+                <div className="each-navItem">
+                  <Link to={"/"} className="menu-name" onClick={handleLogout}>
+                    {"로그아웃"}
+                  </Link>
+                </div>
+              }
               {
                 <div className="alarm-bell" onClick={handleBellClick}>
                   <AiOutlineBell />
