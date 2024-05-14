@@ -1,6 +1,12 @@
 package MIN.DosiNongBu.service.user;
 
+import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropImageUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropManageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropManageListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropResponseDto;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.UserCrop;
@@ -35,5 +41,49 @@ public class UserCropManageServiceImpl implements UserCropManageService{
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
 
         return new UserCropResponseDto(entity);
+    }
+
+    // 내 작물 알림 조회
+    @Override
+    public UserCropAlarmResponseDto viewUserCropAlarm() {
+
+
+        return null;
+    }
+
+    // 내 작물 알림 수정
+    @Override
+    public UserCropAlarmUpdateRequestDto updateUserCropAlarm() {
+        return null;
+    }
+
+    // 내 작물 관리 목록 조회
+    @Override
+    public List<UserCropManageListResponseDto> viewUserCropManageList() {
+        return List.of();
+    }
+
+    // 내 작물 관리 추가
+    @Override
+    public UserCropManageSaveRequestDto registerUserCropManage() {
+        return null;
+    }
+
+    // 내 작물 관리 삭제
+    @Override
+    public void deleteUserCropManage() {
+
+    }
+
+    // 내 작물 사진 추가
+    @Override
+    public UserCropImageSaveRequestDto registerUserCropImage() {
+        return null;
+    }
+
+    // 내 작물 사진 수정
+    @Override
+    public UserCropImageUpdateRequestDto updateUserCropImage() {
+        return null;
     }
 }

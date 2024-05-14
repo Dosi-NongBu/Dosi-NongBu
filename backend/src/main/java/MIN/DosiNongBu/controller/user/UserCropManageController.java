@@ -40,10 +40,9 @@ public class UserCropManageController {
 
     //내 작물 조회
     @GetMapping("/usercrops/{userCropId}")
-    public void userCrop(@PathVariable Long userCropId, Model model) {
-        UserCropResponseDto responseDto = userCropManageService.viewUserCrop(userCropId);
+    public UserCropResponseDto userCrop(@PathVariable Long userCropId) {
 
-        model.addAttribute("userCrop", responseDto);
+        return userCropManageService.viewUserCrop(userCropId);
     }
 
     // 내 작물 알림 조회
@@ -82,7 +81,7 @@ public class UserCropManageController {
 
     }
 
-    // 내 작물 사진 삭제
+    // 내 작물 사진 수정
     @DeleteMapping("/images/{userCropId}")
     public void deleteUserCropImage(@PathVariable Long userCropId) {
 
