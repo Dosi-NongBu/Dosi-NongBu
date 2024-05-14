@@ -31,9 +31,16 @@ public class UserCrop {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-/*    @JoinColumn(name = "crop_id")
+    @JoinColumn(name = "crop_id")
     @OneToOne(fetch = FetchType.LAZY)
-    private Crop crop;*/
+    private Crop crop;
+
+    /* 연관 */
+    @OneToMany(mappedBy = "userCrop", fetch = FetchType.LAZY)
+    private List<UserCropLog> userCropLogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userCrop", fetch = FetchType.LAZY)
+    private List<UserCropAlarm> userCropAlarms = new ArrayList<>();
 
     /* 속성 */
     @Column(name = "name", nullable = false)

@@ -20,16 +20,16 @@ public interface UserCropManageService {
     UserCropResponseDto viewUserCrop(Long userCropId);
 
     //내 작물 알림 조회
-    UserCropAlarmResponseDto viewUserCropAlarm();
+    UserCropAlarmResponseDto viewUserCropAlarm(Long userCropId);
 
     //내 작물 알림 수정
-    UserCropAlarmUpdateRequestDto updateUserCropAlarm();
+    void updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto);
 
     //내 작물 관리 목로 조회
-    List<UserCropManageListResponseDto> viewUserCropManageList();
+    List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId);
 
     //내 작물 관리 추가
-    UserCropManageSaveRequestDto registerUserCropManage();
+    void registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto);
 
     //내 작물 관리 삭제
     void deleteUserCropManage();

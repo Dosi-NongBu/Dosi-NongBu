@@ -8,8 +8,13 @@ import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropManageListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropResponseDto;
+import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.UserCrop;
+import MIN.DosiNongBu.domain.user.UserCropAlarm;
+import MIN.DosiNongBu.domain.user.UserCropLog;
+import MIN.DosiNongBu.repository.user.UserCropAlarmRepository;
+import MIN.DosiNongBu.repository.user.UserCropLogRepository;
 import MIN.DosiNongBu.repository.user.UserCropRepository;
 import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +28,8 @@ public class UserCropManageServiceImpl implements UserCropManageService{
 
     private final UserRepository userRepository;
     private final UserCropRepository userCropRepository;
+    private final UserCropAlarmRepository userCropAlarmRepository;
+    private final UserCropLogRepository userCropLogRepository;
 
     // 내 작물 목록 조회
     @Override
@@ -45,28 +52,58 @@ public class UserCropManageServiceImpl implements UserCropManageService{
 
     // 내 작물 알림 조회
     @Override
-    public UserCropAlarmResponseDto viewUserCropAlarm() {
+    public UserCropAlarmResponseDto viewUserCropAlarm(Long userCropId) {
+        UserCrop entity = userCropRepository.findById(userCropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
 
-
-        return null;
+        return new UserCropAlarmResponseDto(entity);
     }
 
     // 내 작물 알림 수정
     @Override
-    public UserCropAlarmUpdateRequestDto updateUserCropAlarm() {
-        return null;
+    public void updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto) {
+        UserCrop userCrop = userCropRepository.findById(userCropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
+
+        List<UserCropAlarm> userCropAlarms = userCrop.getUserCropAlarms();
+
+        for(UserCropAlarm userCropAlarm : userCropAlarms){
+            if (userCropAlarm.getManage() == CropManageType.WATER) {
+                userCropAlarm.update(requestDto.getIsWaterAlarm(), requestDto.getWater());
+                continue;
+            } else if (userCropAlarm.getManage() == CropManageType.VENTILATION) {
+                userCropAlarm.update(requestDto.getIsVentilationAlarm(), requestDto.getVentilation());
+                continue;
+            } else if (userCropAlarm.getManage() == CropManageType.REPOT) {
+                userCropAlarm.update(requestDto.getIsRepotAlarm(), requestDto.getRepot());
+                continue;
+            } else if (userCropAlarm.getManage() == CropManageType.PRUNING) {
+                userCropAlarm.update(requestDto.getIsPruningAlarm(), requestDto.getPruning());
+            }
+        }
     }
 
     // 내 작물 관리 목록 조회
     @Override
-    public List<UserCropManageListResponseDto> viewUserCropManageList() {
-        return List.of();
+    public List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId) {
+        UserCrop entity = userCropRepository.findById(userCropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
+
+        List<UserCropLog> userCropLogs = entity.getUserCropLogs();
+
+        return userCropLogs.stream().map(UserCropManageListResponseDto::new).toList();
     }
 
     // 내 작물 관리 추가
     @Override
-    public UserCropManageSaveRequestDto registerUserCropManage() {
-        return null;
+    public void registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto) {
+        UserCrop userCrop = userCropRepository.findById(userCropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
+
+        UserCropLog userCropLog = requestDto.toEntity();
+
+        userCropLog.setUserCrop(userCrop);
+        userCropLogRepository.save(userCropLog);
     }
 
     // 내 작물 관리 삭제
