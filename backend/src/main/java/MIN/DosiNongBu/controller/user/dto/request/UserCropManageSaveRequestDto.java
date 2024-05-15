@@ -13,18 +13,15 @@ import java.time.LocalDateTime;
 public class UserCropManageSaveRequestDto {
 
     private CropManageType manage;
-    private LocalDateTime manageDate;
 
     @Builder
-    public UserCropManageSaveRequestDto(CropManageType manage, LocalDateTime manageDate) {
+    public UserCropManageSaveRequestDto(CropManageType manage) {
         this.manage = manage;
-        this.manageDate = manageDate;
     }
 
     public UserCropLog toEntity() {
         return UserCropLog.builder()
                 .manage(this.manage)
-                .manageDate(this.manageDate)
                 .build();
     }
 }

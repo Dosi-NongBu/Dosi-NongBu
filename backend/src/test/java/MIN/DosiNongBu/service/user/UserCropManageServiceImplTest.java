@@ -1,6 +1,11 @@
 package MIN.DosiNongBu.service.user;
 
+import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropManageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropManageListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropResponseDto;
 import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.UserCrop;
@@ -15,6 +20,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,7 +30,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @Slf4j
 @SpringBootTest
 @Transactional
-class UserCropManagementServiceImplTest {
+class UserCropManageServiceImplTest {
 
     @Autowired UserService userService;
     @Autowired UserCropManageService userCropManageService;
@@ -119,6 +125,48 @@ class UserCropManagementServiceImplTest {
         assertThat(responseDto.getMaxTemperature()).isEqualTo(15);
         assertThat(responseDto.getMinTemperature()).isEqualTo(25);
         assertThat(responseDto.getHumidity()).isEqualTo(50);
+    }
+
+    //내 작물 알림 조회
+    //UserCropAlarmResponseDto viewUserCropAlarm(Long userCropId);
+    @Test
+    void 내_작물_알림_조회(){
+
+    }
+
+    //내 작물 알림 수정
+    //Long updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto);
+    @Test
+    void 내_작물_알림_수정() {
+
+    }
+
+    //내 작물 관리 목록 조회
+    //List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId, Pageable pageable);
+    @Test
+    void 내_작물_관리_목록_조회(){
+
+    }
+
+    //내 작물 관리 추가
+    //Long registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto);
+    @Test
+    void 내_작물_관리_추가(){
+
+    }
+
+    //내 작물 관리 삭제
+    //Long deleteUserCropManage(Long cropLogId);
+    @Test
+    void 내_작물_관리_삭제(){
+
+    }
+
+    //내 작물 사진 추가
+    //Long updateUserCropImage(Long userCropId, UserCropImageSaveRequestDto requestDto);
+    @Test
+    void 내_작물_사진_추가(){
+
     }
 
 }

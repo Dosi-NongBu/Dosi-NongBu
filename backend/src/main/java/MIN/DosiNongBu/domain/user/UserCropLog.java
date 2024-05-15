@@ -1,5 +1,6 @@
 package MIN.DosiNongBu.domain.user;
 
+import MIN.DosiNongBu.domain.BaseTimeEntity;
 import MIN.DosiNongBu.domain.crop.Crop;
 import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import jakarta.persistence.*;
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "USERS_CROPS_LOGS")
-public class UserCropLog {
+public class UserCropLog extends BaseTimeEntity {
     /* PK */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "crop_log_id")
@@ -30,14 +31,9 @@ public class UserCropLog {
     @Column(name = "manage")
     private CropManageType manage;
 
-    @CreatedDate
-    @Column(name = "manage_date")
-    private LocalDateTime manageDate;
-
     @Builder
-    public UserCropLog(CropManageType manage, LocalDateTime manageDate) {
+    public UserCropLog(CropManageType manage) {
         this.manage = manage;
-        this.manageDate = manageDate;
     }
 
     public void setUserCrop(UserCrop userCrop) {

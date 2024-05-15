@@ -18,7 +18,11 @@ import MIN.DosiNongBu.repository.user.UserCropLogRepository;
 import MIN.DosiNongBu.repository.user.UserCropRepository;
 import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -61,7 +65,8 @@ public class UserCropManageServiceImpl implements UserCropManageService{
 
     // 내 작물 알림 수정
     @Override
-    public void updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto) {
+    @Transactional
+    public Long updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto) {
         UserCrop userCrop = userCropRepository.findById(userCropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
 
@@ -81,22 +86,25 @@ public class UserCropManageServiceImpl implements UserCropManageService{
                 userCropAlarm.update(requestDto.getIsPruningAlarm(), requestDto.getPruning());
             }
         }
+
+        return userCropId;
     }
 
     // 내 작물 관리 목록 조회
     @Override
-    public List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId) {
-        UserCrop entity = userCropRepository.findById(userCropId)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
+    public List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId, Pageable pageable) {
+        Page<UserCropLog> entity = userCropLogRepository.findByUserCrop(userCropId, pageable);
 
-        List<UserCropLog> userCropLogs = entity.getUserCropLogs();
+        if (entity == null || entity.isEmpty())
+            throw new IllegalArgumentException("관리 기록이 없습니다.");
 
-        return userCropLogs.stream().map(UserCropManageListResponseDto::new).toList();
+        return entity.stream().map(UserCropManageListResponseDto::new).toList();
     }
 
     // 내 작물 관리 추가
     @Override
-    public void registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto) {
+    @Transactional
+    public Long registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto) {
         UserCrop userCrop = userCropRepository.findById(userCropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
 
@@ -104,23 +112,53 @@ public class UserCropManageServiceImpl implements UserCropManageService{
 
         userCropLog.setUserCrop(userCrop);
         userCropLogRepository.save(userCropLog);
+
+        return userCropLog.getCropLogId();
     }
 
     // 내 작물 관리 삭제
     @Override
-    public void deleteUserCropManage() {
+    @Transactional
+    public Long deleteUserCropManage(Long cropLogId) {
+        userCropLogRepository.deleteById(cropLogId);
 
+        return cropLogId;
     }
 
     // 내 작물 사진 추가
     @Override
-    public UserCropImageSaveRequestDto registerUserCropImage() {
-        return null;
+    @Transactional
+    public Long updateUserCropImage(Long userCropId, UserCropImageSaveRequestDto requestDto) {
+        UserCrop userCrop = userCropRepository.findById(userCropId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
+
+        List<String> newImageUrls = requestDto.getImageUrls();
+        List<String> imageUrls = userCrop.getImageUrls();
+
+
+        // 기존 이미지들과 다르면 사진 수정
+        for(int i=0;i<imageUrls.size(); i++){
+            if(imageUrls.get(i).equals(newImageUrls.get(i))){
+                continue;
+            }
+            imageUrls.set(i, newImageUrls.get(i));
+        }
+
+        // 기존 이미지들에 없었던 사진 추가
+        for(int i=imageUrls.size();i <= newImageUrls.size();i++){
+            userCrop.addImageUrl(newImageUrls.get(i));
+        }
+
+        // 기존 이미지들이 없다면 사진 삭제
+        for (int i = newImageUrls.size(); i < imageUrls.size(); i++) {
+            imageUrls.remove(i);
+        }
+
+        // 변경된 이미지 리스트를 저장
+        userCrop.setImageUrls(imageUrls);
+        userCropRepository.save(userCrop);
+
+        return userCropId;
     }
 
-    // 내 작물 사진 수정
-    @Override
-    public UserCropImageUpdateRequestDto updateUserCropImage() {
-        return null;
-    }
 }

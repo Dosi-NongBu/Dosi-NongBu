@@ -9,12 +9,13 @@ import java.time.LocalDateTime;
 
 @Getter
 public class UserCropManageListResponseDto {
-
+    private Long cropLogId;
     private CropManageType manage;
     private LocalDateTime date;
 
     public UserCropManageListResponseDto(UserCropLog entity) {
+        this.cropLogId = entity.getCropLogId();
         this.manage = entity.getManage();
-        this.date = entity.getManageDate();
+        this.date = entity.getModifiedDate();
     }
 }
