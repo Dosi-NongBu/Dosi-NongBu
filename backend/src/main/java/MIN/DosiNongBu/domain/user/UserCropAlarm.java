@@ -13,9 +13,9 @@ import lombok.Setter;
 @Table(name = "USERS_CROPS_ALARMS")
 public class UserCropAlarm {
     /* PK */
-    @Id
-    @Column(name = "user_crop_id")
-    private Long userCropId;
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_crop_alarm_id")
+    private Long userCropAlarmId;
 
     /* FK */
     @ManyToOne(fetch = FetchType.LAZY)

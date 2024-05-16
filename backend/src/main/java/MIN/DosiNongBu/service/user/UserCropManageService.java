@@ -2,10 +2,10 @@ package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropManageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropLogSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
-import MIN.DosiNongBu.controller.user.dto.response.UserCropManageListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropLogListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropResponseDto;
 import org.springframework.data.domain.Pageable;
 
@@ -26,13 +26,13 @@ public interface UserCropManageService {
     Long updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto);
 
     //내 작물 관리 목로 조회
-    List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId, Pageable pageable);
+    List<UserCropLogListResponseDto> viewUserCropLogList(Long userCropId, Pageable pageable);
 
     //내 작물 관리 추가
-    Long registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto);
+    Long registerUserCropLog(Long userCropId, UserCropLogSaveRequestDto requestDto);
 
     //내 작물 관리 삭제
-    Long deleteUserCropManage(Long cropLogId);
+    Long deleteUserCropLog(Long cropLogId);
 
     //내 작물 사진 추가
     Long updateUserCropImage(Long userCropId, UserCropImageSaveRequestDto requestDto);

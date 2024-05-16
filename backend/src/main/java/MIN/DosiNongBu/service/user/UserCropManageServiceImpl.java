@@ -2,11 +2,10 @@ package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropImageUpdateRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropManageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropLogSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
-import MIN.DosiNongBu.controller.user.dto.response.UserCropManageListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropLogListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropResponseDto;
 import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import MIN.DosiNongBu.domain.user.User;
@@ -18,7 +17,6 @@ import MIN.DosiNongBu.repository.user.UserCropLogRepository;
 import MIN.DosiNongBu.repository.user.UserCropRepository;
 import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -92,19 +90,19 @@ public class UserCropManageServiceImpl implements UserCropManageService{
 
     // 내 작물 관리 목록 조회
     @Override
-    public List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId, Pageable pageable) {
-        Page<UserCropLog> entity = userCropLogRepository.findByUserCrop(userCropId, pageable);
+    public List<UserCropLogListResponseDto> viewUserCropLogList(Long userCropId, Pageable pageable) {
+        Page<UserCropLog> entity = userCropLogRepository.findByUserCrop_UserCropId(userCropId, pageable);
 
         if (entity == null || entity.isEmpty())
             throw new IllegalArgumentException("관리 기록이 없습니다.");
 
-        return entity.stream().map(UserCropManageListResponseDto::new).toList();
+        return entity.stream().map(UserCropLogListResponseDto::new).toList();
     }
 
     // 내 작물 관리 추가
     @Override
     @Transactional
-    public Long registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto) {
+    public Long registerUserCropLog(Long userCropId, UserCropLogSaveRequestDto requestDto) {
         UserCrop userCrop = userCropRepository.findById(userCropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
 
@@ -119,7 +117,7 @@ public class UserCropManageServiceImpl implements UserCropManageService{
     // 내 작물 관리 삭제
     @Override
     @Transactional
-    public Long deleteUserCropManage(Long cropLogId) {
+    public Long deleteUserCropLog(Long cropLogId) {
         userCropLogRepository.deleteById(cropLogId);
 
         return cropLogId;

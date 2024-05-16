@@ -4,16 +4,15 @@ import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import MIN.DosiNongBu.domain.user.UserCropLog;
 import lombok.Getter;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
-public class UserCropManageListResponseDto {
+public class UserCropLogListResponseDto {
     private Long cropLogId;
     private CropManageType manage;
     private LocalDateTime date;
 
-    public UserCropManageListResponseDto(UserCropLog entity) {
+    public UserCropLogListResponseDto(UserCropLog entity) {
         this.cropLogId = entity.getCropLogId();
         this.manage = entity.getManage();
         this.date = entity.getModifiedDate();

@@ -1,25 +1,22 @@
 package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropManageSaveRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropLogSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
-import MIN.DosiNongBu.controller.user.dto.response.UserCropManageListResponseDto;
+import MIN.DosiNongBu.controller.user.dto.response.UserCropLogListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropResponseDto;
-import MIN.DosiNongBu.domain.user.User;
-import MIN.DosiNongBu.domain.user.UserCrop;
-import MIN.DosiNongBu.domain.user.UserPlace;
+import MIN.DosiNongBu.domain.crop.constant.CropManageType;
+import MIN.DosiNongBu.domain.user.*;
 import MIN.DosiNongBu.domain.user.constant.*;
-import MIN.DosiNongBu.repository.user.UserCropRepository;
-import MIN.DosiNongBu.repository.user.UserPlaceRepository;
-import MIN.DosiNongBu.repository.user.UserRepository;
+import MIN.DosiNongBu.repository.user.*;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,10 +35,14 @@ class UserCropManageServiceImplTest {
     @Autowired UserRepository userRepository;
     @Autowired UserPlaceRepository  userPlaceRepository;
     @Autowired UserCropRepository userCropRepository;
+    @Autowired UserCropAlarmRepository userCropAlarmRepository;
+    @Autowired UserCropLogRepository userCropLogRepository;
 
     User user;
     UserPlace userPlace;
     UserCrop userCrop;
+
+    UserCropAlarm userCropAlarm;
 
     @BeforeEach
     void add(){
@@ -54,7 +55,6 @@ class UserCropManageServiceImplTest {
                 .role(RoleType.USER)
                 .build();
         userRepository.save(user);
-
 
         log.debug("Debug : UserPlace 저장");
         userPlace = UserPlace.builder()
@@ -80,12 +80,24 @@ class UserCropManageServiceImplTest {
         userCrop.setUser(user);
         userCrop.setUserPlace(userPlace);
         userCropRepository.save(userCrop);
+
+        log.debug("debug log= UserCropAlarm 저장");
+        for(CropManageType type : CropManageType.values()){
+            userCropAlarm = UserCropAlarm.builder()
+                    .manage(type)
+                    .period(4)
+                    .isAlarm(true)
+                    .build();
+            userCropAlarm.setUserCrop(userCrop);
+            userCropAlarmRepository.save(userCropAlarm);
+        }
     }
 
     @AfterEach
     void clear(){
         log.debug("debug log= DB 삭제");
 
+        userCropAlarmRepository.deleteAll();
         userCropRepository.deleteAll();
         userPlaceRepository.deleteAll();
         userRepository.deleteAll();
@@ -127,31 +139,99 @@ class UserCropManageServiceImplTest {
         assertThat(responseDto.getHumidity()).isEqualTo(50);
     }
 
-    //내 작물 알림 조회
-    //UserCropAlarmResponseDto viewUserCropAlarm(Long userCropId);
     @Test
     void 내_작물_알림_조회(){
+        log.debug("debug log= 내 작물 알림 조회");
 
+        //given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        //when
+        UserCropAlarmResponseDto responseDto = userCropManageService.viewUserCropAlarm(findUserCropId);
+
+        //then
+        assertThat(responseDto.getWater()).isEqualTo(4);
+        assertThat(responseDto.getVentilation()).isEqualTo(4);
+        assertThat(responseDto.getRepot()).isEqualTo(4);
+        assertThat(responseDto.getPruning()).isEqualTo(4);
     }
 
-    //내 작물 알림 수정
-    //Long updateUserCropAlarm(Long userCropId, UserCropAlarmUpdateRequestDto requestDto);
     @Test
+    @Transactional
     void 내_작물_알림_수정() {
+        log.debug("debug log= 내 작물 알림 수정");
 
+        //given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        UserCropAlarmUpdateRequestDto requestDto = UserCropAlarmUpdateRequestDto.builder()
+                .isWaterAlarm(true)
+                .water(1)
+                .isVentilationAlarm(true)
+                .ventilation(2)
+                .isRepotAlarm(true)
+                .repot(3)
+                .isPruningAlarm(true)
+                .pruning(4)
+                .build();
+
+        //when
+        userCropManageService.updateUserCropAlarm(findUserCropId, requestDto);
+
+        //then
+        UserCropAlarmResponseDto responseDto = userCropManageService.viewUserCropAlarm(findUserCropId);
+
+        assertThat(responseDto.getWater()).isEqualTo(1);
+        assertThat(responseDto.getVentilation()).isEqualTo(2);
+        assertThat(responseDto.getRepot()).isEqualTo(3);
+        assertThat(responseDto.getPruning()).isEqualTo(4);
     }
 
-    //내 작물 관리 목록 조회
-    //List<UserCropManageListResponseDto> viewUserCropManageList(Long userCropId, Pageable pageable);
     @Test
     void 내_작물_관리_목록_조회(){
+        log.debug("debug log= 내 작물 관리 목록 조회");
+
+        //given
+        Long findUserCropId = userCrop.getUserCropId();
+        Pageable pageable = PageRequest.of(0, 5);
+
+        for(CropManageType type : CropManageType.values()){
+            UserCropLog userCropLog = UserCropLog.builder()
+                    .manage(type)
+                    .build();
+
+            userCropLog.setUserCrop(userCrop);
+            userCropLogRepository.save(userCropLog);
+        }
+
+        //when
+        List<UserCropLogListResponseDto> responseDto = userCropManageService.viewUserCropLogList(findUserCropId, pageable);
+
+        //then
+        assertThat(responseDto.size()).isEqualTo(4);
 
     }
 
-    //내 작물 관리 추가
-    //Long registerUserCropManage(Long userCropId, UserCropManageSaveRequestDto requestDto);
     @Test
+    @Transactional
     void 내_작물_관리_추가(){
+        log.debug("debug log= 내 작물 관리 추가");
+
+        //given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        UserCropLogSaveRequestDto requestDto = UserCropLogSaveRequestDto.builder()
+                .manage(CropManageType.WATER)
+                .build();
+
+        //when
+        Long savedUserCropLogId = userCropManageService.registerUserCropLog(findUserCropId, requestDto);
+
+        UserCropLog logs = userCropLogRepository.findById(savedUserCropLogId)
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 관리 기록입니다. userCropLogId" + savedUserCropLogId));
+
+        //then
+        assertThat(logs.getManage()).isEqualTo(CropManageType.WATER);
 
     }
 
@@ -159,13 +239,39 @@ class UserCropManageServiceImplTest {
     //Long deleteUserCropManage(Long cropLogId);
     @Test
     void 내_작물_관리_삭제(){
+        log.debug("debug log= 내 작물 관리 삭제");
 
+        //given
+        UserCropLog userCropLog = UserCropLog.builder()
+                .manage(CropManageType.WATER)
+                .build();
+
+        userCropLog.setUserCrop(userCrop);
+        userCropLogRepository.save(userCropLog);
+
+        Long findUserCropLogId = userCropLog.getCropLogId();
+
+        //when
+        Long deletedUserCropLogId = userCropManageService.deleteUserCropLog(findUserCropLogId);
+
+        //then
+
+        System.out.println((userCrop.getUserCropLogs().get(0).getManage()));
+
+        assertThat(deletedUserCropLogId).isEqualTo(findUserCropLogId);
     }
 
     //내 작물 사진 추가
     //Long updateUserCropImage(Long userCropId, UserCropImageSaveRequestDto requestDto);
     @Test
     void 내_작물_사진_추가(){
+        log.debug("debug log= 내 작물 사진");
+
+        //given
+
+        //when
+
+        //then
 
     }
 

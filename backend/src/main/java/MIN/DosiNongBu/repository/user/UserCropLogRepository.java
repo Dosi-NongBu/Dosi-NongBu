@@ -9,5 +9,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserCropLogRepository extends JpaRepository<UserCropLog, Long> {
 
-    Page<UserCropLog> findByUserCrop(Long userCropId, Pageable pageable);
+    Page<UserCropLog> findByUserCrop_UserCropId(Long userCropId, Pageable pageable);
 }

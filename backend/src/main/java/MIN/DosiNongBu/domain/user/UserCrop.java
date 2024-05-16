@@ -33,7 +33,7 @@ public class UserCrop extends BaseTimeEntity {
     private User user;
 
     @JoinColumn(name = "crop_id")
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     private Crop crop;
 
     /* 연관 */
