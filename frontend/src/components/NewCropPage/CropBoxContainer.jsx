@@ -21,8 +21,8 @@ const CropBoxContainer = ({ type }) => {
     let response;
 
     if (type === "search") {
-      response = await getCropList(page, size);
-      // response = mockData();
+      // response = await getCropList(page, size);
+      response = mockData();
     } else if (type === "recommend") {
       response = await getRecommendCropList(page, size);
       // response = mockData();
@@ -83,15 +83,18 @@ const CropBoxContainer = ({ type }) => {
             onSearchChange={handleSearchCrop}
             onClickButton={handleSearchButton}
           />
-          <CropBoxArea data={cropList} />
+          <div className="cropBoxArea-container">
+            <CropBoxArea data={cropList} />
+          </div>
         </>
       )}{" "}
       {type === "recommend" && (
         <>
           <h2>추천 작물</h2>
           <h3>도시농부가 추천하는 작물을 키워보세요.</h3>
-
-          <CropBoxArea data={cropList} />
+          <div className="cropBoxArea-container">
+            <CropBoxArea data={cropList} />
+          </div>
         </>
       )}
       {type !== "none" && (

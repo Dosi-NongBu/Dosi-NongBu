@@ -182,3 +182,18 @@ export const mockData3 = () => {
   };
   return ret;
 };
+
+export const mockData5 = () => {
+  const ret = {
+    name: "상추",
+    nickname: "싱싱이",
+    imageUrl: [],
+    startDate: "2024-05-02",
+    period: 10,
+    prePeriod: 20,
+    maxTemperature: 50,
+    minTemperature: 30,
+    humidity: 15,
+  };
+  return ret;
+};

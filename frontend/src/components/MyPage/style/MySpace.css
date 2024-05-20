@@ -1,0 +1,11 @@
+.mySpace {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.mySpace-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}

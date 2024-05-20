@@ -13,6 +13,7 @@ const initialState = {
   isAuth: false,
   isLoading: false,
   error: "",
+  userCrop: [],
 };
 
 const userSlice = createSlice({

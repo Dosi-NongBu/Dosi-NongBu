@@ -1,0 +1,11 @@
+.myPost {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.myPost .myPost-container {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+}
