@@ -85,7 +85,6 @@ class UserServiceImplTest {
         log.debug("Debug : User Profile 조회");
         ProfileResponseDto responseDto = userService.viewProfile(findUserId);
 
-
         //then
         assertThat(responseDto.getName()).isEqualTo("테스트");
         assertThat(responseDto.getNickname()).isEqualTo("test");
