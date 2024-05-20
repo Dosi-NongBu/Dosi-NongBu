@@ -1,5 +1,6 @@
 package MIN.DosiNongBu.domain.user;
 
+import MIN.DosiNongBu.domain.BaseTimeEntity;
 import MIN.DosiNongBu.domain.crop.Crop;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Table(name = "USERS_CROPS")
 @Entity
-public class UserCrop {
+public class UserCrop extends BaseTimeEntity {
     /* PK */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_crop_id")
@@ -31,9 +32,16 @@ public class UserCrop {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-/*    @JoinColumn(name = "crop_id")
-    @OneToOne(fetch = FetchType.LAZY)
-    private Crop crop;*/
+    @JoinColumn(name = "crop_id")
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Crop crop;
+
+    /* 연관 */
+    @OneToMany(mappedBy = "userCrop", fetch = FetchType.LAZY)
+    private List<UserCropLog> userCropLogs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "userCrop", fetch = FetchType.LAZY)
+    private List<UserCropAlarm> userCropAlarms = new ArrayList<>();
 
     /* 속성 */
     @Column(name = "name", nullable = false)
@@ -41,10 +49,6 @@ public class UserCrop {
 
     @Column(name = "nickname")
     private String nickname;
-
-    @CreatedDate
-    @Column(name = "start_date")
-    private LocalDateTime startDate;
 
     @Column(name = "period")
     private Integer period;
@@ -67,16 +71,14 @@ public class UserCrop {
     private List<String> imageUrls = new ArrayList<>();
 
     @Builder
-    public UserCrop(String name, String nickname, LocalDateTime startDate, Integer period, Integer prePeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
+    public UserCrop(String name, String nickname, Integer period, Integer prePeriod, Integer maxTemperature, Integer minTemperature, Integer humidity) {
         this.name = name;
         this.nickname = nickname;
-        this.startDate = startDate;
         this.period = period;
         this.prePeriod = prePeriod;
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.humidity = humidity;
-        this.imageUrls = imageUrls;
     }
 
     public void setUser(User user) {
