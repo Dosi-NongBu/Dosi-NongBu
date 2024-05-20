@@ -1,6 +1,7 @@
 package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
+import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.UserCropLogSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
@@ -20,6 +21,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -104,7 +106,7 @@ class UserCropManageServiceImplTest {
     }
 
     @Test
-    void 내_작묾_목록_조회(){
+    void 내_작물_목록_조회(){
         log.debug("debug log= 내 작물 목록 조회 테스트");
 
         //given
@@ -235,8 +237,6 @@ class UserCropManageServiceImplTest {
 
     }
 
-    //내 작물 관리 삭제
-    //Long deleteUserCropManage(Long cropLogId);
     @Test
     void 내_작물_관리_삭제(){
         log.debug("debug log= 내 작물 관리 삭제");
@@ -253,25 +253,145 @@ class UserCropManageServiceImplTest {
 
         //when
         Long deletedUserCropLogId = userCropManageService.deleteUserCropLog(findUserCropLogId);
+        userCrop.getUserCropLogs().remove(userCropLog);
 
         //then
-
-        System.out.println((userCrop.getUserCropLogs().get(0).getManage()));
-
         assertThat(deletedUserCropLogId).isEqualTo(findUserCropLogId);
     }
 
-    //내 작물 사진 추가
-    //Long updateUserCropImage(Long userCropId, UserCropImageSaveRequestDto requestDto);
     @Test
+    @Transactional
     void 내_작물_사진_추가(){
-        log.debug("debug log= 내 작물 사진");
+        log.debug("debug log= 내 작물 사진 추가");
 
         //given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        List<String> requestList = new ArrayList<>();
+
+        requestList.add("Test ImageUrl 1");
+        requestList.add("Test ImageUrl 2");
+        requestList.add("Test ImageUrl 3");
+
+        UserCropImageSaveRequestDto requestDto = UserCropImageSaveRequestDto.builder()
+                .imageUrls(requestList)
+                .build();
 
         //when
+        userCropManageService.updateUserCropImage(findUserCropId, requestDto);
 
         //then
+        UserCropResponseDto responseDto = userCropManageService.viewUserCrop(findUserCropId);
+
+        assertThat(responseDto.getImageUrls().get(0)).isEqualTo("Test ImageUrl 1");
+        assertThat(responseDto.getImageUrls().get(1)).isEqualTo("Test ImageUrl 2");
+        assertThat(responseDto.getImageUrls().get(2)).isEqualTo("Test ImageUrl 3");
+    }
+
+    @Test
+    @Transactional
+    void 내_작물_사진_수정_사진추가(){
+        log.debug("debug log= 내 작물 수정 사진추가");
+
+        // given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        List<String> findList = userCrop.getImageUrls();
+
+        findList.add("Test ImageUrl 1");
+        findList.add("Test ImageUrl 2");
+        findList.add("Test ImageUrl 3");
+
+        // when
+        List<String> requestList = new ArrayList<>();
+
+        requestList.add("New Test ImageUrl 1");
+        requestList.add("New Test ImageUrl 2");
+        requestList.add("New Test ImageUrl 3");
+        requestList.add("New Test ImageUrl 4");
+        requestList.add("New Test ImageUrl 5");
+
+        UserCropImageSaveRequestDto requestDto = UserCropImageSaveRequestDto.builder()
+                .imageUrls(requestList)
+                .build();
+
+        userCropManageService.updateUserCropImage(findUserCropId, requestDto);
+
+        // then
+        UserCropResponseDto responseDto = userCropManageService.viewUserCrop(findUserCropId);
+
+        assertThat(responseDto.getImageUrls().get(0)).isEqualTo("New Test ImageUrl 1");
+        assertThat(responseDto.getImageUrls().get(1)).isEqualTo("New Test ImageUrl 2");
+        assertThat(responseDto.getImageUrls().get(2)).isEqualTo("New Test ImageUrl 3");
+        assertThat(responseDto.getImageUrls().get(3)).isEqualTo("New Test ImageUrl 4");
+        assertThat(responseDto.getImageUrls().get(4)).isEqualTo("New Test ImageUrl 5");
+    }
+
+    @Test
+    @Transactional
+    void 내_작물_사진_수정_사진삭제(){
+        log.debug("debug log= 내 작물 수정 사진삭제");
+
+        // given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        List<String> findList = userCrop.getImageUrls();
+
+        findList.add("Test ImageUrl 1");
+        findList.add("Test ImageUrl 2");
+        findList.add("Test ImageUrl 3");
+
+        // when
+        List<String> requestList = new ArrayList<>();
+
+        requestList.add("New Test ImageUrl 100");
+        requestList.add("New Test ImageUrl 200");
+
+        UserCropImageSaveRequestDto requestDto = UserCropImageSaveRequestDto.builder()
+                .imageUrls(requestList)
+                .build();
+
+        userCropManageService.updateUserCropImage(findUserCropId, requestDto);
+
+        // then
+        UserCropResponseDto responseDto = userCropManageService.viewUserCrop(findUserCropId);
+
+        assertThat(responseDto.getImageUrls().get(0)).isEqualTo("New Test ImageUrl 100");
+        assertThat(responseDto.getImageUrls().get(1)).isEqualTo("New Test ImageUrl 200");
+        assertThat(responseDto.getImageUrls().size()).isEqualTo(2);
+    }
+
+    @Test
+    @Transactional
+    void 내_작물_사진_수정_개수제한(){
+        log.debug("debug log= 내 작물 수정 개수제한");
+
+        // given
+        Long findUserCropId = userCrop.getUserCropId();
+
+        List<String> findList = userCrop.getImageUrls();
+
+        findList.add("Test ImageUrl 1");
+        findList.add("Test ImageUrl 2");
+        findList.add("Test ImageUrl 3");
+
+        // when
+        List<String> requestList = new ArrayList<>();
+
+        requestList.add("New Test ImageUrl 1");
+        requestList.add("New Test ImageUrl 2");
+        requestList.add("New Test ImageUrl 3");
+        requestList.add("New Test ImageUrl 4");
+        requestList.add("New Test ImageUrl 5");
+        requestList.add("New Test ImageUrl 6");
+
+        UserCropImageSaveRequestDto requestDto = UserCropImageSaveRequestDto.builder()
+                .imageUrls(requestList)
+                .build();
+
+        userCropManageService.updateUserCropImage(findUserCropId, requestDto);
+
+        // then
 
     }
 

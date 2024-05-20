@@ -71,7 +71,7 @@ public class UserCrop extends BaseTimeEntity {
     private List<String> imageUrls = new ArrayList<>();
 
     @Builder
-    public UserCrop(String name, String nickname, Integer period, Integer prePeriod, Integer maxTemperature, Integer minTemperature, Integer humidity, List<String> imageUrls) {
+    public UserCrop(String name, String nickname, Integer period, Integer prePeriod, Integer maxTemperature, Integer minTemperature, Integer humidity) {
         this.name = name;
         this.nickname = nickname;
         this.period = period;
@@ -79,7 +79,6 @@ public class UserCrop extends BaseTimeEntity {
         this.maxTemperature = maxTemperature;
         this.minTemperature = minTemperature;
         this.humidity = humidity;
-        this.imageUrls = imageUrls;
     }
 
     public void setUser(User user) {

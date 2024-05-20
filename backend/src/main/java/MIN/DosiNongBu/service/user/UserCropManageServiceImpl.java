@@ -133,9 +133,10 @@ public class UserCropManageServiceImpl implements UserCropManageService{
         List<String> newImageUrls = requestDto.getImageUrls();
         List<String> imageUrls = userCrop.getImageUrls();
 
+        int minSize = Math.min(newImageUrls.size(), imageUrls.size());
 
         // 기존 이미지들과 다르면 사진 수정
-        for(int i=0;i<imageUrls.size(); i++){
+        for(int i=0;i<minSize; i++){
             if(imageUrls.get(i).equals(newImageUrls.get(i))){
                 continue;
             }
@@ -143,13 +144,13 @@ public class UserCropManageServiceImpl implements UserCropManageService{
         }
 
         // 기존 이미지들에 없었던 사진 추가
-        for(int i=imageUrls.size();i <= newImageUrls.size();i++){
+        for(int i=imageUrls.size();i < newImageUrls.size();i++){
             userCrop.addImageUrl(newImageUrls.get(i));
         }
 
         // 기존 이미지들이 없다면 사진 삭제
-        for (int i = newImageUrls.size(); i < imageUrls.size(); i++) {
-            imageUrls.remove(i);
+        if (imageUrls.size() > newImageUrls.size()) {
+            imageUrls.subList(newImageUrls.size(), imageUrls.size()).clear();
         }
 
         // 변경된 이미지 리스트를 저장
