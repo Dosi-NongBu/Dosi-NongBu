@@ -15,12 +15,6 @@ public class DosiNongBuApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(DosiNongBuApplication.class, args);
-		log.trace("trace");
-		log.debug("debug");
-
-		log.info("info");
-		log.warn("warn");
-		log.error("error");
 	}
 
 

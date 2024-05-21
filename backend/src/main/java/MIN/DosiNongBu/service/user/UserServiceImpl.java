@@ -92,7 +92,7 @@ public class UserServiceImpl implements UserService{
     /* USER POST */
     @Override
     public List<UserPostListResponseDto> viewUserPostList(Long userId, Pageable pageable) {
-        Page<Post> entity = postRepository.findAllByUser_UserId(userId, pageable);
+        Page<Post> entity = postRepository.findByUser_UserId(userId, pageable);
 
         return entity.stream().map(UserPostListResponseDto::new).toList();
     }

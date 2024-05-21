@@ -32,7 +32,14 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<Comment>();
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<PostReport> postReports = new ArrayList<PostReport>();
+
     /* 속성 */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "post_type")
+    private PostType postType;
+
     @Column(name = "title", nullable = false)
     private String title;
 
@@ -48,31 +55,27 @@ public class Post extends BaseTimeEntity {
     @Column(name = "bad")
     private Long bad;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "post_type")
-    private PostType post;
-
     @ElementCollection
     @CollectionTable(name = "POSTS_IMAGES", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "image_url")
-    private List<String> imageUrls = new ArrayList<>();
-
+    private List<String> imageUrls= new ArrayList<String>();
 
     @Builder
-    public Post(String title, String content, Long good, Long bad, PostType post, List<String> imageUrls) {
+    public Post(String title, String content, PostType postType, List<String> imageUrls) {
         this.title = title;
         this.content = content;
-        this.good = good;
-        this.bad = bad;
-        this.post = post;
+        this.postType = postType;
         this.imageUrls = imageUrls;
     }
 
-
     // 서비스 메서드
-    public void addImageUrl(String imageUrl) {
+
+    public void update(String title, String content, List<String> imageUrls){
+        this.title = title;
+        this.content = content;
+
         if (imageUrls.size() < 5) {
-            imageUrls.add(imageUrl);
+            this.imageUrls = imageUrls;
         } else {
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
         }

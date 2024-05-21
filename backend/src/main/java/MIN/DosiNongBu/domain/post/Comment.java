@@ -9,6 +9,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter @Setter
 @NoArgsConstructor
 @Entity
@@ -27,6 +30,10 @@ public class Comment extends BaseTimeEntity {
     @JoinColumn(name = "post_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
+
+    /* 연관 */
+    @OneToMany(mappedBy = "comment", fetch = FetchType.LAZY)
+    private List<CommentReport> commentReports = new ArrayList<CommentReport>();
 
     /* 속성 */
     @Lob
@@ -47,4 +54,5 @@ public class Comment extends BaseTimeEntity {
         this.good = good;
         this.bad = bad;
     }
+
 }
