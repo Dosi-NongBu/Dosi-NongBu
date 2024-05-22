@@ -52,9 +52,10 @@ public class PostController {
 
     // 글 작성
     @PostMapping("/posts")
-    public Long createPost(@RequestParam PostType postType, PostSaveRequestDto requestDto) {
+    public Long createPost(@CookieValue(name = "User") String cookie, @RequestParam PostType postType, PostSaveRequestDto requestDto) {
+        Long userId = UserCookie(cookie);
 
-        return postService.registerPost(postType, requestDto);
+        return postService.registerPost(userId, postType, requestDto);
     }
 
     // 글 수정

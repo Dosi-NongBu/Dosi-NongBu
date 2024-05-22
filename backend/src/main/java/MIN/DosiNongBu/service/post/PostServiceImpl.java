@@ -44,9 +44,13 @@ public class PostServiceImpl implements PostService{
     // 글 등록
     @Override
     @Transactional
-    public Long registerPost(PostType postType, PostSaveRequestDto requestDto) {
+    public Long registerPost(Long userId, PostType postType, PostSaveRequestDto requestDto) {
         Post entity= requestDto.toEntity(postType);
 
+        User user =  userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
+
+        entity.setUser(user);
         postRepository.save(entity);
         return entity.getPostId();
     }
@@ -83,7 +87,7 @@ public class PostServiceImpl implements PostService{
     // 글 반응
     @Override
     @Transactional
-    public void registerPostReaction(Long userId, Long postId, ReactionType reactionType) {
+    public Long registerPostReaction(Long userId, Long postId, ReactionType reactionType) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. postId=" + postId));
 
@@ -101,10 +105,16 @@ public class PostServiceImpl implements PostService{
             entity.setUser(user);
             entity.setPost(post);
             postReactionRepository.save(entity);
+            post.addReaction(reactionType);
+
+            return entity.getPostReactionId();
         }
         // 기존 반응이 있었다면
         else{
             postReaction.update(reactionType);
+            post.updateReaction(reactionType);
+
+            return postReaction.getPostReactionId();
         }
     }
 
@@ -118,7 +128,7 @@ public class PostServiceImpl implements PostService{
     // 글 신고
     @Override
     @Transactional
-    public void registerPostReport(Long userId, Long postId, ReportType reportType) {
+    public Long registerPostReport(Long userId, Long postId, ReportType reportType) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. postId=" + postId));
 
@@ -136,6 +146,8 @@ public class PostServiceImpl implements PostService{
             entity.setUser(user);
             entity.setPost(post);
             postReportRepository.save(entity);
+
+            return entity.getPostReportId();
         }
         // 기존 신고가 있었다면
         else{

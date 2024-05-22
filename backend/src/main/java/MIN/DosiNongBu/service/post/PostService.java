@@ -17,7 +17,7 @@ public interface PostService {
     List<PostListResponseDto> viewPostList(PostType postType, Pageable pageable);
 
     // 글 등록
-    Long registerPost(PostType postType, PostSaveRequestDto  requestDto);
+    Long registerPost(Long userId, PostType postType, PostSaveRequestDto  requestDto);
 
     // 글 조회
     PostResponseDto viewPost(Long postId);
@@ -29,11 +29,11 @@ public interface PostService {
     Long deletePost(Long postId);
 
     // 글 반응
-    void registerPostReaction(Long userId, Long postId, ReactionType reactionType);
+    Long registerPostReaction(Long userId, Long postId, ReactionType reactionType);
 
     // 글 반응 취소
     void deletePostReaction();
 
     // 글 신고
-    void registerPostReport(Long userId, Long postId, ReportType reportType);
+    Long registerPostReport(Long userId, Long postId, ReportType reportType);
 }
