@@ -1,6 +1,7 @@
 package MIN.DosiNongBu.domain.post;
 
 import MIN.DosiNongBu.domain.BaseTimeEntity;
+import MIN.DosiNongBu.domain.post.constant.ReactionType;
 import MIN.DosiNongBu.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -40,19 +41,40 @@ public class Comment extends BaseTimeEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ColumnDefault("0")
     @Column(name = "good")
-    private Long good;
+    private Long good=0L;
 
-    @ColumnDefault("0")
     @Column(name = "bad")
-    private Long bad;
+    private Long bad=0L;
 
     @Builder
-    public Comment(String content, Long good, Long bad) {
+    public Comment(String content) {
         this.content = content;
-        this.good = good;
-        this.bad = bad;
+    }
+
+    // 서비스 메서드
+    public void update(String content){
+        this.content = content;
+    }
+
+    public void addReaction(ReactionType reactionType){
+        if(reactionType == ReactionType.GOOD){
+            this.good++;
+        }
+        else{
+            this.bad++;
+        }
+    }
+
+    public void updateReaction(ReactionType reactionType){
+        if(reactionType == ReactionType.GOOD){
+            this.bad--;
+            this.good++;
+        }
+        else{
+            this.good--;
+            this.bad++;
+        }
     }
 
 }

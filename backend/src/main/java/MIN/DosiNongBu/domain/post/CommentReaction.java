@@ -35,4 +35,9 @@ public class CommentReaction {
     public CommentReaction(ReactionType reaction) {
         this.reaction = reaction;
     }
+
+    // 서비스 메소드
+    public void update(ReactionType reaction){
+        this.reaction = reaction;
+    }
 }

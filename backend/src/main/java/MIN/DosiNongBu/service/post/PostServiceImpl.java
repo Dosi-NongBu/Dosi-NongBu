@@ -52,6 +52,7 @@ public class PostServiceImpl implements PostService{
 
         entity.setUser(user);
         postRepository.save(entity);
+
         return entity.getPostId();
     }
 
@@ -72,6 +73,7 @@ public class PostServiceImpl implements PostService{
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. postId=" + postId));
 
         post.update(requestDto.getTitle(), requestDto.getContent(), requestDto.getImageUrls());
+
         return postId;
     }
 

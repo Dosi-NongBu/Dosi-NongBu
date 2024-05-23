@@ -265,8 +265,6 @@ class PostServiceImplTest {
         assertThat(exception.getMessage()).isEqualTo("존재하지 않는 글입니다. postId=" + findPostId);
     }
 
-    // 글 반응
-    //void registerPostReaction(Long userId, Long postId, ReactionType reactionType);
     @Test
     void 글_반응_최초반응(){
         log.debug("debug log= 글 반응 최초반응");
@@ -356,8 +354,6 @@ class PostServiceImplTest {
 
     }
 
-    // 글 신고
-    //void registerPostReport(Long userId, Long postId, ReportType reportType);
     @Test
     void 글_신고(){
         log.debug("debug log= 글 신고");
