@@ -1,6 +1,7 @@
 package MIN.DosiNongBu.domain.user;
 
 import MIN.DosiNongBu.domain.BaseTimeEntity;
+import MIN.DosiNongBu.domain.post.Post;
 import MIN.DosiNongBu.domain.user.constant.ProviderType;
 import MIN.DosiNongBu.domain.user.constant.RoleType;
 import jakarta.persistence.*;
@@ -28,6 +29,9 @@ public class User extends BaseTimeEntity {
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<UserCrop> userCrops = new ArrayList<UserCrop>();
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Post> posts = new ArrayList<Post>();
 
     /* 속성 */
     @Column(name = "email", nullable = false, unique = true)

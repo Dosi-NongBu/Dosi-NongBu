@@ -35,35 +35,35 @@ public class CropController {
 
     // 작물 목록 조회
     @GetMapping("/crops")
-    public List<CropListResponseDto> cropList(Pageable pageable, Model model){
+    public List<CropListResponseDto> cropList(Pageable pageable){
 
         return cropService.viewCropList(pageable);
     }
 
     // 작물 추천 목록 조회
     @GetMapping("/crops/recommend")
-    public List<CropListResponseDto> cropListToRecommend(Pageable pageable, Model model){
+    public List<CropListResponseDto> cropListToRecommend(Pageable pageable){
 
         return cropService.viewCropRecommendList(pageable);
     }
 
     // 작물 검색 (LIKE)
     @GetMapping("/crops/{keyword}")
-    public List<CropListResponseDto> cropListToSearch(@PathVariable String keyword, Pageable pageable, Model model){
+    public List<CropListResponseDto> cropListToSearch(@PathVariable String keyword, Pageable pageable){
 
         return cropService.viewCropRecommendList(pageable);
     }
 
     // 작물 메인 페이지, 기본정보
     @GetMapping("/crops/{cropId}/main")
-    public CropMainResponseDto cropMainPage(@PathVariable Long cropId, Model model){
+    public CropMainResponseDto cropMainPage(@PathVariable Long cropId){
 
         return cropService.viewCropMain(cropId);
     }
 
     // 작물 상세 정보 및 관리법
     @GetMapping("crops/{cropId}/info")
-    public CropInfoResponseDto cropInfo(@PathVariable Long cropId, Model model){
+    public CropInfoResponseDto cropInfo(@PathVariable Long cropId){
 
         return cropService.viewCropInfo(cropId);
     }

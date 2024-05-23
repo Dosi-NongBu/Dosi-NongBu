@@ -82,7 +82,7 @@ public class UserController {
 
     //내가 쓴 글 목록 조회
     @GetMapping("/userposts")
-    public List<UserPostListResponseDto> userPostList(@CookieValue(name = "User") String cookie, Pageable pageable, Model model){
+    public List<UserPostListResponseDto> userPostList(@CookieValue(name = "User") String cookie, Pageable pageable){
         Long userId = UserCookie(cookie);
 
         return userService.viewUserPostList(userId, pageable);

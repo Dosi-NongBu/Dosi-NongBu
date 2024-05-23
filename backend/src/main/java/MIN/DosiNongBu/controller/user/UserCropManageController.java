@@ -73,23 +73,23 @@ public class UserCropManageController {
 
     // 내 작물 관리 추가
     @PostMapping("/manages/{userCropId}")
-    public void createUserCropManage(@PathVariable Long userCropId, UserCropLogSaveRequestDto requestDto) {
+    public Long createUserCropManage(@PathVariable Long userCropId, UserCropLogSaveRequestDto requestDto) {
 
-        userCropManageService.registerUserCropLog(userCropId, requestDto);
+        return userCropManageService.registerUserCropLog(userCropId, requestDto);
     }
 
     // 내 작물 관리 삭제
     @DeleteMapping("/manages/{userCropId}/{cropLogId}")
-    public void deleteUserCropLog(@PathVariable Long userCropId, @PathVariable Long cropLogId) {
+    public Long deleteUserCropLog(@PathVariable Long userCropId, @PathVariable Long cropLogId) {
 
-        userCropManageService.deleteUserCropLog(cropLogId);
+        return userCropManageService.deleteUserCropLog(cropLogId);
     }
 
     // 내 작물 사진 추가
     @PostMapping("/images/{userCropId}")
-    public void createUserCropImage(@PathVariable Long userCropId, UserCropImageSaveRequestDto requestDto) {
+    public Long createUserCropImage(@PathVariable Long userCropId, UserCropImageSaveRequestDto requestDto) {
 
-        userCropManageService.updateUserCropImage(userCropId, requestDto);
+        return userCropManageService.updateUserCropImage(userCropId, requestDto);
     }
 
 }
