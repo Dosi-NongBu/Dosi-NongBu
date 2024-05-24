@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import "./style/MyCropBoxArea.css";
 
-const MyCropBox = ({ name, image, id }) => {
+const MyCropBox = ({ nickname, image, id }) => {
   const navigate = useNavigate();
 
   const handleClickCrop = () => {
@@ -14,7 +14,7 @@ const MyCropBox = ({ name, image, id }) => {
     <div className="myCropBox" onClick={handleClickCrop}>
       <div className="myCropBox-container">
         <img src={image} className="image" />
-        <p className="name">{name}</p>
+        <p className="name">{nickname}</p>
       </div>
     </div>
   );
@@ -24,8 +24,8 @@ const MyCropBoxArea = ({ data }) => {
   return (
     <div className="myCropBoxArea-wrapper">
       <div className="myCropBoxArea">
-        {data.map(({ name, cropsImage, cropId }) => (
-          <MyCropBox key={cropId} name={name} image={cropsImage} id={cropId} />
+        {data.map(({ nickname, imageUrl, id }) => (
+          <MyCropBox key={id} nickname={nickname} image={imageUrl} id={id} />
         ))}
       </div>
     </div>

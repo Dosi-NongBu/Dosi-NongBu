@@ -4,7 +4,7 @@ import "./style/MyCropContainer.css";
 import Banner from "../common/Banner";
 import MyCropBoxArea from "../common/MyCropBoxArea";
 
-import { mockData } from "../../util/api";
+import { mockData6 } from "../../util/api";
 
 const MyCropContainer = () => {
   return (
@@ -14,7 +14,7 @@ const MyCropContainer = () => {
       <div className="myCrop-wrapper">
         <div className="myCropArea">
           <h2> 내 작물 목록</h2>
-          {<MyCropBoxArea data={mockData()} />}
+          {<MyCropBoxArea data={mockData6()} />}
         </div>
       </div>
     </div>

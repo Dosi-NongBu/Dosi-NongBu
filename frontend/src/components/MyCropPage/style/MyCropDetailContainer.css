@@ -22,41 +22,137 @@
   gap: 50px;
 }
 
-.myCropDetailContainer .myCropDetailBox .myCrop-header {
+.myCropDetailBox .myCrop-elements {
+  margin-left: 10%;
+  margin-right: 10%;
+}
+
+.myCropDetailBox .myCrop-header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
-.myCropDetailContainer .myCropDetailBox .myCrop-info {
+.myCropDetailBox .myCrop-info {
   display: flex;
-  justify-content: space-between;
-}
-
-.myCropDetailContainer .myCropDetailBox .myCrop-info .myCrop-info-image {
-  width: 150px;
-  height: 150px;
-  background-color: purple;
-}
-
-.myCropDetailContainer .myCropDetailBox .myCrop-info .myCrop-info-info {
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
+  /* justify-content: space-between; */
   gap: 20px;
 }
 
-.myCropDetailContainer
-  .myCropDetailBox
-  .myCrop-info
-  .myCrop-info-info
-  .myCrop-info-eachInfo {
+.myCropDetailBox .myCrop-info img {
+  width: 200px;
+  height: 200px;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+.myCropDetailBox .myCrop-info .myCrop-info-info {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+.myCropDetailBox .myCrop-info .myCrop-info-info .myCrop-info-eachInfo {
   display: flex;
   justify-content: space-between;
 }
 
-.myCropDetailContainer .myCropDetailBox .myCrop-activity {
-  width: 100%;
+.myCropDetailBox
+  .myCrop-info
+  .myCrop-info-info
+  .myCrop-info-eachInfo
+  span:first-child {
+  font-weight: bold;
+}
+
+.myCropDetailBox .myCrop-activity .myCrop-activity-button {
   display: flex;
+  justify-content: space-between;
+}
+
+.myCropDetailBox
+  .myCrop-activity
+  .myCrop-activity-button
+  .myCrop-activity-each {
+  display: flex;
+  flex-direction: column;
   justify-content: space-around;
+  align-items: center;
+  background-color: #c8e8cf;
+
+  width: 100px;
+  height: 100px;
+  border: none;
+  border-radius: 10px;
+
+  padding: 5px;
+
+  cursor: pointer;
+}
+
+.myCropDetailBox .myCrop-timeline {
+  display: flex;
+  flex-direction: column;
+}
+
+.myCropDetailBox .myCrop-timeline .myCrop-timeline-each {
+  display: flex;
+}
+
+.myCropDetailBox
+  .myCrop-timeline
+  .myCrop-timeline-each
+  .myCrop-timeline-each-date {
+  border: 1px solid black;
+}
+
+.myCropDetailBox
+  .myCrop-timeline
+  .myCrop-timeline-each
+  .myCrop-timeline-each-activity {
+  border: 1px solid black;
+}
+
+/* .myCropDetailBox .myCrop-gallery {
+  width: 50%;
+} */
+
+.thumbnail-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.delete-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  cursor: pointer;
+  background-color: rgba(255, 0, 0, 0.5);
+  border: none;
+  color: white;
+}
+
+.image-gallery-image img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+.file-input {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+.modal-area {
+  margin-left: 100px;
+  margin-right: 100px;
 }

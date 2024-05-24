@@ -46,6 +46,15 @@ const SpaceBoxArea = ({ onSelectSpace }) => {
     { id: 3, name: "책상 위" },
   ]);
   const idRef = useRef(4);
+
+  // 공간 조회
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getExistingUserSpace(1, 5);
+    };
+    fetchData();
+  }, []);
+
   const [addMoreButton, setAddMoreButton] = useState(
     // 공간을 더 추가할 수 있는지 여부
     spaceData.length < 5 ? true : false
@@ -100,7 +109,9 @@ const SpaceBoxArea = ({ onSelectSpace }) => {
     alert("새 공간이 등록되었습니다.");
 
     // jwt
-    // const response = await postNewUserPlace(newSpace);
+
+    console.log("new space, ", newSpace);
+    const response = await postNewUserPlace(newSpace);
   };
 
   return (

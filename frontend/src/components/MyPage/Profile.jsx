@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 
 import "./style/Profile.css";
 import Button from "../common/Button";
+import { getUserProfile, putUserProfile } from "../../util/api";
 
 const Profile = () => {
+  const fileInputRef = useRef(null);
+
   // API로 가져올 것
   const [user, setUser] = useState({
     name: "name",
@@ -14,10 +17,47 @@ const Profile = () => {
     profileImage: "../../../public/vite.svg",
     provider: "DEFAULT",
   });
+
+  const [changed, setChanged] = useState({
+    name: false,
+    nickname: false,
+    email: false,
+    address: false,
+    profileImage: false,
+  });
   const [onEdit, setOnEdit] = useState(false);
+
+  // 프로필 fetch
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserProfile();
+      setUser(data);
+    };
+    fetchData();
+  }, []);
+
+  // 수정
+  const sendEdittedData = async () => {
+    setOnEdit(!onEdit);
+
+    const newData = Object.keys(changed).reduce((acc, key) => {
+      if (changed[key] === true) {
+        acc[key] = user[key];
+      }
+      return acc;
+    }, {});
+    console.log("new Data = ", newData);
+
+    putUserProfile(newData);
+  };
 
   const onChangeProfile = (e) => {
     const { name, value } = e.target;
+
+    setChanged((prevChanged) => ({
+      ...prevChanged,
+      [name]: true,
+    }));
 
     setUser((prevUser) => ({
       ...prevUser,
@@ -25,16 +65,39 @@ const Profile = () => {
     }));
   };
 
-  const { getRootProps, getInputProps } = useDropzone({
-    onDrop: (acceptedFiles) => {
-      console.log(acceptedFiles);
-      // 파일 업로드 로직 추가
+  // const { getRootProps, getInputProps } = useDropzone({
+  //   onDrop: (acceptedFiles) => {
+  //     console.log(acceptedFiles);
+  //     // 파일 업로드 로직 추가
+  //     setUser((prevUser) => ({
+  //       ...prevUser,
+  //       profileImage: acceptedFiles,
+  //     }));
+  //   },
+  // });
+
+  // 이미지 클릭 시 파일 입력 요소를 클릭하는 함수
+  const handleImageClick = () => {
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleAddImage = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const filePath = URL.createObjectURL(file);
+      console.log(filePath);
       setUser((prevUser) => ({
         ...prevUser,
-        profileImage: acceptedFiles,
+        profileImage: filePath,
       }));
-    },
-  });
+    }
+    setChanged((prevChanged) => ({
+      ...prevChanged,
+      profileImage: true,
+    }));
+  };
 
   return (
     <div className="profile">
@@ -84,11 +147,7 @@ const Profile = () => {
               <Button
                 title={"저장하기"}
                 type={"negative"}
-                onClick={() => {
-                  setOnEdit(!onEdit);
-
-                  // API 전송 코드 작성
-                }}
+                onClick={sendEdittedData}
               />
             </div>
             <div className="each-profile">
@@ -123,33 +182,22 @@ const Profile = () => {
               />
             </div>
           </div>
-          {/* <div className="profile-image">
-            <Dropzone onDrop={(acceptFiles) => console.log(acceptFiles)}>
-              <img src={user.profileImage} />
-            </Dropzone>
-          </div> */}
+
           <div className="profile-image">
-            <div {...getRootProps()} className="dropzone">
-              <input {...getInputProps()} />
-              <div className="profile-container">
-                {user.profileImage ? (
-                  <>
-                    <img
-                      src={user.profileImage}
-                      alt="Profile"
-                      className="profile-image-container"
-                    />
-                    <div className="overlay">
-                      <div className="text">+</div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="placeholder">
-                    프로필 이미지를 업로드하세요.
-                  </div>
-                )}
-              </div>
-            </div>
+            <input
+              type="file"
+              id="fileInput"
+              ref={fileInputRef}
+              onChange={handleAddImage}
+              className="file-input"
+              style={{ display: "none" }} // 파일 입력 요소를 숨김
+            />
+            <img
+              src={user.profileImage}
+              alt="Profile"
+              onClick={handleImageClick}
+              style={{ cursor: "pointer" }} // 커서가 포인터 모양으로 변경
+            />
           </div>
         </div>
       )}
