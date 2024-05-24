@@ -9,7 +9,7 @@ import MIN.DosiNongBu.domain.user.User;
 import MIN.DosiNongBu.domain.user.UserCrop;
 import MIN.DosiNongBu.domain.user.UserPlace;
 import MIN.DosiNongBu.repository.crop.CropInformationRepository;
-import MIN.DosiNongBu.repository.crop.CropManageRepository;
+import MIN.DosiNongBu.repository.crop.CropManagementRepository;
 import MIN.DosiNongBu.repository.crop.CropRepository;
 import MIN.DosiNongBu.repository.user.UserCropRepository;
 import MIN.DosiNongBu.repository.user.UserPlaceRepository;
@@ -32,7 +32,7 @@ public class CropServiceImpl implements CropService{
 
     private final CropRepository cropRepository;
     private final CropInformationRepository cropInformationRepository;
-    private final CropManageRepository cropManageRepository;
+    private final CropManagementRepository cropManagementRepository;
 
     // 작물 목록 조회
     @Override
@@ -84,7 +84,7 @@ public class CropServiceImpl implements CropService{
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
 
         // 작물 관리법
-        CropManagement manageEntity = cropManageRepository.findById(cropId)
+        CropManagement manageEntity = cropManagementRepository.findById(cropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. cropId=" + cropId));
 
         return new CropInfoResponseDto(infoEntity, manageEntity);

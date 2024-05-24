@@ -233,7 +233,7 @@ class UserCropManageServiceImplTest {
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 관리 기록입니다. userCropLogId" + savedUserCropLogId));
 
         //then
-        assertThat(logs.getManage()).isEqualTo(CropManageType.WATER);
+        assertThat(logs.getManageType()).isEqualTo(CropManageType.WATER);
 
     }
 

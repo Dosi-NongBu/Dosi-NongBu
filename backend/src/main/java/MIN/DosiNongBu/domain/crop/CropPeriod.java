@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.mapping.Join;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -25,14 +24,15 @@ public class CropPeriod {
 
     /* 속성 */
     @Column(name = "manage")
-    private CropManageType manage;
+    @Enumerated(EnumType.STRING)
+    private CropManageType manageType;
 
     @Column(name = "period")
     private Integer period;
 
     @Builder
-    public CropPeriod(CropManageType manage, Integer period) {
-        this.manage = manage;
+    public CropPeriod(CropManageType manageType, Integer period) {
+        this.manageType = manageType;
         this.period = period;
     }
 

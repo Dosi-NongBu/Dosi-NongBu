@@ -10,16 +10,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class UserCropLogSaveRequestDto {
 
-    private CropManageType manage;
+    private CropManageType manageType;
 
     @Builder
     public UserCropLogSaveRequestDto(CropManageType manage) {
-        this.manage = manage;
+        this.manageType = manage;
     }
 
     public UserCropLog toEntity() {
         return UserCropLog.builder()
-                .manage(this.manage)
+                .manageType(this.manageType)
                 .build();
     }
 }

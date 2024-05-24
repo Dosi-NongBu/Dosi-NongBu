@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "CROPS_MANAGES")
+@Table(name = "CROPS_MANAGEMENTS")
 public class CropManagement {
     /* PK & FK */
     @Id

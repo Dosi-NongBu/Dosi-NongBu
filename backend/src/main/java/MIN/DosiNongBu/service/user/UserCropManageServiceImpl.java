@@ -71,16 +71,16 @@ public class UserCropManageServiceImpl implements UserCropManageService{
         List<UserCropAlarm> userCropAlarms = userCrop.getUserCropAlarms();
 
         for(UserCropAlarm userCropAlarm : userCropAlarms){
-            if (userCropAlarm.getManage() == CropManageType.WATER) {
+            if (userCropAlarm.getManageType() == CropManageType.WATER) {
                 userCropAlarm.update(requestDto.getIsWaterAlarm(), requestDto.getWater());
                 continue;
-            } else if (userCropAlarm.getManage() == CropManageType.VENTILATION) {
+            } else if (userCropAlarm.getManageType() == CropManageType.VENTILATION) {
                 userCropAlarm.update(requestDto.getIsVentilationAlarm(), requestDto.getVentilation());
                 continue;
-            } else if (userCropAlarm.getManage() == CropManageType.REPOT) {
+            } else if (userCropAlarm.getManageType() == CropManageType.REPOT) {
                 userCropAlarm.update(requestDto.getIsRepotAlarm(), requestDto.getRepot());
                 continue;
-            } else if (userCropAlarm.getManage() == CropManageType.PRUNING) {
+            } else if (userCropAlarm.getManageType() == CropManageType.PRUNING) {
                 userCropAlarm.update(requestDto.getIsPruningAlarm(), requestDto.getPruning());
             }
         }
