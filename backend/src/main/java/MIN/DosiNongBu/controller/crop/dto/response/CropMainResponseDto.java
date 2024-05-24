@@ -6,7 +6,6 @@ import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Objects;
 
 @Getter
 public class CropMainResponseDto {
@@ -33,16 +32,16 @@ public class CropMainResponseDto {
 
         List<CropPeriod> periodEntity = cropEntity.getCropPeriod();
         for(CropPeriod cropPeriod : periodEntity){
-            if (cropPeriod.getManage() == CropManageType.WATER) {
+            if (cropPeriod.getManageType() == CropManageType.WATER) {
                 this.water = cropPeriod.getPeriod();
                 continue;
-            } else if (cropPeriod.getManage() == CropManageType.VENTILATION) {
+            } else if (cropPeriod.getManageType() == CropManageType.VENTILATION) {
                 this.ventilation = cropPeriod.getPeriod();
                 continue;
-            } else if (cropPeriod.getManage() == CropManageType.REPOT) {
+            } else if (cropPeriod.getManageType() == CropManageType.REPOT) {
                 this.repot = cropPeriod.getPeriod();
                 continue;
-            } else if (cropPeriod.getManage() == CropManageType.PRUNING) {
+            } else if (cropPeriod.getManageType() == CropManageType.PRUNING) {
                 this.pruning = cropPeriod.getPeriod();
             }
         }
