@@ -14,16 +14,14 @@ import MIN.DosiNongBu.domain.user.UserCrop;
 import MIN.DosiNongBu.domain.user.UserPlace;
 import MIN.DosiNongBu.domain.user.constant.*;
 import MIN.DosiNongBu.repository.crop.CropInformationRepository;
-import MIN.DosiNongBu.repository.crop.CropManageRepository;
+import MIN.DosiNongBu.repository.crop.CropManagementRepository;
 import MIN.DosiNongBu.repository.crop.CropPeriodRepository;
 import MIN.DosiNongBu.repository.crop.CropRepository;
 import MIN.DosiNongBu.repository.user.UserCropRepository;
 import MIN.DosiNongBu.repository.user.UserPlaceRepository;
 import MIN.DosiNongBu.repository.user.UserRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,8 @@ class CropServiceImplTest {
 
     @Autowired CropRepository cropRepository;
     @Autowired CropInformationRepository cropInformationRepository;
-    @Autowired CropManageRepository cropManageRepository;
+    @Autowired
+    CropManagementRepository cropManagementRepository;
     @Autowired CropPeriodRepository cropPeriodRepository;
 
     Crop crop;
@@ -104,7 +103,7 @@ class CropServiceImplTest {
                         "상추가 마르지 않도록 주기적으로 확인하고 필요한 경우, 키친타월을 촉촉하게 해서 수분을 조절해주세요.")
                 .build();
         cropManagement.setCrop(crop);
-        cropManageRepository.save(cropManagement);
+        cropManagementRepository.save(cropManagement);
 
         for(CropManageType cropManageType : CropManageType.values()){
             cropPeriod = CropPeriod.builder()

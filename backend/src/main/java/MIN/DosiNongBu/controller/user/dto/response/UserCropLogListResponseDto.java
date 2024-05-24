@@ -14,7 +14,7 @@ public class UserCropLogListResponseDto {
 
     public UserCropLogListResponseDto(UserCropLog entity) {
         this.cropLogId = entity.getCropLogId();
-        this.manage = entity.getManage();
+        this.manage = entity.getManageType();
         this.date = entity.getModifiedDate();
     }
 }

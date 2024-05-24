@@ -2,6 +2,7 @@ package MIN.DosiNongBu.domain.post;
 
 import MIN.DosiNongBu.domain.BaseTimeEntity;
 import MIN.DosiNongBu.domain.post.constant.PostType;
+import MIN.DosiNongBu.domain.post.constant.ReactionType;
 import MIN.DosiNongBu.domain.user.User;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -9,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +18,7 @@ import java.util.List;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
+@DynamicInsert
 @Table(name = "POSTS")
 public class Post extends BaseTimeEntity {
     /* PK */
@@ -32,7 +35,14 @@ public class Post extends BaseTimeEntity {
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<Comment>();
 
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<PostReport> postReports = new ArrayList<PostReport>();
+
     /* 속성 */
+    @Enumerated(EnumType.STRING)
+    @Column(name = "post_type")
+    private PostType postType;
+
     @Column(name = "title", nullable = false)
     private String title;
 
@@ -40,41 +50,59 @@ public class Post extends BaseTimeEntity {
     @Column(name = "content", nullable = false)
     private String content;
 
-    @ColumnDefault("0")
     @Column(name = "good")
-    private Long good;
+    private Long good = 0L;
 
-    @ColumnDefault("0")
     @Column(name = "bad")
-    private Long bad;
-
-    @Enumerated(EnumType.STRING)
-    @Column(name = "post_type")
-    private PostType post;
+    private Long bad = 0L;
 
     @ElementCollection
     @CollectionTable(name = "POSTS_IMAGES", joinColumns = @JoinColumn(name = "post_id"))
     @Column(name = "image_url")
-    private List<String> imageUrls = new ArrayList<>();
-
+    private List<String> imageUrls;
 
     @Builder
-    public Post(String title, String content, Long good, Long bad, PostType post, List<String> imageUrls) {
+    public Post(String title, String content, PostType postType, List<String> imageUrls) {
         this.title = title;
         this.content = content;
-        this.good = good;
-        this.bad = bad;
-        this.post = post;
+        this.postType = postType;
         this.imageUrls = imageUrls;
     }
 
+    public void setUser(User user) {
+        this.user = user;
+        user.getPosts().add(this);
+    }
 
     // 서비스 메서드
-    public void addImageUrl(String imageUrl) {
+    public void update(String title, String content, List<String> imageUrls){
+        this.title = title;
+        this.content = content;
+
         if (imageUrls.size() < 5) {
-            imageUrls.add(imageUrl);
+            this.imageUrls = imageUrls;
         } else {
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
+        }
+    }
+
+    public void addReaction(ReactionType reactionType){
+        if(reactionType == ReactionType.GOOD){
+            this.good++;
+        }
+        else{
+            this.bad++;
+        }
+    }
+
+    public void updateReaction(ReactionType reactionType){
+        if(reactionType == ReactionType.GOOD){
+            this.bad--;
+            this.good++;
+        }
+        else{
+            this.good--;
+            this.bad++;
         }
     }
 

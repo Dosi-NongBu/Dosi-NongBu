@@ -1,16 +1,12 @@
 package MIN.DosiNongBu.domain.user;
 
 import MIN.DosiNongBu.domain.BaseTimeEntity;
-import MIN.DosiNongBu.domain.crop.Crop;
 import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
-
-import java.time.LocalDateTime;
 
 @Getter @Setter
 @NoArgsConstructor
@@ -29,11 +25,12 @@ public class UserCropLog extends BaseTimeEntity {
 
     /* 속성 */
     @Column(name = "manage")
-    private CropManageType manage;
+    @Enumerated(EnumType.STRING)
+    private CropManageType manageType;
 
     @Builder
-    public UserCropLog(CropManageType manage) {
-        this.manage = manage;
+    public UserCropLog(CropManageType manageType) {
+        this.manageType = manageType;
     }
 
     public void setUserCrop(UserCrop userCrop) {

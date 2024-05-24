@@ -24,7 +24,8 @@ public class UserCropAlarm {
 
     /* 속성 */
     @Column(name = "manage")
-    private CropManageType manage;
+    @Enumerated(EnumType.STRING)
+    private CropManageType manageType;
 
     @Column(name = "period")
     private Integer period;
@@ -33,8 +34,8 @@ public class UserCropAlarm {
     private Boolean isAlarm;
 
     @Builder
-    public UserCropAlarm(CropManageType manage, Integer period, Boolean isAlarm) {
-        this.manage = manage;
+    public UserCropAlarm(CropManageType manageType, Integer period, Boolean isAlarm) {
+        this.manageType = manageType;
         this.period = period;
         this.isAlarm = isAlarm;
     }

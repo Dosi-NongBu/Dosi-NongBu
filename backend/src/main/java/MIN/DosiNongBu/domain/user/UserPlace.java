@@ -28,20 +28,20 @@ public class UserPlace {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "place", nullable = false)
+    @Enumerated(EnumType.STRING)
     private PlaceType place;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "direction", nullable = false)
+    @Enumerated(EnumType.STRING)
     private DirectionType direction;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "light", nullable = false)
+    @Enumerated(EnumType.STRING)
     private LightType light;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "quantity", nullable = false)
+    @Enumerated(EnumType.STRING)
     private QuantityType quantity;
 
     @Builder

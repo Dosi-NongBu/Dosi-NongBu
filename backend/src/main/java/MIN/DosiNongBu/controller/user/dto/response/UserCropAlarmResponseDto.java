@@ -1,6 +1,5 @@
 package MIN.DosiNongBu.controller.user.dto.response;
 
-import MIN.DosiNongBu.domain.crop.CropPeriod;
 import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import MIN.DosiNongBu.domain.user.UserCrop;
 import MIN.DosiNongBu.domain.user.UserCropAlarm;
@@ -27,19 +26,19 @@ public class UserCropAlarmResponseDto {
 
         List<UserCropAlarm> alarmEntity = entity.getUserCropAlarms();
         for(UserCropAlarm userCropAlarm : alarmEntity){
-            if (userCropAlarm.getManage() == CropManageType.WATER) {
+            if (userCropAlarm.getManageType() == CropManageType.WATER) {
                 this.isWaterAlarm = userCropAlarm.getIsAlarm();
                 this.water = userCropAlarm.getPeriod();
                 continue;
-            } else if (userCropAlarm.getManage() == CropManageType.VENTILATION) {
+            } else if (userCropAlarm.getManageType() == CropManageType.VENTILATION) {
                 this.isVentilationAlarm = userCropAlarm.getIsAlarm();
                 this.ventilation = userCropAlarm.getPeriod();
                 continue;
-            } else if (userCropAlarm.getManage() == CropManageType.REPOT) {
+            } else if (userCropAlarm.getManageType() == CropManageType.REPOT) {
                 this.isRepotAlarm = userCropAlarm.getIsAlarm();
                 this.repot = userCropAlarm.getPeriod();
                 continue;
-            } else if (userCropAlarm.getManage() == CropManageType.PRUNING) {
+            } else if (userCropAlarm.getManageType() == CropManageType.PRUNING) {
                 this.isPruningAlarm = userCropAlarm.getIsAlarm();
                 this.pruning = userCropAlarm.getPeriod();
             }
