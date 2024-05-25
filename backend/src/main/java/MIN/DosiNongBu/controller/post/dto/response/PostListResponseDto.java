@@ -21,26 +21,13 @@ public class PostListResponseDto {
 
     public PostListResponseDto(Post entity) {
         this.id = entity.getPostId();
-
-
-        if(entity.getUser().getNickname()==null){
-            this.author = entity.getUser().getName();
-        }
-        else{
-            this.author = entity.getUser().getNickname();
-        }
-
+        this.author = (entity.getUser().getNickname() != null) ? entity.getUser().getNickname() : entity.getUser().getName();
         this.profileImage = entity.getUser().getProfileImage();
         this.postType = entity.getPostType();
         this.title = entity.getTitle();
         this.content = entity.getContent();
         this.good = entity.getGood();
         this.bad = entity.getBad();
-
-        if (entity.getImageUrls() != null && !entity.getImageUrls().isEmpty()) {
-            this.imageUrl = entity.getImageUrls().get(0);
-        } else {
-            this.imageUrl = null;
-        }
+        this.imageUrl = (entity.getImageUrls() != null && !entity.getImageUrls().isEmpty()) ? entity.getImageUrls().get(0) : null;
     }
 }
