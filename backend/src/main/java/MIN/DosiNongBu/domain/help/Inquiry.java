@@ -25,7 +25,7 @@ public class Inquiry extends BaseTimeEntity {
 
     /* FK */
     @ManyToOne(fetch = FetchType.LAZY)
-    @Column(name = "user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     /* 속성 */
@@ -40,17 +40,17 @@ public class Inquiry extends BaseTimeEntity {
     @Column(name = "content")
     private String content;
 
+    @ElementCollection
+    @CollectionTable(name = "INQUIRYS_IMAGES", joinColumns = @JoinColumn(name = "inquiry_id"))
+    @Column(name = "image_url")
+    private List<String> imageUrls;
+
     @Column(name = "inquiry_status_type")
     private InquiryStatusType inquiryStatusType=InquiryStatusType.NO;
 
     @Lob
     @Column(name = "inquiry_answer")
     private String inquiryAnswer;
-
-    @ElementCollection
-    @CollectionTable(name = "INQUIRYS_IMAGES", joinColumns = @JoinColumn(name = "inquiry_id"))
-    @Column(name = "image_url")
-    private List<String> imageUrls;
 
     @Builder
     public Inquiry(InquiryType inquiryType, String title, String content, List<String> imageUrls) {

@@ -46,7 +46,7 @@ public class HelpServiceImpl implements HelpService{
 
     @Override
     public Long registerInquiry(Long userId, InquiryType inquiryType, InquirySaveRequestDto requestDto) {
-        Inquiry entity = requestDto.toEntity();
+        Inquiry entity = requestDto.toEntity(inquiryType);
 
         User user =  userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));

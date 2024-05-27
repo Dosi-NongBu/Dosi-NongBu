@@ -16,7 +16,7 @@ public class FaqListResponseDto {
 
     public FaqListResponseDto(Faq entity) {
         this.id = entity.getFaqId();
-        this.title = entity.getFaqAnswer();
+        this.title = entity.getFaqQuestion();
         this.modifiedDate = entity.getModifiedDate();
     }
 }

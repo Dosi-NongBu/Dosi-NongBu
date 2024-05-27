@@ -86,7 +86,7 @@ class UserCropManageServiceImplTest {
         log.debug("debug log= UserCropAlarm 저장");
         for(CropManageType type : CropManageType.values()){
             userCropAlarm = UserCropAlarm.builder()
-                    .manage(type)
+                    .manageType(type)
                     .period(4)
                     .isAlarm(true)
                     .build();
@@ -199,7 +199,7 @@ class UserCropManageServiceImplTest {
 
         for(CropManageType type : CropManageType.values()){
             UserCropLog userCropLog = UserCropLog.builder()
-                    .manage(type)
+                    .manageType(type)
                     .build();
 
             userCropLog.setUserCrop(userCrop);
@@ -243,7 +243,7 @@ class UserCropManageServiceImplTest {
 
         //given
         UserCropLog userCropLog = UserCropLog.builder()
-                .manage(CropManageType.WATER)
+                .manageType(CropManageType.WATER)
                 .build();
 
         userCropLog.setUserCrop(userCrop);

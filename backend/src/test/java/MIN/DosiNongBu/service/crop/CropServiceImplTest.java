@@ -107,7 +107,7 @@ class CropServiceImplTest {
 
         for(CropManageType cropManageType : CropManageType.values()){
             cropPeriod = CropPeriod.builder()
-                    .manage(cropManageType)
+                    .manageType(cropManageType)
                     .period(4)
                     .build();
             cropPeriod.setCrop(crop);

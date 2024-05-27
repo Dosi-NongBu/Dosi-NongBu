@@ -12,20 +12,18 @@ import java.util.List;
 @NoArgsConstructor
 public class InquirySaveRequestDto {
 
-    private InquiryType inquiryType;
     private String title;
     private String content;
     private List<String> imageUrls;
 
     @Builder
-    public InquirySaveRequestDto(InquiryType inquiryType, String title, String content, List<String> imageUrls) {
-        this.inquiryType = inquiryType;
+    public InquirySaveRequestDto(String title, String content, List<String> imageUrls) {
         this.title = title;
         this.content = content;
         this.imageUrls = imageUrls;
     }
 
-    public Inquiry toEntity(){
+    public Inquiry toEntity(InquiryType inquiryType){
         return Inquiry.builder()
                 .inquiryType(inquiryType)
                 .title(title)
