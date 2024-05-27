@@ -18,17 +18,11 @@ public class CommentListResponseDto {
 
     public CommentListResponseDto(Comment entity) {
         this.id = entity.getCommentId();
-
-        if(entity.getUser().getNickname()==null){
-            this.author = entity.getUser().getName();
-        }
-        else{
-            this.author = entity.getUser().getNickname();
-        }
-
+        this.author = (entity.getUser().getNickname() != null) ? entity.getUser().getNickname() : entity.getUser().getName();
         this.profileImage = entity.getUser().getProfileImage();
         this.content = entity.getContent();
         this.good = entity.getGood();
         this.bad = entity.getBad();
     }
+
 }
