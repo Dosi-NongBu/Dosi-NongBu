@@ -55,10 +55,10 @@ class UserServiceImplTest {
         log.debug("Debug : User Place 저장");
         userPlace = UserPlace.builder()
                 .name("My Place")
-                .place(PlaceType.TERRACE)
-                .direction(DirectionType.EAST)
-                .light(LightType.DIRECT)
-                .quantity(QuantityType.MANY)
+                .placeType(PlaceType.TERRACE)
+                .directionType(DirectionType.EAST)
+                .lightType(LightType.DIRECT)
+                .quantityType(QuantityType.MANY)
                 .build();
 
         userPlace.setUser(user);

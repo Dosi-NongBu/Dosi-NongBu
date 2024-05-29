@@ -61,10 +61,10 @@ class UserCropManageServiceImplTest {
         log.debug("Debug : UserPlace 저장");
         userPlace = UserPlace.builder()
                 .name("테스트 공간")
-                .place(PlaceType.VERANDA)
-                .direction(DirectionType.EAST)
-                .light(LightType.DIRECT)
-                .quantity(QuantityType.MANY)
+                .placeType(PlaceType.VERANDA)
+                .directionType(DirectionType.EAST)
+                .lightType(LightType.DIRECT)
+                .quantityType(QuantityType.MANY)
                 .build();
         userPlace.setUser(user);
         userPlaceRepository.save(userPlace);
