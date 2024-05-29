@@ -38,6 +38,6 @@ public class CropPeriod {
 
     public void setCrop(Crop crop) {
         this.crop = crop;
-        crop.getCropPeriod().add(this);
+        crop.getCropPeriods().add(this);
     }
 }

@@ -1,28 +1,35 @@
 package MIN.DosiNongBu.service.admin;
 
+import MIN.DosiNongBu.controller.admin.dto.request.*;
+import MIN.DosiNongBu.controller.admin.dto.response.UserListResponseDto;
+import MIN.DosiNongBu.controller.admin.dto.response.UserResponseDto;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
+
 public interface AdminService {
 
     // 신규 작물 등록
-    void registerNewCrop();
+    Long registerNewCrop(NewCropRequestDto requestDto);
     // 사용자 정보 목록 조회
-    void viewUserList();
+    List<UserListResponseDto> viewUserList(Pageable pageable);
     // 사용자 정보 조히
-    void viewUser();
+    UserResponseDto viewUser(Long userId);
     // 사용자 정보 추가
     void registerUser();
     // 사용자 정보 수정
-    void updateUser();
+    Long updateUser(Long userId, UserUpdateRequestDto requestDto);
     // 1:1 문의 답변 등록
-    void registerInquiryResponse();
+    Long registerInquiryAnswer(Long inquiryId, InquiryAnswerRequestDto requestDto);
     // 1:1 문의 답변 수정
-    void updateInquiryResponse();
+    void updateInquiryAnswer();
     // 공지사항 등록
-    void registerNotice();
+    Long registerNotice(NoticeSaveRequestDto requestDto);
     // 공지사항 수정
-    void updateNotice();
+    Long updateNotice(Long noticeId, NoticeUpdateRequestDto requestDto);
     // FAQ 등록
-    void registerFAQ();
+    Long registerFAQ(FaqSaveRequestDto requestDto);
     // FAQ 수정
-    void updateFAQ();
+    Long updateFAQ(Long faqId, FaqUpdateRequestDto requestDto);
 
 }

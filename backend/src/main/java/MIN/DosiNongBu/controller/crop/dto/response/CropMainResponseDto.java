@@ -30,7 +30,7 @@ public class CropMainResponseDto {
         this.humidity = cropEntity.getHumidity();
         this.month = cropEntity.getMonth();
 
-        List<CropPeriod> periodEntity = cropEntity.getCropPeriod();
+        List<CropPeriod> periodEntity = cropEntity.getCropPeriods();
         for(CropPeriod cropPeriod : periodEntity){
             if (cropPeriod.getManageType() == CropManageType.WATER) {
                 this.water = cropPeriod.getPeriod();

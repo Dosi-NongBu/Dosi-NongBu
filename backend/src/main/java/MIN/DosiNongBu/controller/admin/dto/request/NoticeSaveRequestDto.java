@@ -1,7 +1,7 @@
-package MIN.DosiNongBu.controller.post.dto.request;
+package MIN.DosiNongBu.controller.admin.dto.request;
 
-import MIN.DosiNongBu.domain.post.Post;
-import MIN.DosiNongBu.domain.post.constant.PostType;
+import MIN.DosiNongBu.domain.help.Notice;
+import MIN.DosiNongBu.domain.help.constant.NoticeType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,26 +10,28 @@ import java.util.List;
 
 @Getter
 @NoArgsConstructor
-public class PostSaveRequestDto {
+public class NoticeSaveRequestDto {
 
+    private NoticeType noticeType;
     private String title;
     private String content;
     private List<String> imageUrls;
 
     @Builder
-    public PostSaveRequestDto(String title, String content, List<String> imageUrls) {
+    public NoticeSaveRequestDto(NoticeType noticeType, String title, String content, List<String> imageUrls) {
+        this.noticeType = noticeType;
         this.title = title;
         this.content = content;
         this.imageUrls = imageUrls;
     }
 
-    public Post toEntity(PostType postType){
+    public Notice toEntity(){
         if(imageUrls.size()>5){
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
         }
 
-        return Post.builder()
-                .postType(postType)
+        return Notice.builder()
+                .noticeType(noticeType)
                 .title(title)
                 .content(content)
                 .imageUrls(imageUrls)

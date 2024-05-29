@@ -88,5 +88,9 @@ public class User extends BaseTimeEntity {
         this.profileImage = profileImage;
     }
 
-
+    // 관리자의 요청에 의한 정보 수정
+    public void fix(String nickname, String profileImage){
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+    }
 }

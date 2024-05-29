@@ -1,0 +1,7 @@
+package MIN.DosiNongBu.service.admin;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class AdminServiceImplTest {
+
+}

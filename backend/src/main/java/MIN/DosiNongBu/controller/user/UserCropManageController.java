@@ -59,9 +59,9 @@ public class UserCropManageController {
 
     // 내 작물 알림 수정
     @PutMapping("/alarms/{userCropId}")
-    public void UpdateUserCropAlarm(@PathVariable Long userCropId, UserCropAlarmUpdateRequestDto requestDto) {
+    public Long UpdateUserCropAlarm(@PathVariable Long userCropId, UserCropAlarmUpdateRequestDto requestDto) {
 
-        userCropManageService.updateUserCropAlarm(userCropId, requestDto);
+        return userCropManageService.updateUserCropAlarm(userCropId, requestDto);
     }
 
     // 내 작물 관리 타임라인 조회

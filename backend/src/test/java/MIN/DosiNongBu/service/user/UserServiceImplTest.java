@@ -155,10 +155,10 @@ class UserServiceImplTest {
 
         //then
         assertThat(savedUserPlace.getName()).isEqualTo("New Place 1");
-        assertThat(savedUserPlace.getPlace()).isEqualTo(PlaceType.TERRACE);
-        assertThat(savedUserPlace.getDirection()).isEqualTo(DirectionType.SOUTH);
-        assertThat(savedUserPlace.getLight()).isEqualTo(LightType.DIRECT);
-        assertThat(savedUserPlace.getQuantity()).isEqualTo(QuantityType.MANY);
+        assertThat(savedUserPlace.getPlaceType()).isEqualTo(PlaceType.TERRACE);
+        assertThat(savedUserPlace.getDirectionType()).isEqualTo(DirectionType.SOUTH);
+        assertThat(savedUserPlace.getLightType()).isEqualTo(LightType.DIRECT);
+        assertThat(savedUserPlace.getQuantityType()).isEqualTo(QuantityType.MANY);
     }
 
     @Test

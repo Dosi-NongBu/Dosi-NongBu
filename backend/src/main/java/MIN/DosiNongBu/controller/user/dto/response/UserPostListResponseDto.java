@@ -2,10 +2,12 @@ package MIN.DosiNongBu.controller.user.dto.response;
 
 import MIN.DosiNongBu.domain.post.Post;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
+@NoArgsConstructor
 public class UserPostListResponseDto {
     private Long id;
     private String title;
@@ -15,7 +17,6 @@ public class UserPostListResponseDto {
     private LocalDateTime modifiedDate;
     private Long good;
     private Long bad;
-
 
     public UserPostListResponseDto(Post entity) {
         this.id = entity.getPostId();

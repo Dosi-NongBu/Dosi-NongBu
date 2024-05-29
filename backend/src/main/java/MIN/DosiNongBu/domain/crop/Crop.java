@@ -27,7 +27,7 @@ public class Crop {
     private CropManagement cropManagement;
 
     @OneToMany(mappedBy = "crop", fetch = FetchType.LAZY)
-    private List<CropPeriod> cropPeriod= new ArrayList<>();
+    private List<CropPeriod> cropPeriods = new ArrayList<>();
 
     /* 속성 */
     @Column(name = "name")

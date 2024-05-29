@@ -79,7 +79,7 @@ public class Post extends BaseTimeEntity {
         this.title = title;
         this.content = content;
 
-        if (imageUrls.size() < 5) {
+        if (imageUrls.size() <= 5) {
             this.imageUrls = imageUrls;
         } else {
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
