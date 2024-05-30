@@ -23,7 +23,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -41,19 +43,27 @@ public class AdminServiceImpl implements AdminService{
     private final CropPeriodRepository cropPeriodRepository;
 
     @Override
+    @Transactional
     public Long registerNewCrop(NewCropRequestDto requestDto) {
         Crop crop = requestDto.toCropEntity();
         CropInformation cropInformation = requestDto.toCropInformationEntity();
         CropManagement cropManagement = requestDto.toCropManagementEntity();
         List<CropPeriod> cropPeriods = requestDto.toCropPeriodEntity();
 
+        cropInformation.setCrop(crop);
+        cropInformationRepository.save(cropInformation);
+
+        cropManagement.setCrop(crop);
+        cropManagementRepository.save(cropManagement);
+
+        for (CropPeriod cropPeriod : cropPeriods)
+            cropPeriod.setCrop(crop);
+        cropPeriodRepository.saveAll(cropPeriods);
+
         crop.setCropInformation(cropInformation);
         crop.setCropManagement(cropManagement);
         crop.setCropPeriods(cropPeriods);
         cropRepository.save(crop);
-        cropInformationRepository.save(cropInformation);
-        cropManagementRepository.save(cropManagement);
-        cropPeriodRepository.saveAll(cropPeriods);
 
         return crop.getCropId();
     }
@@ -74,20 +84,23 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    @Transactional
     public void registerUser() {
 
     }
 
     @Override
+    @Transactional
     public Long updateUser(Long userId, UserUpdateRequestDto requestDto) {
         User entity =  userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
-        entity.fix(requestDto.getNickname(), requestDto.getProfileImage());
+        entity.update(requestDto.getNickname(), requestDto.getProfileImage(), requestDto.getRoleType());
         return entity.getUserId();
     }
 
     @Override
+    @Transactional
     public Long registerInquiryAnswer(Long inquiryId, InquiryAnswerRequestDto requestDto) {
         Inquiry entity = inquiryRepository.findById(inquiryId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 문의입니다. inquiryId=" + inquiryId));
@@ -102,6 +115,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    @Transactional
     public Long registerNotice(NoticeSaveRequestDto requestDto) {
         Notice entity = requestDto.toEntity();
 
@@ -110,6 +124,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    @Transactional
     public Long updateNotice(Long noticeId, NoticeUpdateRequestDto requestDto) {
         Notice entity = noticeRepository.findById(noticeId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 공지사항입니다. noticeId=" + noticeId));
@@ -119,6 +134,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    @Transactional
     public Long registerFAQ(FaqSaveRequestDto requestDto) {
         Faq entity = requestDto.toEntity();
 
@@ -127,6 +143,7 @@ public class AdminServiceImpl implements AdminService{
     }
 
     @Override
+    @Transactional
     public Long updateFAQ(Long faqId, FaqUpdateRequestDto requestDto) {
         Faq entity = faqRepository.findById(faqId)
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 FAQ입니다. faqId=" + faqId));

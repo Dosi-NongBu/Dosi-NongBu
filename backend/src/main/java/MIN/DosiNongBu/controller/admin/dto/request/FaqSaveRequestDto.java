@@ -28,7 +28,7 @@ public class FaqSaveRequestDto {
     }
 
     public Faq toEntity(){
-        if(imageUrls.size()>5){
+        if(imageUrls != null && imageUrls.size()>5){
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
         }
 

@@ -31,10 +31,10 @@ public class PlaceSaveRequestDto {
     public UserPlace toEntity(){
         return UserPlace.builder()
                 .name(name)
-                .place(place)
-                .direction(direction)
-                .light(light)
-                .quantity(quantity)
+                .placeType(place)
+                .directionType(direction)
+                .lightType(light)
+                .quantityType(quantity)
                 .build();
     }
 }

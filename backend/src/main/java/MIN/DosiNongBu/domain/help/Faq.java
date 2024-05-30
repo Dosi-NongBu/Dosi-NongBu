@@ -53,10 +53,11 @@ public class Faq extends BaseTimeEntity {
         this.faqQuestion = question;
         this.faqAnswer = answer;
 
-        if (imageUrls.size() <= 5) {
-            this.imageUrls = imageUrls;
-        } else {
+        if(imageUrls != null && imageUrls.size()>5){
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
+        }
+        else{
+            this.imageUrls = imageUrls;
         }
     }
 

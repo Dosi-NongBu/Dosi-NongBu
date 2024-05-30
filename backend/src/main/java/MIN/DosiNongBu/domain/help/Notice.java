@@ -18,8 +18,7 @@ import java.util.List;
 @Table(name = "NOTICES")
 public class Notice extends BaseTimeEntity {
     /* PK */
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "notice_id")
     private Long noticeId;
 
@@ -54,10 +53,11 @@ public class Notice extends BaseTimeEntity {
         this.title = title;
         this.content = content;
 
-        if (imageUrls.size() <= 5) {
-            this.imageUrls = imageUrls;
-        } else {
+        if(imageUrls != null && imageUrls.size()>5){
             throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
+        }
+        else{
+            this.imageUrls = imageUrls;
         }
     }
 }
