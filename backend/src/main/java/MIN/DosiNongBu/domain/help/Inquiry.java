@@ -65,6 +65,16 @@ public class Inquiry extends BaseTimeEntity {
         this.inquiryType = inquiryType;
         this.title = title;
         this.content = content;
-        this.imageUrls = imageUrls;
+
+        if (imageUrls.size() <= 5) {
+            this.imageUrls = imageUrls;
+        } else {
+            throw new IllegalStateException("이미지 URL은 최대 5개까지만 저장할 수 있습니다.");
+        }
+    }
+
+    public void answer(InquiryStatusType inquiryStatusType, String inquiryAnswer){
+        this.inquiryStatusType = inquiryStatusType;
+        this.inquiryAnswer = inquiryAnswer;
     }
 }

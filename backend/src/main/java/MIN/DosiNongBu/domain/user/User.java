@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,5 +89,10 @@ public class User extends BaseTimeEntity {
         this.profileImage = profileImage;
     }
 
-
+    // 관리자의 요청에 의한 정보 수정
+    public void update(String nickname, String profileImage, RoleType roleType){
+        this.nickname = nickname;
+        this.profileImage = profileImage;
+        this.role = roleType;
+    }
 }

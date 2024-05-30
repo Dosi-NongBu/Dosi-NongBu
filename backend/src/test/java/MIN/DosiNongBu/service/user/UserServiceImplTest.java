@@ -55,10 +55,10 @@ class UserServiceImplTest {
         log.debug("Debug : User Place 저장");
         userPlace = UserPlace.builder()
                 .name("My Place")
-                .place(PlaceType.TERRACE)
-                .direction(DirectionType.EAST)
-                .light(LightType.DIRECT)
-                .quantity(QuantityType.MANY)
+                .placeType(PlaceType.TERRACE)
+                .directionType(DirectionType.EAST)
+                .lightType(LightType.DIRECT)
+                .quantityType(QuantityType.MANY)
                 .build();
 
         userPlace.setUser(user);
@@ -155,10 +155,10 @@ class UserServiceImplTest {
 
         //then
         assertThat(savedUserPlace.getName()).isEqualTo("New Place 1");
-        assertThat(savedUserPlace.getPlace()).isEqualTo(PlaceType.TERRACE);
-        assertThat(savedUserPlace.getDirection()).isEqualTo(DirectionType.SOUTH);
-        assertThat(savedUserPlace.getLight()).isEqualTo(LightType.DIRECT);
-        assertThat(savedUserPlace.getQuantity()).isEqualTo(QuantityType.MANY);
+        assertThat(savedUserPlace.getPlaceType()).isEqualTo(PlaceType.TERRACE);
+        assertThat(savedUserPlace.getDirectionType()).isEqualTo(DirectionType.SOUTH);
+        assertThat(savedUserPlace.getLightType()).isEqualTo(LightType.DIRECT);
+        assertThat(savedUserPlace.getQuantityType()).isEqualTo(QuantityType.MANY);
     }
 
     @Test
