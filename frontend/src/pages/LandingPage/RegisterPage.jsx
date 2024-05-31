@@ -23,7 +23,6 @@ const RegisterPage = () => {
       password,
       name,
     };
-    console.log(body);
     dispatch(registerUser(body));
     alert("회원가입 되었습니다.");
     nav("/login");

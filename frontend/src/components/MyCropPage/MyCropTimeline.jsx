@@ -11,7 +11,6 @@ const MyCropTimeline = ({ timeline, onDeleteTimeline }) => {
 
   const handleNewPage = (newPage) => {
     setNowPage(newPage);
-    console.log("new page = ", newPage);
   };
 
   return (

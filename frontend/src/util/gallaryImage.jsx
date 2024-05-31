@@ -15,6 +15,5 @@ export const makeOriginalThumbnail = (initialData) => {
 
 export const makeSendImage = (data) => {
   const imageURLs = data.map((obj) => obj.original);
-  console.log("변환됨 ", imageURLs);
   return imageURLs;
 };

@@ -39,7 +39,6 @@ export const logoutUser = createAsyncThunk(
   async (body, thunkAPI) => {
     try {
       const response = await axios.post(`/api/v1/auth/logout`, body);
-      // console.log(response.data, " 로그아웃 백엔드");
       return response.data; // 백엔드에서 받아온 값
     } catch (error) {
       console.log(error);

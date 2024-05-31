@@ -23,7 +23,6 @@ const DetailInfoContainer = () => {
       const response = await getCropDetailInfo(Number(cropId));
       const mainInfo = await getCropMainInfo(Number(cropId));
       if (response && mainInfo) {
-        console.log("mainInfo = ", mainInfo);
         setData({ ...response, ...mainInfo });
       }
     };

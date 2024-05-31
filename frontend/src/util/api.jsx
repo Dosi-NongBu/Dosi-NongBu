@@ -3,11 +3,9 @@ import { makeOriginalThumbnail, makeSendImage } from "./gallaryImage";
 
 // 전체 작물 목록 조회
 export const getCropList = async (page, size) => {
-  console.log(page, ", ", size);
   try {
     const response = await axios.get(`/api/v1/crops?page=${page}&size=${size}`);
     if (response.status === 200) {
-      console.log("api response = ", response);
       return response.data;
     }
   } catch (error) {
@@ -93,16 +91,7 @@ export const getExistingUserSpace = async (page, size) => {
       }
     );
 
-    // console.log("existing space ", response);
     if (response.status === 200 || response.status === 201) {
-      console.log(response.data, " is data");
-      // const newSpaces = response.data.places.map((place, index) => ({
-      //   id: index + 1,
-      //   name: place.name,
-      // }));
-      // console.log("new spaces = ", newSpaces);
-
-      // return newSpaces;
       return response.data;
     }
   } catch (error) {
@@ -120,7 +109,6 @@ export const postNewUserPlace = async (newPlace) => {
     lightType: newPlace.lightType,
     quantityType: newPlace.quantityType,
   };
-  console.log(aa, "is aa");
 
   try {
     const response = await axios.post(
@@ -163,19 +151,6 @@ export const deleteUserSpace = async (placeId) => {
 
 // 최종 사용자 작물 전송
 export const postMyCrop = async (cropInfo, cropId) => {
-  // try {
-  //   const response = await axios.post(`/api/v1/crops/${cropInfo.cropId}/add`, {
-  //     cropId: cropInfo.cropId,
-  //     userPlaceId: Number(cropInfo.userPlaceId),
-  //     name: cropInfo.name,
-  //     nickname: cropInfo.nickname,
-  //   });
-  //   if (response.status === 200) {
-  //     console.log("작물 추가 성공");
-  //   }
-  // } catch (error) {
-  //   console.log(error);
-  // }
   try {
     const response = await axios.post(`/api/v1/crops/${cropId}/grow`, cropInfo);
     if (response.status === 200 || response.status === 201) {
@@ -258,9 +233,6 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
     const response = await axios.delete(
       `/api/v1/manages/${userCropId}/${cropLogId}`
     );
-    if (response.status === 200 || response.data === 201) {
-      console.log("삭제 잘 됨 ..");
-    }
   } catch (error) {
     console.log(error);
   }
@@ -341,9 +313,7 @@ export const getUserProfile = async () => {
         Authorization: jwt,
       },
     });
-    console.log("status = ", response.status);
     if (response.status === 200) {
-      console.log(response.data);
       return response.data;
     }
   } catch (e) {
@@ -361,7 +331,7 @@ export const putUserProfile = async (data) => {
       },
     });
 
-    console.log("profile chagned response ", response);
+    console.log("사용자 정보 수정", response);
   } catch (error) {
     console.log(error);
   }

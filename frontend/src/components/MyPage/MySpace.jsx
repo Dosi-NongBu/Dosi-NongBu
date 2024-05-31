@@ -7,11 +7,7 @@ const MySpace = () => {
     <div className="mySpace">
       <div className="mySpace-container">
         <h2>내 공간 보기</h2>
-        <SpaceBoxArea
-          onSelectSpace={() => {
-            console.log("clicked");
-          }}
-        />
+        <SpaceBoxArea onSelectSpace={() => {}} />
       </div>
     </div>
   );

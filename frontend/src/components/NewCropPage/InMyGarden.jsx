@@ -42,12 +42,7 @@ const InMyGarden = ({ cropId, name }) => {
     setCurStep(curStep + 1);
     // api 호출해서 전송
 
-    // const response = await postMyCrop(cropInfo);
-
     const send = {
-      // userPlaceId: 1,
-      // name: "임시",
-      // nickname: "닉네임",
       ...cropInfo,
       name: name,
       period: 10,
@@ -56,15 +51,9 @@ const InMyGarden = ({ cropId, name }) => {
       minTemperature: 20,
       humidity: 50,
     };
-    console.log("send , ", send);
-    console.log("dfa ", name);
 
     await postMyCrop(send, Number(cropId));
   };
-
-  // useEffect(() => {
-  //   console.log("changed , ", cropInfo);
-  // }, [cropInfo]);
 
   return (
     <div className="newSpace">

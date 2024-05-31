@@ -13,10 +13,8 @@ const MyCropContainer = () => {
     const fetchData = async () => {
       const response = await getUserCropAll();
       setData(response);
-      console.log("re = ", response);
     };
     fetchData();
-    // console.log("data=///  ", data);
   }, []);
 
   return (

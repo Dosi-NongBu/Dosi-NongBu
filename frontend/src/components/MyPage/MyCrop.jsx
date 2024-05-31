@@ -7,22 +7,13 @@ import CropBoxArea from "../common/CropBoxArea";
 const MyCrop = () => {
   const [myCrop, setMyCrop] = useState();
   useEffect(() => {
-    // const response = mockData6();
-    // console.log("data = ", response);
-    // setMyCrop(response);
-
     const fetchData = async () => {
       const data = await getUserCropAll();
-      console.log("data,,", data);
       setMyCrop(data);
     };
 
     fetchData();
   }, []);
-
-  // useEffect(() => {
-  //   console.log(myCrop, " -> myCrpo");
-  // }, [myCrop]);
 
   return (
     <div className="myCrop">

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { AiOutlineBell } from "react-icons/ai";
-import Modal from "react-modal";
 import "react-image-gallery/styles/css/image-gallery.css";
 import "./style/MyCropDetailContainer.css";
 
@@ -83,7 +82,7 @@ const MyCropDetailContainer = ({ userCropId }) => {
         thumbnail: filePath,
       };
       const newImages = [...cropData.imageUrls, newImage];
-      console.log("new images = ", newImages);
+      console.log("전송 이미지 = ", newImages);
       setCropData({ ...cropData, imageUrls: newImages });
 
       await postUserCropImage(Number(userCropId), newImages);

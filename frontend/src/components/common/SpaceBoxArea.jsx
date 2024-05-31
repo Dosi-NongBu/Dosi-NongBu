@@ -73,7 +73,7 @@ const SpaceBoxArea = ({ onSelectSpace }) => {
     setSpaceData([...spaceData, newSpace]);
     setNewSpace({});
 
-    console.log("새 함수에서 추가될 공간", newSpace);
+    console.log("추가 공간", newSpace);
 
     await postNewUserPlace(newSpace); // 백엔드에 공간 추가 요청
     fetchUserSpace(); // 최신 사용자 공간 데이터 불러오기
@@ -81,7 +81,6 @@ const SpaceBoxArea = ({ onSelectSpace }) => {
 
   // 공간을 삭제하는 함수
   async function handleDeleteUserSpace(spaceId) {
-    console.log("delete space id = ", spaceId);
     await deleteUserSpace(Number(spaceId)); // 백엔드에 공간 삭제 요청
     fetchUserSpace(); // 최신 사용자 공간 데이터 불러오기
   }

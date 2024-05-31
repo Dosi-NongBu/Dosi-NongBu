@@ -4,7 +4,6 @@ import MyCropDetailContainer from "../../components/MyCropPage/MyCropDetailConta
 
 const MyCropDetailPage = () => {
   const { cropId } = useParams();
-  console.log("id ==== ", cropId);
   return (
     <div>
       <MyCropDetailContainer userCropId={cropId} />

@@ -21,9 +21,7 @@ const CropBoxContainer = ({ type }) => {
     let response;
 
     if (type === "search") {
-      console.log("page=", page, ", size=", size);
       response = await getCropList(page, size);
-      console.log(" crop response ====", response);
       // response = mockData();
     } else if (type === "recommend") {
       response = await getRecommendCropList(page, size);

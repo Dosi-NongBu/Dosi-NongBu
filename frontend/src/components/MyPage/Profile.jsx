@@ -33,7 +33,7 @@ const Profile = () => {
     setOnEdit(!onEdit);
 
     putUserProfile(user);
-    console.log(user);
+    console.log("새 사용자 = ", user);
   };
 
   const onChangeProfile = (e) => {
@@ -55,7 +55,6 @@ const Profile = () => {
     const file = event.target.files[0];
     if (file) {
       const filePath = URL.createObjectURL(file);
-      console.log(filePath);
       setUser((prevUser) => ({
         ...prevUser,
         profileImage: filePath,
