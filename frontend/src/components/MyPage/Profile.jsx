@@ -120,28 +120,28 @@ const Profile = () => {
             </div>
             <div className="each-profile">
               <span>이름</span>
-              <input name="name" value={user.name} disabled />
+              <input name="name" value={user.name || ""} disabled />
             </div>
 
             <div className="each-profile">
               <span>닉네임</span>
               <input
                 name="nickname"
-                value={user.nickname}
+                value={user.nickname || ""}
                 onChange={onChangeProfile}
               />
             </div>
 
             <div className="each-profile">
               <span>이메일</span>
-              <input name="email" value={user.email} disabled />
+              <input name="email" value={user.email || ""} disabled />
             </div>
 
             <div className="each-profile">
               <span>주소</span>
               <input
                 name="address"
-                value={user.address}
+                value={user.address || ""}
                 onChange={onChangeProfile}
               />
             </div>

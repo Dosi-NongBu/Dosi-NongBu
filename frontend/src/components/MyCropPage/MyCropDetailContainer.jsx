@@ -42,8 +42,8 @@ const MyCropDetailContainer = ({ userCropId }) => {
 
   // 로딩 시
   useEffect(() => {
-    fetchTimeline();
-    fetchData();
+    // fetchTimeline();
+    // fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
