@@ -13,21 +13,8 @@ export const makeOriginalThumbnail = (initialData) => {
   return updatedData;
 };
 
-export const makeSendImage = (imageUrls) => {
-  console.log("image Urls -> ", imageUrls);
-  const formattedData = imageUrls.map((url, index) => ({
-    imageUrl: url.original,
-  }));
-  console.log("send data ", formattedData);
-  return formattedData;
-
-  // const imageURL = {
-  //   img1URL: null,
-  //   img2URL: null,
-  //   img3URL: null,
-  //   img4URL: null,
-  //   img5URL: null,
-  // };
-
-  // return imageURL;
+export const makeSendImage = (data) => {
+  const imageURLs = data.map((obj) => obj.original);
+  console.log("변환됨 ", imageURLs);
+  return imageURLs;
 };

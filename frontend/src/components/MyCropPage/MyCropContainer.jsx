@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import "./style/MyCropContainer.css";
 import Banner from "../common/Banner";
-import MyCropBoxArea from "../common/MyCropBoxArea";
 
-import { mockData6 } from "../../util/api";
+import { getUserCropAll, mockData6 } from "../../util/api";
+import CropBoxArea from "../common/CropBoxArea";
 
 const MyCropContainer = () => {
+  const [data, setData] = useState(mockData6());
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await getUserCropAll();
+      setData(response);
+      console.log("re = ", response);
+    };
+    fetchData();
+    // console.log("data=///  ", data);
+  }, []);
+
   return (
     <div className="myCropContainer">
       <Banner title={"내 작물 관리"} subTitle={"내 작물을 관리해보세요."} />
@@ -14,7 +26,7 @@ const MyCropContainer = () => {
       <div className="myCrop-wrapper">
         <div className="myCropArea">
           <h2> 내 작물 목록</h2>
-          {<MyCropBoxArea data={mockData6()} />}
+          <CropBoxArea data={data} type={"MY"} />
         </div>
       </div>
     </div>

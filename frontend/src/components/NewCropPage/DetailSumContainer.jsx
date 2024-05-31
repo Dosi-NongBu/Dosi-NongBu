@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 
 import { IoStar } from "react-icons/io5";
 
-import { mockData2, getCropBasicInfo } from "../../util/api.jsx";
+import {
+  mockData2,
+  getCropBasicInfo,
+  getCropMainInfo,
+} from "../../util/api.jsx";
 import "./style/DetailSumContainer.css";
 
 const DetailSumContainer = () => {
@@ -13,9 +17,10 @@ const DetailSumContainer = () => {
   useEffect(() => {
     const fetchData = async () => {
       // const response = mockData2(cropId);
-      const response = await getCropBasicInfo(Number(cropId));
+      const response = await getCropMainInfo(Number(cropId));
       if (response) {
         setCropData(response);
+        console.log("basic info ", response);
       }
     };
     fetchData();
@@ -33,15 +38,12 @@ const DetailSumContainer = () => {
           <div className="each-info">
             <div className="each-title">난이도</div>
             <div className="each-content">
-              {Array.from({ length: cropData.difficultyType }, (_, index) => (
+              {Array.from({ length: cropData.difficulty }, (_, index) => (
                 <IoStar key={index} size="25px" color="#ED988F" />
               ))}
-              {Array.from(
-                { length: 5 - cropData.difficultyType },
-                (_, index) => (
-                  <IoStar key={index} size="25px" color="#d9d9d9" />
-                )
-              )}
+              {Array.from({ length: 5 - cropData.difficulty }, (_, index) => (
+                <IoStar key={index} size="25px" color="#d9d9d9" />
+              ))}
             </div>
           </div>
 

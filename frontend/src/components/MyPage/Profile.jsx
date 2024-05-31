@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDropzone } from "react-dropzone";
-
+import { CgProfile } from "react-icons/cg";
 import "./style/Profile.css";
 import Button from "../common/Button";
 import { getUserProfile, putUserProfile } from "../../util/api";
@@ -9,14 +8,7 @@ const Profile = () => {
   const fileInputRef = useRef(null);
 
   // API로 가져올 것
-  const [user, setUser] = useState({
-    name: "name",
-    nickname: "nickname",
-    email: "idkhm0728@naver.com",
-    address: "경기도 용인시 기흥구",
-    profileImage: "../../../public/vite.svg",
-    provider: "DEFAULT",
-  });
+  const [user, setUser] = useState({});
 
   const [changed, setChanged] = useState({
     name: false,
@@ -40,41 +32,17 @@ const Profile = () => {
   const sendEdittedData = async () => {
     setOnEdit(!onEdit);
 
-    const newData = Object.keys(changed).reduce((acc, key) => {
-      if (changed[key] === true) {
-        acc[key] = user[key];
-      }
-      return acc;
-    }, {});
-    console.log("new Data = ", newData);
-
-    putUserProfile(newData);
+    putUserProfile(user);
+    console.log(user);
   };
 
   const onChangeProfile = (e) => {
     const { name, value } = e.target;
-
-    setChanged((prevChanged) => ({
-      ...prevChanged,
-      [name]: true,
-    }));
-
     setUser((prevUser) => ({
       ...prevUser,
-      [name]: value,
+      [name]: value, // 입력 필드의 name 속성에 따라 user 객체 업데이트
     }));
   };
-
-  // const { getRootProps, getInputProps } = useDropzone({
-  //   onDrop: (acceptedFiles) => {
-  //     console.log(acceptedFiles);
-  //     // 파일 업로드 로직 추가
-  //     setUser((prevUser) => ({
-  //       ...prevUser,
-  //       profileImage: acceptedFiles,
-  //     }));
-  //   },
-  // });
 
   // 이미지 클릭 시 파일 입력 요소를 클릭하는 함수
   const handleImageClick = () => {
@@ -93,10 +61,6 @@ const Profile = () => {
         profileImage: filePath,
       }));
     }
-    setChanged((prevChanged) => ({
-      ...prevChanged,
-      profileImage: true,
-    }));
   };
 
   return (
@@ -114,6 +78,7 @@ const Profile = () => {
                 }}
               />
             </div>
+
             <div className="each-profile">
               <span>이름</span>
               <span>{user.name}</span>
@@ -135,7 +100,11 @@ const Profile = () => {
             </div>
           </div>
           <div className="profile-image">
-            <img src={user.profileImage} />
+            {user.profileImage ? (
+              <img src={user.profileImage} alt="프로필 이미지" />
+            ) : (
+              <CgProfile size={150} />
+            )}
           </div>
         </div>
       )}{" "}
@@ -152,7 +121,7 @@ const Profile = () => {
             </div>
             <div className="each-profile">
               <span>이름</span>
-              <input name="name" value={user.name} onChange={onChangeProfile} />
+              <input name="name" value={user.name} disabled />
             </div>
 
             <div className="each-profile">
@@ -166,11 +135,7 @@ const Profile = () => {
 
             <div className="each-profile">
               <span>이메일</span>
-              <input
-                name="email"
-                value={user.email}
-                onChange={onChangeProfile}
-              />
+              <input name="email" value={user.email} disabled />
             </div>
 
             <div className="each-profile">
@@ -192,12 +157,12 @@ const Profile = () => {
               className="file-input"
               style={{ display: "none" }} // 파일 입력 요소를 숨김
             />
-            <img
-              src={user.profileImage}
-              alt="Profile"
-              onClick={handleImageClick}
-              style={{ cursor: "pointer" }} // 커서가 포인터 모양으로 변경
-            />
+            <div className="image-container" onClick={handleImageClick}>
+              <img src={user.profileImage} />
+              <div className="overlay">
+                <span className="plus-icon">+</span>
+              </div>
+            </div>
           </div>
         </div>
       )}

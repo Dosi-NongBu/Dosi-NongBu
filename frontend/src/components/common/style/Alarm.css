@@ -39,8 +39,8 @@
 }
 
 [type="checkbox"]:checked {
-  background-color: tomato;
-  border-color: tomato;
+  background-color: #ed988f;
+  border-color: #ed988f;
 }
 
 [type="checkbox"]:enabled:hover {
@@ -52,13 +52,17 @@
 .alarm {
   width: 100%;
   margin-bottom: 50px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
 }
 
 .alarm .each-alarm {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 20px;
+  gap: 30px;
 }
 
 .alarm .each-alarm input[type="number"] {

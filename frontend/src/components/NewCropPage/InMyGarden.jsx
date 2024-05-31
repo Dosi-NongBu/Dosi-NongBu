@@ -10,7 +10,7 @@ import SpaceBoxArea from "../common/SpaceBoxArea";
 
 import { postMyCrop } from "../../util/api";
 
-const InMyGarden = ({ cropId }) => {
+const InMyGarden = ({ cropId, name }) => {
   const nav = useNavigate();
   const [curStep, setCurStep] = useState(2); // 현재 단계
   const [cropInfo, setCropInfo] = useState({ cropId: Number(cropId) });
@@ -42,8 +42,24 @@ const InMyGarden = ({ cropId }) => {
     setCurStep(curStep + 1);
     // api 호출해서 전송
 
-    console.log("send , ", cropInfo);
-    const response = await postMyCrop(cropInfo);
+    // const response = await postMyCrop(cropInfo);
+
+    const send = {
+      // userPlaceId: 1,
+      // name: "임시",
+      // nickname: "닉네임",
+      ...cropInfo,
+      name: name,
+      period: 10,
+      perPeriod: 10,
+      maxTemperature: 40,
+      minTemperature: 20,
+      humidity: 50,
+    };
+    console.log("send , ", send);
+    console.log("dfa ", name);
+
+    await postMyCrop(send, Number(cropId));
   };
 
   // useEffect(() => {
@@ -68,14 +84,6 @@ const InMyGarden = ({ cropId }) => {
       {cropInfo["userPlaceId"] && curStep === 2 && (
         <Button title="등록하기" onClick={handleSubmitButton} />
       )}
-      {/* {curStep === 3 && (
-        <>
-          <h2>알림설정</h2>
-          <h3>알림을 설정하고 식물 관리를 놓치지 마세요!</h3>
-
-          <Alarm onSubmitButton={handleSubmitButton} />
-        </>
-      )} */}
       {curStep === 3 && (
         <>
           <h2>작물 등록을 완료하였습니다!</h2>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 
 import "./style/MyCrop.css";
-import MyCropBoxArea from "../common/MyCropBoxArea";
 import { getUserCropAll, mockData6 } from "../../util/api";
+import CropBoxArea from "../common/CropBoxArea";
 
 const MyCrop = () => {
   const [myCrop, setMyCrop] = useState();
@@ -13,6 +13,7 @@ const MyCrop = () => {
 
     const fetchData = async () => {
       const data = await getUserCropAll();
+      console.log("data,,", data);
       setMyCrop(data);
     };
 
@@ -28,7 +29,7 @@ const MyCrop = () => {
       <div className="myCrop-container">
         <h2> 내 작물 모아보기</h2>
         {!myCrop && <h3>키우는 작물이 없습니다.</h3>}
-        {myCrop && <MyCropBoxArea data={myCrop} />}
+        {myCrop && <CropBoxArea data={myCrop} type="MY" />}
       </div>
     </div>
   );

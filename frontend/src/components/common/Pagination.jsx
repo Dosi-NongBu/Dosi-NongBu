@@ -7,42 +7,44 @@ const Pagination = ({ totalPage, nowPage, onClick }) => {
   return (
     <div className="pagination">
       <div className="number-conatiner">
-        <button
-          className="pagination-button"
-          onClick={() => {
-            if (page > 1) {
-              onClick(page - 1);
-              setPage(page - 1);
-            }
-          }}
-        >
-          {"<"}
-        </button>
-        {Array.from({ length: totalPage }, (_, index) => (
+        <div className="number-button">
           <button
-            className={`pagination-button ${
-              index + 1 === nowPage ? "active" : ""
-            }`}
-            key={index}
+            className="pagination-button"
             onClick={() => {
-              onClick(index + 1);
-              setPage(index + 1);
+              if (page > 1) {
+                onClick(page - 1);
+                setPage(page - 1);
+              }
             }}
           >
-            {index + 1}
+            {"<"}
           </button>
-        ))}
-        <button
-          className="pagination-button"
-          onClick={() => {
-            if (page < totalPage) {
-              onClick(page + 1);
-              setPage(page + 1);
-            }
-          }}
-        >
-          {">"}
-        </button>
+          {Array.from({ length: totalPage }, (_, index) => (
+            <button
+              className={`pagination-button ${
+                index + 1 === nowPage ? "active" : ""
+              }`}
+              key={index}
+              onClick={() => {
+                onClick(index + 1);
+                setPage(index + 1);
+              }}
+            >
+              {index + 1}
+            </button>
+          ))}
+          <button
+            className="pagination-button"
+            onClick={() => {
+              if (page < totalPage) {
+                onClick(page + 1);
+                setPage(page + 1);
+              }
+            }}
+          >
+            {">"}
+          </button>
+        </div>
       </div>
     </div>
   );

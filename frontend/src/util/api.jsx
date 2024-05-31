@@ -3,9 +3,11 @@ import { makeOriginalThumbnail, makeSendImage } from "./gallaryImage";
 
 // 전체 작물 목록 조회
 export const getCropList = async (page, size) => {
+  console.log(page, ", ", size);
   try {
     const response = await axios.get(`/api/v1/crops?page=${page}&size=${size}`);
     if (response.status === 200) {
+      console.log("api response = ", response);
       return response.data;
     }
   } catch (error) {
@@ -53,6 +55,19 @@ export const getCropBasicInfo = async (cropId) => {
   }
 };
 
+//cropId 에 해당하는 메인 정보 조회
+export const getCropMainInfo = async (cropId) => {
+  try {
+    const response = await axios.get(`/api/v1/crops/${cropId}/main`);
+
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // cropId에 해당하는 상세정보 조회
 export const getCropDetailInfo = async (cropId) => {
   try {
@@ -79,13 +94,16 @@ export const getExistingUserSpace = async (page, size) => {
     );
 
     // console.log("existing space ", response);
-    if (response.data === 200) {
-      const newSpaces = response.data.places.map((place, index) => ({
-        id: index + 1,
-        name: place.name,
-      }));
+    if (response.status === 200 || response.status === 201) {
+      console.log(response.data, " is data");
+      // const newSpaces = response.data.places.map((place, index) => ({
+      //   id: index + 1,
+      //   name: place.name,
+      // }));
+      // console.log("new spaces = ", newSpaces);
 
-      return newSpaces;
+      // return newSpaces;
+      return response.data;
     }
   } catch (error) {
     console.error(error);
@@ -95,23 +113,25 @@ export const getExistingUserSpace = async (page, size) => {
 // 새 공간 추가 함수
 export const postNewUserPlace = async (newPlace) => {
   const jwt = localStorage.getItem("accessToken");
-  // const aa = {
-  //   name: newPlace.name,
-  //   placeType: newPlace.placeType,
-  //   directionType: newPlace.directionType,
-  //   lightType: newPlace.lightType,
-  //   quantityType: newPlace.quantityType,
-  // };
+  const aa = {
+    name: newPlace.name,
+    placeType: newPlace.placeType,
+    directionType: newPlace.directionType,
+    lightType: newPlace.lightType,
+    quantityType: newPlace.quantityType,
+  };
+  console.log(aa, "is aa");
 
   try {
     const response = await axios.post(
       `/api/v1/userplaces`,
       {
-        name: newPlace.name,
-        placeType: newPlace.placeType,
-        direction: newPlace.directionType,
-        light: newPlace.lightType,
-        quantity: newPlace.quantityType,
+        // name: newPlace.name,
+        // placeType: newPlace.placeType,
+        // direction: newPlace.directionType,
+        // light: newPlace.lightType,
+        // quantity: newPlace.quantityType,
+        aa,
       },
       {
         headers: {
@@ -128,17 +148,38 @@ export const postNewUserPlace = async (newPlace) => {
   }
 };
 
-// 최종 사용자 작물 전송
-export const postMyCrop = async (cropInfo) => {
+// 사용자 공간 삭제 함수
+export const deleteUserSpace = async (placeId) => {
   try {
-    const response = await axios.post(`/api/v1/crops/${cropInfo.cropId}/add`, {
-      cropId: cropInfo.cropId,
-      userPlaceId: Number(cropInfo.userPlaceId),
-      name: cropInfo.name,
-      nickname: cropInfo.nickname,
-    });
-    if (response.status === 200) {
-      console.log("작물 추가 성공");
+    const response = await axios.delete(`/api/v1/userplaces/${placeId}`);
+
+    if (response.status === 200 || response.status === 201) {
+      console.log("사용자 공간 삭제됨");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 최종 사용자 작물 전송
+export const postMyCrop = async (cropInfo, cropId) => {
+  // try {
+  //   const response = await axios.post(`/api/v1/crops/${cropInfo.cropId}/add`, {
+  //     cropId: cropInfo.cropId,
+  //     userPlaceId: Number(cropInfo.userPlaceId),
+  //     name: cropInfo.name,
+  //     nickname: cropInfo.nickname,
+  //   });
+  //   if (response.status === 200) {
+  //     console.log("작물 추가 성공");
+  //   }
+  // } catch (error) {
+  //   console.log(error);
+  // }
+  try {
+    const response = await axios.post(`/api/v1/crops/${cropId}/grow`, cropInfo);
+    if (response.status === 200 || response.status === 201) {
+      console.log("작물 등록 성공");
     }
   } catch (error) {
     console.log(error);
@@ -157,7 +198,8 @@ export const getUserCropAll = async () => {
       },
     });
 
-    if (response.status === 201) {
+    if (response.status === 201 || response.status === 200) {
+      console.log("response = ", response);
       return response.data;
     }
   } catch (e) {
@@ -175,9 +217,8 @@ export const getUserCropDetail = async (userCropId) => {
       },
     });
 
-    if (response.status === 201) {
-      console.log(response.data);
-      return makeOriginalThumbnail(response.data);
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
     }
   } catch (e) {
     console.log(e);
@@ -229,6 +270,7 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
 export const postUserCropImage = async (userCropId, cropImages) => {
   const jwt = localStorage.getItem("accessToken");
   const sendData = makeSendImage(cropImages);
+
   try {
     const response = await axios.post(
       `/api/v1/images/${userCropId}`,
@@ -399,7 +441,8 @@ export const mockData5 = () => {
 };
 
 export const mockSend1 = (imageUrls) => {
-  console.log(makeSendImage(imageUrls));
+  // console.log(makeSendImage(imageUrls));
+  console.log(imageUrls);
 };
 
 export const mockData6 = () => {

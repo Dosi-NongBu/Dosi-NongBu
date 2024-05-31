@@ -2,6 +2,16 @@
   margin: 50px;
 }
 
+.pagination .number-container {
+  display: flex;
+  justify-content: center;
+}
+
+.number-button {
+  display: flex;
+  justify-content: center;
+}
+
 .pagination-button {
   background-color: white;
   color: black;
