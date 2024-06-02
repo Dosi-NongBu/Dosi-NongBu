@@ -20,7 +20,6 @@ const DetailSumContainer = () => {
       const response = await getCropMainInfo(Number(cropId));
       if (response) {
         setCropData(response);
-        console.log("basic info ", response);
       }
     };
     fetchData();

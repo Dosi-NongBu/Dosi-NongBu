@@ -54,10 +54,9 @@ const Profile = () => {
   const handleAddImage = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const filePath = URL.createObjectURL(file);
       setUser((prevUser) => ({
         ...prevUser,
-        profileImage: filePath,
+        profileImage: file.name,
       }));
     }
   };

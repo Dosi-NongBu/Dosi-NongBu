@@ -102,7 +102,7 @@ export const getExistingUserSpace = async (page, size) => {
 // 새 공간 추가 함수
 export const postNewUserPlace = async (newPlace) => {
   const jwt = localStorage.getItem("accessToken");
-  const aa = {
+  const sendData = {
     name: newPlace.name,
     placeType: newPlace.placeType,
     directionType: newPlace.directionType,
@@ -110,16 +110,12 @@ export const postNewUserPlace = async (newPlace) => {
     quantityType: newPlace.quantityType,
   };
 
+  console.log("새 공간 :", sendData);
   try {
     const response = await axios.post(
       `/api/v1/userplaces`,
       {
-        // name: newPlace.name,
-        // placeType: newPlace.placeType,
-        // direction: newPlace.directionType,
-        // light: newPlace.lightType,
-        // quantity: newPlace.quantityType,
-        aa,
+        sendData,
       },
       {
         headers: {
@@ -142,7 +138,7 @@ export const deleteUserSpace = async (placeId) => {
     const response = await axios.delete(`/api/v1/userplaces/${placeId}`);
 
     if (response.status === 200 || response.status === 201) {
-      console.log("사용자 공간 삭제됨");
+      console.log("사용자 공간 삭제 성공");
     }
   } catch (error) {
     console.log(error);
@@ -174,7 +170,6 @@ export const getUserCropAll = async () => {
     });
 
     if (response.status === 201 || response.status === 200) {
-      console.log("response = ", response);
       return response.data;
     }
   } catch (e) {
@@ -222,6 +217,9 @@ export const postUserTimeline = async (userCropId, cropManageType) => {
     const response = await axios.post(
       `/api/v1/manages/${userCropId}?cropManageType=${cropManageType}`
     );
+    if (response.status === 200 || response.status === 201) {
+      console.log("작물 관리 추가 성공");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -233,6 +231,9 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
     const response = await axios.delete(
       `/api/v1/manages/${userCropId}/${cropLogId}`
     );
+    if (response.status === 200 || response.status === 201) {
+      console.log("작물 관리 추가 성공");
+    }
   } catch (error) {
     console.log(error);
   }
@@ -247,7 +248,7 @@ export const postUserCropImage = async (userCropId, cropImages) => {
     const response = await axios.post(
       `/api/v1/images/${userCropId}`,
       {
-        imageUrl: sendData,
+        newImageUrls: sendData,
       },
       {
         headers: {
@@ -330,8 +331,9 @@ export const putUserProfile = async (data) => {
         Authorization: jwt,
       },
     });
-
-    console.log("사용자 정보 수정", response);
+    if (response.status === 200 || response.status === 201) {
+      console.log("사용자 정보 수정 성공");
+    }
   } catch (error) {
     console.log(error);
   }

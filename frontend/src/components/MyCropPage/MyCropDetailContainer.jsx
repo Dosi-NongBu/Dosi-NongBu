@@ -42,8 +42,8 @@ const MyCropDetailContainer = ({ userCropId }) => {
 
   // 로딩 시
   useEffect(() => {
-    // fetchTimeline();
-    // fetchData();
+    fetchTimeline(); // 주석처리 시 타임라인 임시 데이터
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -78,11 +78,11 @@ const MyCropDetailContainer = ({ userCropId }) => {
       const filePath = URL.createObjectURL(file);
       const newImage = {
         id: cropData.imageUrls.length + 1,
-        original: filePath,
-        thumbnail: filePath,
+        original: file.name,
+        thumbnail: file.name,
       };
+
       const newImages = [...cropData.imageUrls, newImage];
-      console.log("전송 이미지 = ", newImages);
       setCropData({ ...cropData, imageUrls: newImages });
 
       await postUserCropImage(Number(userCropId), newImages);
