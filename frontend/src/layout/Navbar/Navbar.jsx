@@ -52,6 +52,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.user?.isAuth);
+  // const isAuth = true;
   const [bell, setBell] = useState(5);
   const [menu, setMenu] = useState(false);
 

@@ -12,9 +12,9 @@ import NotAuthRoutes from "./layout/NotAuthRoutes";
 import ProtectedRoutes from "./layout/ProtectedRoutes";
 import SearchCropPage from "./pages/NewCropPage/SearchCropPage";
 import CropDetailPage from "./pages/NewCropPage/CropDetailPage";
-// import MyPage from "./pages/MyPage/MyPage";
-// import MyCropPage from "./pages/MyCropPage/MyCropPage";
-// import MyCropDetailPage from "./pages/MyCropPage/MyCropDetailPage";
+import MyPage from "./pages/MyPage/MyPage";
+import MyCropPage from "./pages/MyCropPage/MyCropPage";
+import MyCropDetailPage from "./pages/MyCropPage/MyCropDetailPage";
 // import CommunityPage from "./pages/CommunityPage/CommunityPage";
 // import QuestionCommunityPage from "./pages/CommunityPage/QuestionCommunityPage";
 // import FAQPage from "./pages/OfficialPage/FAQPage";
@@ -35,6 +35,7 @@ function Layout() {
 
 function App() {
   const isAuth = useSelector((state) => state.user?.isAuth);
+  // const isAuth = true;
   return (
     <>
       <Routes>
@@ -61,9 +62,9 @@ function App() {
 
           {/* 로그인한 사람만 갈 수 있는 경로 */}
           <Route element={<ProtectedRoutes isAuth={isAuth} />}>
-            {/* <Route path="/myPage" element={<MyPage />} />
-          <Route path="/myCrop" element={<MyCropPage />} />
-          <Route path="/myCrop/:cropId" element={<MyCropDetailPage />} /> */}
+            <Route path="/myPage" element={<MyPage />} />
+            <Route path="/myCrop" element={<MyCropPage />} />
+            <Route path="/myCrop/:cropId" element={<MyCropDetailPage />} />
           </Route>
         </Route>
       </Routes>

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { makeOriginalThumbnail, makeSendImage } from "./gallaryImage";
 
 // 전체 작물 목록 조회
 export const getCropList = async (page, size) => {
@@ -52,6 +53,19 @@ export const getCropBasicInfo = async (cropId) => {
   }
 };
 
+//cropId 에 해당하는 메인 정보 조회
+export const getCropMainInfo = async (cropId) => {
+  try {
+    const response = await axios.get(`/api/v1/crops/${cropId}/main`);
+
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // cropId에 해당하는 상세정보 조회
 export const getCropDetailInfo = async (cropId) => {
   try {
@@ -65,28 +79,20 @@ export const getCropDetailInfo = async (cropId) => {
 };
 
 // 현재 존재하는 사용자 공간 조회
-export const getExistingUserSpace = async (token, page, size) => {
+export const getExistingUserSpace = async (page, size) => {
+  const jwt = localStorage.getItem("accessToken");
   try {
     const response = await axios.get(
       `/api/v1/userplaces?page=${page}&size=${size}`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          page, // 요청할 페이지 번호
-          size, // 페이지 당 아이템 수
+          Authorization: jwt,
         },
       }
     );
 
-    if (response.data === 200) {
-      const newSpaces = response.data.places.map((place, index) => ({
-        id: index + 1,
-        name: place.name,
-      }));
-
-      return newSpaces;
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
     }
   } catch (error) {
     console.error(error);
@@ -94,20 +100,26 @@ export const getExistingUserSpace = async (token, page, size) => {
 };
 
 // 새 공간 추가 함수
-export const postNewUserPlace = async (newPlace, JWT) => {
+export const postNewUserPlace = async (newPlace) => {
+  const jwt = localStorage.getItem("accessToken");
+  const sendData = {
+    name: newPlace.name,
+    placeType: newPlace.placeType,
+    directionType: newPlace.directionType,
+    lightType: newPlace.lightType,
+    quantityType: newPlace.quantityType,
+  };
+
+  console.log("새 공간 :", sendData);
   try {
     const response = await axios.post(
       `/api/v1/userplaces`,
       {
-        name: newPlace.name,
-        placeType: newPlace.placeType,
-        directionType: newPlace.directionType,
-        lightType: newPlace.lightType,
-        quantityType: newPlace.quantityType,
+        sendData,
       },
       {
         headers: {
-          Authorization: `Bearer ${JWT}`,
+          Authorization: jwt,
         },
       }
     );
@@ -120,17 +132,207 @@ export const postNewUserPlace = async (newPlace, JWT) => {
   }
 };
 
-// 최종 사용자 작물 전송
-export const postMyCrop = async (cropInfo) => {
+// 사용자 공간 삭제 함수
+export const deleteUserSpace = async (placeId) => {
   try {
-    const response = await axios.post(`/api/v1/crops/${cropInfo.cropId}/add`, {
-      cropId: cropInfo.cropId,
-      userPlaceId: Number(cropInfo.userPlaceId),
-      name: cropInfo.name,
-      nickname: cropInfo.nickname,
+    const response = await axios.delete(`/api/v1/userplaces/${placeId}`);
+
+    if (response.status === 200 || response.status === 201) {
+      console.log("사용자 공간 삭제 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 최종 사용자 작물 전송
+export const postMyCrop = async (cropInfo, cropId) => {
+  try {
+    const response = await axios.post(`/api/v1/crops/${cropId}/grow`, cropInfo);
+    if (response.status === 200 || response.status === 201) {
+      console.log("작물 등록 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 사용자 작물 관리 페이지
+
+// 사용자 작물 전체 보기
+export const getUserCropAll = async () => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get("/api/v1/usercrops", {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// 사용자 작물 관리 상세 - 정보, 이미지들
+export const getUserCropDetail = async (userCropId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get(`/api/v1/usercrops/${userCropId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+
+    if (response.status === 201 || response.status === 200) {
+      return response.data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// 사용자 작물 타임라인 조회
+export const getUserTimeline = async (userCropId, page, size) => {
+  try {
+    const response = await axios.get(
+      `/api/v1/manages/${userCropId}?page=${page}&size=${size}`
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      console.log(response);
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 사용자 작물 타임라인 추가
+export const postUserTimeline = async (userCropId, cropManageType) => {
+  try {
+    const response = await axios.post(
+      `/api/v1/manages/${userCropId}?cropManageType=${cropManageType}`
+    );
+    if (response.status === 200 || response.status === 201) {
+      console.log("작물 관리 추가 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 사용자 작물 타임라인 삭제
+export const deleteUserTimeline = async (userCropId, cropLogId) => {
+  try {
+    const response = await axios.delete(
+      `/api/v1/manages/${userCropId}/${cropLogId}`
+    );
+    if (response.status === 200 || response.status === 201) {
+      console.log("작물 관리 추가 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 사용자 작물 이미지 추가
+export const postUserCropImage = async (userCropId, cropImages) => {
+  const jwt = localStorage.getItem("accessToken");
+  const sendData = makeSendImage(cropImages);
+
+  try {
+    const response = await axios.post(
+      `/api/v1/images/${userCropId}`,
+      {
+        newImageUrls: sendData,
+      },
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// 사용자 작물 알림 조회
+export const getCropNotification = async (userCropId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get(`/api/v1/alarms/${userCropId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 사용자 작물 알림 수정
+export const putCropNotification = async (userCropId, notification) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.put(
+      `/api/v1/alarms/${userCropId}`,
+      {
+        notification,
+      },
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+
+    if (response.status === 200 || response.status === 201) {
+      console.log("알림 수정 성공");
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// 마이 페이지
+
+// 사용자 프로필
+export const getUserProfile = async () => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get("/api/v1/users", {
+      headers: {
+        Authorization: jwt,
+      },
     });
     if (response.status === 200) {
-      console.log("작물 추가 성공");
+      return response.data;
+    }
+  } catch (e) {
+    console.log(e);
+  }
+};
+
+// 사용자 정보 수정
+export const putUserProfile = async (data) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.put("/api/v1/users", data, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("사용자 정보 수정 성공");
     }
   } catch (error) {
     console.log(error);
@@ -180,5 +382,68 @@ export const mockData3 = () => {
     manage:
       "상추가 마르지 않도록 주기적으로 확인하고 필요한 경우, 키친타월을 촉촉하게 해서 수분을 조절해주세요.",
   };
+  return ret;
+};
+
+export const mockData5 = () => {
+  const get = {
+    name: "상추",
+    nickname: "싱싱이",
+    imageUrls: [
+      {
+        imageUrl: "../../../public/picture5.png",
+      },
+      {
+        imageUrl: "../../../public/picture3.png",
+      },
+      {
+        imageUrl: "../../../public/picture4.png",
+      },
+    ],
+    startDate: "2024-05-02",
+    period: 10,
+    prePeriod: 20,
+    maxTemperature: 50,
+    minTemperature: 30,
+    humidity: 15,
+  };
+
+  const ret = makeOriginalThumbnail(get);
+  return ret;
+};
+
+export const mockSend1 = (imageUrls) => {
+  // console.log(makeSendImage(imageUrls));
+  console.log(imageUrls);
+};
+
+export const mockData6 = () => {
+  const ret = [
+    {
+      id: 1,
+      imageUrl: "../../../public/picture.png",
+      nickname: "Golden Wheat",
+    },
+    {
+      id: 2,
+      imageUrl: "../../../public/picture2.png",
+      nickname: "Red Tomato",
+    },
+    {
+      id: 3,
+      imageUrl: "../../../public/picture3.png",
+      nickname: "Green Lettuce",
+    },
+    {
+      id: 4,
+      imageUrl: "../../../public/picture4.png",
+      nickname: "Blueberry Bliss",
+    },
+    {
+      id: 5,
+      imageUrl: "../../../public/picture5.png",
+      nickname: "Sunny Sunflower",
+    },
+  ];
   return ret;
 };

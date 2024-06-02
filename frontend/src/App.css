@@ -22,3 +22,27 @@ body {
 .main {
   flex-grow: 1;
 }
+
+.flex-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.no-margin {
+  margin: 0px;
+}
+
+.tb-margin-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.tb-margin-20 {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import Button from "../common/Button";
 import "./style/DetailInfoContainer.css";
 import CareGuide from "./CareGuide";
-import { getCropDetailInfo, mockData3 } from "../../util/api";
+import { getCropDetailInfo, getCropMainInfo, mockData3 } from "../../util/api";
 import BasicInfo from "./BasicInfo";
 import InMyGarden from "./InMyGarden";
 
@@ -21,8 +21,9 @@ const DetailInfoContainer = () => {
     const fetchData = async () => {
       // const response = mockData3();
       const response = await getCropDetailInfo(Number(cropId));
-      if (response) {
-        setData(response);
+      const mainInfo = await getCropMainInfo(Number(cropId));
+      if (response && mainInfo) {
+        setData({ ...response, ...mainInfo });
       }
     };
     fetchData();
@@ -62,7 +63,9 @@ const DetailInfoContainer = () => {
         <div className="detail-content-container">
           {(tab === "상세 정보" || tab === "") && <BasicInfo data={data} />}
           {tab === "관리법" && <CareGuide data={data} />}
-          {tab === "내 텃밭에 키우기" && <InMyGarden cropId={cropId} />}
+          {tab === "내 텃밭에 키우기" && (
+            <InMyGarden cropId={cropId} name={data.name} />
+          )}
         </div>
       </div>
     </section>

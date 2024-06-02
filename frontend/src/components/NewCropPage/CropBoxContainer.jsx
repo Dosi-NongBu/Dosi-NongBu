@@ -14,7 +14,7 @@ import {
 const CropBoxContainer = ({ type }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [cropList, setCropList] = useState([]);
-  const [page, setpage] = useState(1);
+  const [page, setpage] = useState(0);
   const [size, setSize] = useState(12);
 
   const fetchData = async () => {
@@ -38,7 +38,7 @@ const CropBoxContainer = ({ type }) => {
   }, [page, size]);
 
   useEffect(() => {
-    setpage(1);
+    setpage(0);
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [type]);
@@ -83,15 +83,18 @@ const CropBoxContainer = ({ type }) => {
             onSearchChange={handleSearchCrop}
             onClickButton={handleSearchButton}
           />
-          <CropBoxArea data={cropList} />
+          <div className="cropBoxArea-container">
+            <CropBoxArea data={cropList} type="CROP" />
+          </div>
         </>
       )}{" "}
       {type === "recommend" && (
         <>
           <h2>추천 작물</h2>
           <h3>도시농부가 추천하는 작물을 키워보세요.</h3>
-
-          <CropBoxArea data={cropList} />
+          <div className="cropBoxArea-container">
+            <CropBoxArea data={cropList} type="CROP" />
+          </div>
         </>
       )}
       {type !== "none" && (

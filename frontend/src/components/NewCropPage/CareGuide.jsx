@@ -31,11 +31,12 @@ const EachGuide = ({ title, content, tip }) => {
 const CareGuide = ({ data }) => {
   return (
     <div className="careGuide">
-      <EachGuide title="재배일정" content={stringToNumberArray(data.plant)} />
-      <EachGuide title="심는법" content={data.grow} />
-      <EachGuide title="병해충" content={data.bug} />
+      {/* <EachGuide title="재배일정" content={stringToNumberArray(data.plant)} /> */}
+      <EachGuide title="재배일정" content={data.month} />
+      <EachGuide title="심는법" content={data.planting} />
+      <EachGuide title="병해충" content={data.pest} />
       <EachGuide title="재배팁" content={data.tip} tip={"tip"} />
-      <EachGuide title="수확 후 관리방법" content={data.manage} />
+      <EachGuide title="수확 후 관리방법" content={data.harvest_manage} />
     </div>
   );
 };
