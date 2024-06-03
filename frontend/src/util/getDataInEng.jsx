@@ -21,7 +21,7 @@ export const getDataInEng = (kor) => {
     case "많음":
       return "MANY";
     case "중간":
-      return "MIDIUM";
+      return "MEDIUM";
     case "적음":
       return "LESS";
   }

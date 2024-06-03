@@ -114,9 +114,7 @@ export const postNewUserPlace = async (newPlace) => {
   try {
     const response = await axios.post(
       `/api/v1/userplaces`,
-      {
         sendData,
-      },
       {
         headers: {
           Authorization: jwt,

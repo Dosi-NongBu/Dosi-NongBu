@@ -48,8 +48,8 @@ public class Faq extends BaseTimeEntity {
     }
 
     // 서비스 메서드
-    public void update(FaqType faqType, String question, String answer, List<String> imageUrls) {
-        this.faqType = faqType;
+    public void update(String faqType, String question, String answer, List<String> imageUrls) {
+        this.faqType = FaqType.valueOf(faqType.toUpperCase());
         this.faqQuestion = question;
         this.faqAnswer = answer;
 

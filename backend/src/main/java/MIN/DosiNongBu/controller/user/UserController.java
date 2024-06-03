@@ -7,6 +7,7 @@ import MIN.DosiNongBu.controller.user.dto.response.ProfileResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserPostListResponseDto;
 import MIN.DosiNongBu.service.user.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import java.util.List;
 * 유저 정보에 대한 API
 * 마이페이지 & 내가 쓴 글 등
 * */
+@Slf4j
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1")
@@ -41,7 +43,8 @@ public class UserController {
 
     // 프로필 정보 조회
     @GetMapping("/users")
-    public ProfileResponseDto user(@CookieValue(name = "User") String cookie, Model model){
+    public ProfileResponseDto user(@CookieValue(name = "User") String cookie){
+        log.info("프로필 정보 조회");
         Long userId = UserCookie(cookie);
 
         return userService.viewProfile(userId);
@@ -50,6 +53,7 @@ public class UserController {
     //프로필 정보 수정
     @PutMapping("/users")
     public Long updateUser(@CookieValue(name = "User") String cookie, @RequestBody ProfileUpdateRequestDto requestDto){
+        log.info("프로필 정보 수정");
         Long userId = UserCookie(cookie);
 
         return userService.updateProfile(userId, requestDto);
@@ -58,7 +62,8 @@ public class UserController {
 
     //내 공간 목록 조회
     @GetMapping("/userplaces")
-    public List<PlaceListResponseDto> placeList(@CookieValue(name = "User") String cookie, Model model){
+    public List<PlaceListResponseDto> placeList(@CookieValue(name = "User") String cookie){
+        log.info("내 공간 목록 조회");
         Long userId = UserCookie(cookie);
 
         return userService.viewPlaceList(userId);
@@ -67,6 +72,7 @@ public class UserController {
     //내 공간 추가
     @PostMapping("/userplaces")
     public Long createPlace(@CookieValue(name = "User") String cookie, @RequestBody PlaceSaveRequestDto requestDto){
+        log.info("내 공간 추가");
         Long userId = UserCookie(cookie);
 
         return userService.registerPlace(userId, requestDto);
@@ -75,6 +81,7 @@ public class UserController {
     //내 공간 삭제
     @DeleteMapping("/userplaces/{placeId}")
     public ResponseEntity<?> deletePlace(@PathVariable Long placeId){
+        log.info("내 공간 삭제");
         userService.deletePlace(placeId);
 
         return ResponseEntity.ok("User Place Delete Success");
@@ -83,6 +90,7 @@ public class UserController {
     //내가 쓴 글 목록 조회
     @GetMapping("/userposts")
     public List<UserPostListResponseDto> userPostList(@CookieValue(name = "User") String cookie, Pageable pageable){
+        log.info("내가 쓴 글 목록 조회");
         Long userId = UserCookie(cookie);
 
         return userService.viewUserPostList(userId, pageable);

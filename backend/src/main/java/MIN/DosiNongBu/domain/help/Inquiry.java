@@ -73,8 +73,8 @@ public class Inquiry extends BaseTimeEntity {
         }
     }
 
-    public void answer(InquiryStatusType inquiryStatusType, String inquiryAnswer){
-        this.inquiryStatusType = inquiryStatusType;
+    public void answer(String inquiryStatusType, String inquiryAnswer){
+        this.inquiryStatusType = InquiryStatusType.valueOf(inquiryStatusType.toUpperCase());
         this.inquiryAnswer = inquiryAnswer;
     }
 }
