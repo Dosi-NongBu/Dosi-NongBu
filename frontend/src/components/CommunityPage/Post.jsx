@@ -63,7 +63,11 @@ const Post = () => {
   };
 
   const handleDelete = async () => {
+    if (!window.confirm("정말 삭제하시겠습니까?")) {
+      return;
+    }
     await deleteCommunityPost(Number(postId));
+    nav("/community");
   };
 
   return (

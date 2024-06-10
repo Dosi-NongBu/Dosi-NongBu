@@ -28,6 +28,7 @@ import NoticeDetailPage from "./pages/OfficialPage/NoticeDetailPage";
 import RequestPage from "./pages/OfficialPage/RequestPage";
 import RequestDetailPage from "./pages/OfficialPage/RequestDetailPage";
 import RequestRegisterPage from "./pages/OfficialPage/RequestRegisterPage";
+import NotFound from "./layout/NotFound";
 
 function Layout() {
   return (
@@ -93,6 +94,8 @@ function App() {
             <Route path="/myCrop" element={<MyCropPage />} />
             <Route path="/myCrop/:cropId" element={<MyCropDetailPage />} />
           </Route>
+          {/* 잘못된 경로 */}
+          <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
     </>
