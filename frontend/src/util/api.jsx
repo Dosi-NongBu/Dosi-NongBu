@@ -110,19 +110,14 @@ export const postNewUserPlace = async (newPlace) => {
     quantityType: newPlace.quantityType,
   };
 
-  console.log("새 공간 :", sendData);
+  console.log("새 공간 :", newPlace);
+  console.log("jwt : ", jwt);
   try {
-    const response = await axios.post(
-      `/api/v1/userplaces`,
-      {
-        sendData,
+    const response = await axios.post(`/api/v1/userplaces`, newPlace, {
+      headers: {
+        Authorization: jwt,
       },
-      {
-        headers: {
-          Authorization: jwt,
-        },
-      }
-    );
+    });
     if (response.status === 200 || response.status === 201) {
       console.log("공간 추가 성공");
       return response.data;
@@ -339,6 +334,353 @@ export const putUserProfile = async (data) => {
   }
 };
 
+// 문의 페이지
+
+// 1:1 문의 목록 조회
+export const getRequestList = async (page, size) => {
+  try {
+    const response = await axios.get(
+      `/api/v1/inquiries?page=${page}&size=${size}`
+    );
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 1:1 문의 상세 조회
+export const getRequestDetail = async (inquiryId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get(`/api/v1/inquiries/${inquiryId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 1:1 문의 작성
+export const postRequest = async (inquiry) => {
+  const { inquiryType, title, content, imagesUrls } = inquiry;
+  const body = {
+    title: title,
+    content: content,
+    imageUrls: imagesUrls,
+  };
+
+  try {
+    const response = await axios.post(
+      `/api/v1/inquiries?inquiryType=${inquiryType}`,
+      body
+    );
+    if (response.status === 200 || response.status === 201) {
+      console.log("문의 작성 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 1:1 문의 수정
+export const putRequest = async (inquiryId, inquiry) => {
+  const { inquiryType, title, content, imagesUrls } = inquiry;
+  const body = {
+    inquiryType: inquiryType,
+    title: title,
+    content: content,
+    imageUrls: imagesUrls,
+  };
+  console.log(body, "수정");
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.put(`/api/v1/inquiries/${inquiryId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("문의 수정 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 1:1 문의 삭제
+export const deleteRequest = async (inquiryId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.delete(`/api/v1/inquiries/${inquiryId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("문의 삭제 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 공지사항 목록 조회
+export const getNoticeList = async (page, size) => {
+  try {
+    const response = await axios.get(
+      `/api/v1/notices?page=${page}&size=${size}`
+    );
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 공지사항 내용 조회
+export const getNoticeDetail = async (noticeId) => {
+  try {
+    const response = await axios.get(`/api/v1/notices/${noticeId}`);
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// FAQ 목록 조회
+export const getFAQList = async (page, size) => {
+  try {
+    const response = await axios.get(`/api/v1/faqs?page=${page}&size=${size}`);
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// FAQ 내용 조회
+export const getFAQDetail = async (faqId) => {
+  try {
+    const response = await axios.get(`/api/v1/faqs/${faqId}`);
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 커뮤니티 페이지
+
+// 자유/질문 게시판 목록 조회
+export const getCommunityList = async (postType, page, size) => {
+  try {
+    const response = await axios.get(
+      `/api/v1/posts?postType=${postType}&page=${page}&size=${size}`
+    );
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 자유/질문 게시판 등록
+export const postCommunityPost = async (postType, send) => {
+  const body = {
+    title: send.title,
+    content: send.content,
+    imageUrls: send.imageUrls,
+  };
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.post(
+      `/api/v1/posts?postType=${postType}`,
+      body,
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 자유/질문 게시판 글 조회
+export const getCommunityPost = async (postId) => {
+  try {
+    const response = await axios.get(`/api/v1/posts/${postId}`);
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 글 수정
+export const putCommunityPost = async (postId, body) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.put(`/api/v1/posts/${postId}`, body, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("글 수정 완료");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 글 삭제
+export const deleteCommunityPost = async (postId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.delete(`/api/v1/posts/${postId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("글 삭제 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 글 반응
+export const postCommunityReaction = async (postId, reactionType) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.post(
+      `/api/v1/reactions/${postId}?reactionType=${reactionType}`,
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+    if (response.status === 200 || response.status === 201) {
+      console.log("글 추천/비추천 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 댓글 가져오기
+export const getComment = async (postId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.get(`/api/v1/comments/${postId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 댓글 작성
+export const postComment = async (postId, content) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.post(
+      `/api/v1/comments/${postId}`,
+      { content },
+
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+    if (response.status === 200 || response.status === 201) {
+      console.log("댓글 달기 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 댓글 수정
+export const putComment = async (commentId, content) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.put(`/api/v1/comments/${commentId}`, content, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("댓글 수정 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 댓글 삭제
+export const deleteComment = async (commentId) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.delete(`/api/v1/comments/${commentId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
+    if (response.status === 200 || response.status === 201) {
+      console.log("댓글 삭제 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+// 댓글 반응
+export const postCommentReaction = async (commentId, reactionType) => {
+  const jwt = localStorage.getItem("accessToken");
+  try {
+    const response = await axios.post(
+      `/api/v1/reaction/${commentId}?reactionType=${reactionType}`,
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+    if (response.status === 200 || response.status === 201) {
+      console.log("댓글 반응 추가 성공");
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
 /*
 Mock Data Area
 */

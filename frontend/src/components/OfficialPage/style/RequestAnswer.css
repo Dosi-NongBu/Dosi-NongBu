@@ -1,0 +1,40 @@
+.request-table {
+  width: 90%;
+  margin-top: 50px;
+  margin-left: 5%;
+  border-collapse: collapse;
+  /* margin: 20px 0; */
+  font-size: 18px;
+  text-align: left;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+}
+
+.request-table th,
+.request-table td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+.request-table th {
+  width: 200px;
+  background-color: #f4f4f4;
+  color: #333;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.request-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.request-table tbody tr {
+  transition: background-color 0.3s ease;
+}
+
+.edit-delete-container {
+  display: flex;
+  gap: 20px;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 50px;
+}

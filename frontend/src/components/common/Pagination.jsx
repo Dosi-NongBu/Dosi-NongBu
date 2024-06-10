@@ -21,13 +21,11 @@ const Pagination = ({ totalPage, nowPage, onClick }) => {
           </button>
           {Array.from({ length: totalPage }, (_, index) => (
             <button
-              className={`pagination-button ${
-                index + 1 === nowPage ? "active" : ""
-              }`}
+              className={`pagination-button ${index === page ? "active" : ""}`}
               key={index}
               onClick={() => {
-                onClick(index + 1);
-                setPage(index + 1);
+                onClick(index);
+                setPage(index);
               }}
             >
               {index + 1}
