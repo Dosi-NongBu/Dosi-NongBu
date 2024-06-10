@@ -18,7 +18,8 @@ const Post = () => {
   const [postData, setPostData] = useState({});
   const [likeCount, setLikeCount] = useState(0);
   const [dislikeCount, setDislikeCount] = useState(0);
-  const [comment, setComment] = useState("");
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
   const [editedContent, setEditedContent] = useState("");
 
   // 글 내용 조회
@@ -35,31 +36,26 @@ const Post = () => {
   }, [fetchData]);
 
   // 댓글 내용 조회
-  useEffect(() => {
-    const fetchComment = async () => {
-      const data = await getComment(Number(postId));
-      console.log("댓글 내용", data);
-      setComment(data);
-    };
-    fetchComment();
+  const fetchComment = useCallback(async () => {
+    const data = await getComment(Number(postId));
+    console.log("댓글 내용", data);
+    setComments(data);
   }, [postId]);
 
-  const handleLike = async () => {
-    setLikeCount(likeCount + 1);
-    await postCommunityReaction(Number(postId), "GOOD");
-    fetchData();
-  };
+  useEffect(() => {
+    fetchComment();
+  }, [fetchComment]);
 
-  const handleDislike = async () => {
-    setDislikeCount(dislikeCount + 1);
-    await postCommunityReaction(Number(postId), "BAD");
+  const handleReaction = async (type) => {
+    await postCommunityReaction(Number(postId), type);
     fetchData();
   };
 
   const handleSubmitComment = async (e) => {
     e.preventDefault();
-    await postComment(Number(postId), comment);
-    setComment("");
+    await postComment(Number(postId), newComment);
+    setNewComment("");
+    fetchComment();
   };
 
   const handleEdit = () => {
@@ -69,34 +65,6 @@ const Post = () => {
   const handleDelete = async () => {
     await deleteCommunityPost(Number(postId));
   };
-
-  // const comments = [
-  //   {
-  //     commentId: 1,
-  //     author: "강희민",
-  //     profileImage: "https://randomuser.me/api/portraits/men/1.jpg",
-  //     content: "정말 좋은 글입니다! 많은 도움이 되었습니다.",
-  //     good: 5,
-  //     bad: 0,
-  //   },
-  //   {
-  //     commentId: 2,
-  //     author: "강희민",
-  //     profileImage: "https://randomuser.me/api/portraits/women/2.jpg",
-  //     content: "좋은 정보 감사합니다. 앞으로도 좋은 글 부탁드려요.",
-  //     good: 3,
-  //     bad: 1,
-  //   },
-  //   {
-  //     commentId: 3,
-  //     author: "강희민",
-  //     profileImage: "https://randomuser.me/api/portraits/men/3.jpg",
-  //     content:
-  //       "이 부분에 대해 좀 더 자세히 알고 싶어요.이 부분에 대해 좀 더 자세히 알고 싶어요.이 부분에 대해 좀 더 자세히 알고 싶어요.이 부분에 대해 좀 더 자세히 알고 싶어요.",
-  //     good: 2,
-  //     bad: 0,
-  //   },
-  // ];
 
   return (
     <div className="post">
@@ -118,8 +86,20 @@ const Post = () => {
       <Gallery type="READ" readImages={postData.imageUrls} />
 
       <div className="post-footer">
-        <button onClick={handleLike}>👍 {likeCount}</button>
-        <button onClick={handleDislike}>👎 {dislikeCount}</button>
+        <button
+          onClick={() => {
+            handleReaction("GOOD");
+          }}
+        >
+          👍 {likeCount}
+        </button>
+        <button
+          onClick={() => {
+            handleReaction("BAD");
+          }}
+        >
+          👎 {dislikeCount}
+        </button>
         <button onClick={handleEdit}> 수정</button>
         <button onClick={handleDelete}> 삭제</button>
       </div>
@@ -128,22 +108,23 @@ const Post = () => {
         <input
           type="text"
           placeholder="댓글을 작성하세요..."
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
         />
         <button type="submit">제출</button>
       </form>
 
-      {comment.map((comment) => (
-        <Comment
-          key={comment.commentId}
-          commentId={comment.commentId}
-          profileImage={comment.profileImage}
-          commentContent={comment.content}
-          likeCount={comment.good}
-          dislikeCount={comment.bad}
-        />
-      ))}
+      {comments &&
+        comments.map((comment) => (
+          <Comment
+            key={comment.commentId}
+            commentId={comment.commentId}
+            profileImage={comment.profileImage}
+            commentContent={comment.content}
+            likeCount={comment.good}
+            dislikeCount={comment.bad}
+          />
+        ))}
     </div>
   );
 };
