@@ -61,8 +61,8 @@ public class Inquiry extends BaseTimeEntity {
     }
 
     // 서비스 메서드
-    public void update(InquiryType inquiryType, String title, String content, List<String> imageUrls){
-        this.inquiryType = inquiryType;
+    public void update(String inquiryType, String title, String content, List<String> imageUrls){
+        this.inquiryType = InquiryType.valueOf(inquiryType);
         this.title = title;
         this.content = content;
 
