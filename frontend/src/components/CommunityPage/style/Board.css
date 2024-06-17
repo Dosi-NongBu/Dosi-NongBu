@@ -1,81 +1,20 @@
 .community-board {
-  width: 70%;
-  margin-left: 15%;
+  width: 80%;
+  margin-left: 10%;
   margin-top: 50px;
 }
 
-/* 기본 레이아웃 설정 */
 .community-list {
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
   width: 100%;
-  /* margin-left: 10%; */
-  /* padding: 20px; */
   margin-top: 20px;
   box-sizing: border-box;
 }
 
-/* 각 커뮤니티 글의 스타일 */
-.each-community {
-  width: calc(50% - 10px); /* 두 개씩 배치하기 위해 50%의 너비로 설정 */
+.header-move {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  background-color: #ffffff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
-  overflow: hidden;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.each-community:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-/* 썸네일 이미지 스타일 */
-.each-community img {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-right: 1px solid #eee;
-}
-
-/* 게시글 정보 스타일 */
-.each-community-info {
-  flex: 1;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
   justify-content: space-between;
-}
-
-/* 게시글 제목 스타일 */
-.each-community-info h2 {
-  margin: 0;
-  font-size: 1.5em;
-  color: #333;
-}
-
-/* 작성자 정보 컨테이너 스타일 */
-.post-author-info {
-  display: flex;
   align-items: center;
-  margin-top: 10px;
-}
-
-/* 작성자 프로필 이미지 스타일 */
-.each-community-info img {
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  object-fit: cover;
-  margin-right: 10px;
-}
-
-/* 작성자 이름 스타일 */
-.each-community-info span {
-  font-size: 1em;
-  color: #666;
 }

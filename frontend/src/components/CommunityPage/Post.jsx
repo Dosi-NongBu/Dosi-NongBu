@@ -46,11 +46,13 @@ const Post = () => {
     fetchComment();
   }, [fetchComment]);
 
+  // 글 좋아요 / 싫어요
   const handleReaction = async (type) => {
     await postCommunityReaction(Number(postId), type);
     fetchData();
   };
 
+  // 댓글 제출 버튼
   const handleSubmitComment = async (e) => {
     e.preventDefault();
     await postComment(Number(postId), newComment);
@@ -58,10 +60,12 @@ const Post = () => {
     fetchComment();
   };
 
+  // 글 수정
   const handleEdit = () => {
     nav(`/community/edit/${Number(postId)}`);
   };
 
+  // 글 삭제
   const handleDelete = async () => {
     if (!window.confirm("정말 삭제하시겠습니까?")) {
       return;

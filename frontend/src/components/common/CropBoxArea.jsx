@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style/CropBoxArea.css";
 
@@ -37,6 +37,9 @@ const MyCropBox = ({ nickname, image, id }) => {
 };
 
 const CropBoxArea = ({ data, type }) => {
+  if (!data || data.length === 0) {
+    return <h4>등록된 작물이 없습니다.</h4>;
+  }
   return (
     <div className="CropBoxArea-wrapper">
       <div className="CropBoxArea">

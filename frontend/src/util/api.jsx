@@ -334,6 +334,27 @@ export const putUserProfile = async (data) => {
   }
 };
 
+// 사용자 작성글 조회
+export const getUserPost = async (page, size) => {
+  const jwt = localStorage.getItem("accessToken");
+
+  try {
+    const response = await axios.get(
+      `/api/v1/userposts?page=${page}&size=${size}`,
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
+    );
+    if (response.status === 200 || response.status === 201) {
+      return response.data;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 // 문의 페이지
 
 // 1:1 문의 목록 조회
@@ -343,6 +364,7 @@ export const getRequestList = async (page, size) => {
       `/api/v1/inquiries?page=${page}&size=${size}`
     );
     if (response.status === 200 || response.status === 201) {
+      console.log(response.data, " --");
       return response.data;
     }
   } catch (error) {

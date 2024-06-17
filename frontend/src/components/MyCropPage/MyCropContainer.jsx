@@ -7,7 +7,7 @@ import { getUserCropAll, mockData6 } from "../../util/api";
 import CropBoxArea from "../common/CropBoxArea";
 
 const MyCropContainer = () => {
-  const [data, setData] = useState(mockData6());
+  const [data, setData] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
