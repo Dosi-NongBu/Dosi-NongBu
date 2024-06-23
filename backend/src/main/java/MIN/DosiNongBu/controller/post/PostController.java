@@ -52,7 +52,7 @@ public class PostController {
 
     // 글 작성
     @PostMapping("/posts")
-    public Long createPost(@CookieValue(name = "User") String cookie, @RequestParam PostType postType, PostSaveRequestDto requestDto) {
+    public Long createPost(@CookieValue(name = "User") String cookie, @RequestParam PostType postType, @RequestBody PostSaveRequestDto requestDto) {
         Long userId = UserCookie(cookie);
 
         return postService.registerPost(userId, postType, requestDto);
@@ -60,7 +60,7 @@ public class PostController {
 
     // 글 수정
     @PutMapping("/posts/{postId}")
-    public Long updatePost(@PathVariable Long postId, PostUpdateRequestDto requestDto) {
+    public Long updatePost(@PathVariable Long postId, @RequestBody PostUpdateRequestDto requestDto) {
 
         return postService.updatePost(postId, requestDto);
     }

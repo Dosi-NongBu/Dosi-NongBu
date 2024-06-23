@@ -48,8 +48,8 @@ public class Notice extends BaseTimeEntity {
     }
 
     //서비스 메서드
-    public void update(NoticeType noticeType, String title, String content, List<String> imageUrls){
-        this.noticeType = noticeType;
+    public void update(String noticeType, String title, String content, List<String> imageUrls){
+        this.noticeType = NoticeType.valueOf(noticeType.toUpperCase());
         this.title = title;
         this.content = content;
 

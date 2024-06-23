@@ -3,8 +3,10 @@ package MIN.DosiNongBu.controller.crop.dto.response;
 import MIN.DosiNongBu.domain.crop.CropInformation;
 import MIN.DosiNongBu.domain.crop.CropManagement;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@NoArgsConstructor
 public class CropInfoResponseDto {
 
     private String classification;

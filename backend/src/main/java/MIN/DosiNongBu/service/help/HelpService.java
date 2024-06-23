@@ -17,7 +17,7 @@ public interface HelpService {
     InquiryResponseDto viewInquiry(Long inquiryId);
 
     // 1:1 문의 작성
-    Long registerInquiry(Long userId, InquiryType inquiryType, InquirySaveRequestDto requestDto);
+    Long registerInquiry(Long userId, String inquiryType, InquirySaveRequestDto requestDto);
 
     // 1:1 문의 수정
     Long updateInquiry(Long inquiryId, InquiryUpdateRequestDto requestDto);

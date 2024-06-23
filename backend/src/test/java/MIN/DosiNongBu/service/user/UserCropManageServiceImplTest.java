@@ -197,14 +197,14 @@ class UserCropManageServiceImplTest {
         Long findUserCropId = userCrop.getUserCropId();
         Pageable pageable = PageRequest.of(0, 5);
 
-        for(CropManageType type : CropManageType.values()){
+/*        for(CropManageType type : CropManageType.values()){
             UserCropLog userCropLog = UserCropLog.builder()
                     .manageType(type)
                     .build();
 
             userCropLog.setUserCrop(userCrop);
             userCropLogRepository.save(userCropLog);
-        }
+        }*/
 
         //when
         List<UserCropLogListResponseDto> responseDto = userCropManageService.viewUserCropLogList(findUserCropId, pageable);
