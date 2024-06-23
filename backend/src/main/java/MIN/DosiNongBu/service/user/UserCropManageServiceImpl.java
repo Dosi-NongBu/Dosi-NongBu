@@ -93,9 +93,6 @@ public class UserCropManageServiceImpl implements UserCropManageService{
     public List<UserCropLogListResponseDto> viewUserCropLogList(Long userCropId, Pageable pageable) {
         Page<UserCropLog> entity = userCropLogRepository.findByUserCrop_UserCropId(userCropId, pageable);
 
-        if (entity == null || entity.isEmpty())
-            throw new IllegalArgumentException("관리 기록이 없습니다.");
-
         return entity.stream().map(UserCropLogListResponseDto::new).toList();
     }
 

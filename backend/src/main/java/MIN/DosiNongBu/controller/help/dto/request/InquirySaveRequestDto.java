@@ -23,9 +23,9 @@ public class InquirySaveRequestDto {
         this.imageUrls = imageUrls;
     }
 
-    public Inquiry toEntity(InquiryType inquiryType){
+    public Inquiry toEntity(String inquiryType){
         return Inquiry.builder()
-                .inquiryType(inquiryType)
+                .inquiryType(InquiryType.valueOf(inquiryType))
                 .title(title)
                 .content(content)
                 .imageUrls(imageUrls)

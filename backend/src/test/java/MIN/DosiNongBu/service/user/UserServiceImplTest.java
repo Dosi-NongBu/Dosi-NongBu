@@ -141,10 +141,10 @@ class UserServiceImplTest {
 
         PlaceSaveRequestDto requestDto = PlaceSaveRequestDto.builder()
                 .name("New Place 1")
-                .place(PlaceType.TERRACE)
-                .direction(DirectionType.SOUTH)
-                .light(LightType.DIRECT)
-                .quantity(QuantityType.MANY)
+                .placeType("TERRACE")
+                .directionType("SOUTH")
+                .lightType("DIRECT")
+                .quantityType("MANY")
                 .build();
 
         //when
@@ -172,10 +172,10 @@ class UserServiceImplTest {
         for(int i=1;i<=12;i++){
             PlaceSaveRequestDto requestDto = PlaceSaveRequestDto.builder()
                     .name("New Place " + i)
-                    .place(PlaceType.TERRACE)
-                    .direction(DirectionType.SOUTH)
-                    .light(LightType.DIRECT)
-                    .quantity(QuantityType.MANY)
+                    .placeType("TERRACE")
+                    .directionType("SOUTH")
+                    .lightType("DIRECT")
+                    .quantityType("MANY")
                     .build();
 
             try {

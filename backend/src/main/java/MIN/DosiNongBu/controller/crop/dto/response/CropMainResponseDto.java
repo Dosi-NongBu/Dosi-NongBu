@@ -4,10 +4,12 @@ import MIN.DosiNongBu.domain.crop.Crop;
 import MIN.DosiNongBu.domain.crop.CropPeriod;
 import MIN.DosiNongBu.domain.crop.constant.CropManageType;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
+@NoArgsConstructor
 public class CropMainResponseDto {
 
     private String name;

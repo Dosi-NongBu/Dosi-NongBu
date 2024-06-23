@@ -75,6 +75,8 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
+        System.out.println(requestDto.getPlaceType());
+
         // 연관 관계 연결
         userPlace.setUser(user);
         userPlaceRepository.save(userPlace);

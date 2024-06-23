@@ -45,7 +45,7 @@ public class HelpServiceImpl implements HelpService{
     }
 
     @Override
-    public Long registerInquiry(Long userId, InquiryType inquiryType, InquirySaveRequestDto requestDto) {
+    public Long registerInquiry(Long userId, String inquiryType, InquirySaveRequestDto requestDto) {
         Inquiry entity = requestDto.toEntity(inquiryType);
 
         User user =  userRepository.findById(userId)

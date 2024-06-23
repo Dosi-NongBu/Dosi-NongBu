@@ -1,9 +1,11 @@
 package MIN.DosiNongBu.controller.admin.dto.request;
 
+import MIN.DosiNongBu.aop.EnumValue;
 import MIN.DosiNongBu.domain.help.Faq;
 import MIN.DosiNongBu.domain.help.Notice;
 import MIN.DosiNongBu.domain.help.constant.FaqType;
 import MIN.DosiNongBu.domain.help.constant.NoticeType;
+import MIN.DosiNongBu.domain.user.constant.PlaceType;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,13 +16,15 @@ import java.util.List;
 @NoArgsConstructor
 public class FaqSaveRequestDto {
 
-    private FaqType faqType;
+    @EnumValue(enumClass = FaqType.class, message = "FAQ 카테고리가 잘못되었습니다.", ignoreCase = true)
+    private String faqType;
+
     private String question;
     private String answer;
     private List<String> imageUrls;
 
     @Builder
-    public FaqSaveRequestDto(FaqType faqType, String question, String answer, List<String> imageUrls) {
+    public FaqSaveRequestDto(String faqType, String question, String answer, List<String> imageUrls) {
         this.faqType = faqType;
         this.question = question;
         this.answer = answer;
@@ -33,7 +37,7 @@ public class FaqSaveRequestDto {
         }
 
         return Faq.builder()
-                .faqType(faqType)
+                .faqType(FaqType.valueOf(faqType.toUpperCase()))
                 .faqQuestion(question)
                 .faqAnswer(answer)
                 .imageUrls(imageUrls)
