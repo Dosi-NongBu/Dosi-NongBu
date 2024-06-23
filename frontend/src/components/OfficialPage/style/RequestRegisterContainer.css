@@ -1,0 +1,60 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+  margin-left: 15%;
+  align-items: center;
+}
+
+.register-input {
+  width: 100%;
+  padding: 10px 15px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  font-size: 16px;
+  color: #333;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.register-input:focus {
+  outline: none;
+  border-color: #70d49c;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.register-content {
+  height: 500px; /* 기본 높이 설정 */
+  overflow-y: hidden; /* 스크롤바 감추기 */
+}
+
+.register-container .image-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.register-container .image-container .image {
+  width: 15%;
+  height: 100%;
+  background-color: #f4f4f4;
+  object-fit: cover;
+}
+
+/* .register-container .image-container input[type="file"] {
+  display: none;
+}
+
+.register-container .image-container .custom-file-upload {
+  width: 200px;
+  height: 200px;
+  background-color: grey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+} */

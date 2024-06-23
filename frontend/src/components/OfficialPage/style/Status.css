@@ -1,0 +1,24 @@
+.status {
+  width: 70px;
+  height: 20px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.8em;
+  padding: 5px;
+}
+
+.status-no {
+  background-color: #ed988f;
+  color: #ffe5de;
+}
+
+.status-answering {
+  background-color: #bad6f2;
+  color: #005eb8;
+}
+.status-complete {
+  background-color: #1fab70;
+  color: white;
+}

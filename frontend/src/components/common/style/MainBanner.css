@@ -1,0 +1,36 @@
+.main-banner {
+  background: linear-gradient(to right, #9eb0a2, #667c6b);
+  padding: 50px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.banner-content {
+  display: flex;
+  align-items: center;
+}
+
+.banner-title {
+  font-size: 3em;
+  font-weight: bold;
+  color: white;
+  margin-right: 20px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.banner-icon {
+  font-size: 40px;
+  color: white;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
