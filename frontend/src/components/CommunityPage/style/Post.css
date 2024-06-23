@@ -73,93 +73,53 @@
   padding: 5px 15px;
   cursor: pointer;
 }
+@media (max-width: 767px) {
+  .post {
+    width: 90%;
+    margin-left: 5%;
+  }
 
-/* .post {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #fff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  .post-header {
+    padding: 8px;
+  }
+
+  .post-profile-image {
+    width: 40px;
+    height: 40px;
+  }
+
+  .post-info h2 {
+    font-size: 16px;
+  }
+
+  .post-info p {
+    font-size: 12px;
+  }
+
+  .post-content {
+    padding: 12px;
+  }
+
+  .post-footer {
+    padding: 8px;
+  }
+
+  .post-footer button {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .comment-form {
+    padding: 8px;
+  }
+
+  .comment-form input {
+    font-size: 14px;
+    padding: 4px;
+  }
+
+  .comment-form button {
+    font-size: 14px;
+    padding: 4px 12px;
+  }
 }
-
-.post-header {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.profile-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  margin-right: 10px;
-}
-
-.post-info h2 {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-.post-info p {
-  color: #666;
-  font-size: 14px;
-}
-
-.post-content {
-  font-size: 16px;
-  line-height: 1.5;
-  margin-bottom: 20px;
-}
-
-.post-footer {
-  display: flex;
-  justify-content: flex-end;
-  margin-bottom: 20px;
-}
-
-.post-footer button {
-  background-color: #f2f2f2;
-  border: none;
-  color: #333;
-  padding: 8px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin-left: 10px;
-  cursor: pointer;
-}
-
-.post-footer button:hover {
-  background-color: #e6e6e6;
-}
-
-.comment-form {
-  display: flex;
-  margin-bottom: 20px;
-}
-
-.comment-form input {
-  flex-grow: 1;
-  padding: 8px 12px;
-  font-size: 14px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-
-.comment-form button {
-  background-color: #007bff;
-  border: none;
-  color: #fff;
-  padding: 8px 12px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  cursor: pointer;
-}
-
-.comment-form button:hover {
-  background-color: #0056b3;
-} */

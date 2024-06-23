@@ -157,6 +157,7 @@
     padding: 20px;
     border: 1px solid black;
     border-radius: 10px;
+    z-index: 1;
   }
 
   .mobile {

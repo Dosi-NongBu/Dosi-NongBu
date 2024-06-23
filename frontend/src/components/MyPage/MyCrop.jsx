@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import "./style/MyCrop.css";
-import { getUserCropAll, mockData6 } from "../../util/api";
+import "./style/MyEach.css";
+import { getUserCropAll } from "../../util/api";
 import CropBoxArea from "../common/CropBoxArea";
 
 const MyCrop = () => {
@@ -16,8 +16,8 @@ const MyCrop = () => {
   }, []);
 
   return (
-    <div className="myCrop">
-      <div className="myCrop-container">
+    <div className="myPage-each">
+      <div className="myPage-each-container">
         <h2> 내 작물 모아보기</h2>
         {!myCrop && <h3>키우는 작물이 없습니다.</h3>}
         {myCrop && <CropBoxArea data={myCrop} type="MY" />}

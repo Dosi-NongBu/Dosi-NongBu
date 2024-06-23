@@ -72,3 +72,26 @@
 .file-input-button:hover {
   background-color: #45a049;
 }
+
+@media (max-width: 600px) {
+  .gallery .main-image {
+    width: 100%;
+  }
+
+  .gallery .thumbnail-container {
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .gallery .thumbnail-container .each-thumbnail {
+    width: 40px;
+    height: 40px;
+  }
+
+  .file-input-button {
+    width: auto;
+    padding: 10px;
+    font-size: 14px;
+  }
+}

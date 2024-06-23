@@ -44,7 +44,7 @@ const RequestDetailPage = () => {
         <Button title={"수정"} type={"negative"} onClick={handleEditRequest} />
       </div>
       {detail && <RequestContent data={detail} />}
-      {detail && <RequestAnswer data={detail} />}
+      {detail && <RequestAnswer data={detail} type="read" />}
       <div className="tolist-container">
         <Button
           title={"목록으로"}

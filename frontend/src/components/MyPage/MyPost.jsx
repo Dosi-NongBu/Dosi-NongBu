@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./style/MyPost.css";
+import "./style/MyEach.css";
 import Board from "../CommunityPage/Board";
 import { getUserPost } from "../../util/api";
 
@@ -16,8 +16,8 @@ const MyPost = () => {
   }, []);
 
   return (
-    <div className="myPost">
-      <div className="myPost-container">
+    <div className="myPage-each">
+      <div className="myPage-each-container">
         <h2>내 글 모아보기</h2>
         {/* <Board type="DEFAULT" mode="READ" posts={posts} /> */}
       </div>

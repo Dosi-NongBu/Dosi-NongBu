@@ -1,5 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import noPhoto from "../../../public/no-photos.png";
 
 import "./style/EachPost.css";
 
@@ -17,7 +18,10 @@ const EachPost = ({ id, imageUrl, title, author, profileImage }) => {
       <div className="each-community-info">
         <h2>{title}</h2>
         <span>{author}</span>
-        <img src={profileImage} />
+        <img
+          src={profileImage ? profileImage : noPhoto}
+          className="each-community-profile"
+        />
       </div>
     </div>
   );

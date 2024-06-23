@@ -22,7 +22,7 @@ td {
 
 th {
   background-color: #ffe5de;
-  color: #ffffff;
+  color: #707070;
 }
 
 tr:hover {
@@ -59,18 +59,48 @@ tbody tr:nth-child(even) {
   flex: 1;
 }
 
-@media screen and (max-width: 768px) {
-  .board h1 {
-    padding: 10px;
-  }
-
+@media (max-width: 768px) {
   th,
   td {
-    padding: 8px 10px;
+    font-size: 12px;
+    padding: 6px;
+    white-space: normal; /* 줄바꿈 허용 */
+  }
+
+  .column-id {
+    width: 15%;
+  }
+
+  .column-title {
+    width: 35%;
+  }
+
+  .column-date {
+    width: 25%;
+  }
+
+  .column-author {
+    width: 15%;
+  }
+
+  .column-status {
+    width: 10%;
+  }
+
+  /* 더 작은 화면일 경우 텍스트가 길어지면 줄바꿈 */
+  th,
+  td {
+    word-wrap: break-word;
+  }
+
+  /* 헤더의 텍스트를 두 줄로 나누기 위해 너비 설정 */
+  .table-header-row th {
+    width: auto;
+    max-width: 100px;
   }
 }
 
-th {
+/* th {
   word-wrap: break-word;
   word-break: break-all;
   font-size: 15px;
@@ -80,4 +110,4 @@ th {
   outline: 0 !important;
   box-sizing: border-box;
   height: 56px;
-}
+} */

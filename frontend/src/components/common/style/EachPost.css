@@ -54,3 +54,71 @@
   font-size: 1em;
   color: #666;
 }
+
+/* 모바일 화면을 위한 미디어 쿼리 */
+@media (max-width: 768px) {
+  .each-community {
+    width: calc(100% - 20px);
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .each-community img {
+    width: 100%;
+    height: auto;
+    border-right: none;
+  }
+
+  .each-community-info {
+    padding: 10px;
+  }
+
+  .each-community-info h2 {
+    font-size: 1.2em;
+  }
+
+  .each-community-info span {
+    font-size: 0.9em;
+  }
+
+  .post-author-info img {
+    width: 30px;
+    height: 30px;
+  }
+
+  .each-community-profile {
+    display: none;
+  }
+}
+
+/* @media (max-width: 480px) {
+  .each-community {
+    width: 100%;
+    margin: 0 0 10px 0;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .each-community img {
+    width: 100%;
+    height: auto;
+    border-right: none;
+  }
+
+  .each-community-info {
+    padding: 10px;
+  }
+
+  .each-community-info h2 {
+    font-size: 1em;
+  }
+
+  .each-community-info span {
+    font-size: 0.8em;
+  }
+
+  .post-author-info img {
+    width: 25px;
+    height: 25px;
+  }
+} */

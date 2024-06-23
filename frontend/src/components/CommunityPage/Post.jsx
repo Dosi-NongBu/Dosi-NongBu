@@ -11,6 +11,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Comment from "./Comment";
 import Gallery from "../common/Gallery";
 
+import noPhoto from "../../../public/no-photos.png";
+
 const Post = () => {
   const { postId } = useParams();
   const nav = useNavigate();
@@ -78,9 +80,9 @@ const Post = () => {
     <div className="post">
       <div className="post-header">
         <img
-          src={postData.profileImage}
+          src={postData.profileImage ? postData.profileImage : noPhoto}
           alt="profile"
-          className="profile-image"
+          className="post-profile-image"
         />
         <div className="post-info">
           <h2>{postData.title}</h2>

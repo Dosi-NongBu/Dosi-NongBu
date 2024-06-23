@@ -50,9 +50,6 @@ const Board = ({ type, mode, posts }) => {
           />
         ))}
       </div>
-      {/* {mode !== "READ" && (
-        <Pagination totalPage={5} nowPage={nowPage} onClick={setNowPage} />
-      )} */}
     </div>
   );
 };

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import "./style/MySpace.css";
+import "./style/MyEach.css";
 import SpaceBoxArea from "../common/SpaceBoxArea";
 
 const MySpace = () => {
   return (
-    <div className="mySpace">
-      <div className="mySpace-container">
+    <div className="myPage-each">
+      <div className="myPage-each-container">
         <h2>내 공간 보기</h2>
         <SpaceBoxArea onSelectSpace={() => {}} />
       </div>

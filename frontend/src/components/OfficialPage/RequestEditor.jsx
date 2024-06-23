@@ -1,85 +1,3 @@
-// import React, { useEffect, useState } from "react";
-// import Select from "../common/Select";
-// import Button from "../common/Button";
-// import Gallery from "../../components/common/Gallery";
-
-// import "./style/RequestRegisterContainer.css";
-// import { postRequest } from "../../util/api";
-// import { useNavigate } from "react-router-dom";
-
-// const RequestRegisterContainer = () => {
-//   const nav = useNavigate();
-//   const [request, setRequest] = useState({});
-//   const [images, setImages] = useState([]);
-//   const [selected, setSelected] = useState("");
-//   const [title, setTitle] = useState("");
-//   const [content, setContent] = useState("");
-
-//   const handleSelectChange = (value) => {
-//     setSelected(value);
-//   };
-
-//   const handleSubmit = async () => {
-//     if (!validateInput()) return;
-
-//     const newRequest = {
-//       inquiryType: selected,
-//       title: title,
-//       content: content,
-//       imagesUrls: images,
-//     };
-//     setRequest(newRequest);
-//     console.log("Request: ", newRequest);
-
-//     // 전송 코드
-//     await postRequest(newRequest);
-//     nav("/request");
-//   };
-
-//   const validateInput = () => {
-//     if (!selected) {
-//       alert("문의 유형을 선택해주세요.");
-//       return false;
-//     }
-//     if (!title) {
-//       alert("제목을 입력해주세요.");
-//       return false;
-//     }
-//     if (!content) {
-//       alert("내용을 입력해주세요.");
-//       return false;
-//     }
-//     return true;
-//   };
-
-//   return (
-//     <div className="register-container">
-//       <Select onSelectChange={handleSelectChange} />
-//       <input
-//         type="text"
-//         placeholder="제목을 입력하세요"
-//         className="register-input"
-//         onChange={(e) => setTitle(e.target.value)}
-//       />
-//       <textarea
-//         type="text"
-//         placeholder="질문 내용을 입력하세요"
-//         className="register-input register-content"
-//         onChange={(e) => setContent(e.target.value)}
-//       />
-
-//       <Gallery
-//         type="WRITE"
-//         setGalleryImages={(images) => setImages(images.map((img) => img.name))}
-//       />
-
-//       <Button title={"등록하기"} type={"positive"} onClick={handleSubmit} />
-//     </div>
-//   );
-// };
-
-// export default RequestRegisterContainer;
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Select from "../common/Select";
@@ -87,9 +5,9 @@ import Button from "../common/Button";
 import Gallery from "../../components/common/Gallery";
 import { getRequestDetail, postRequest, putRequest } from "../../util/api";
 
-import "./style/RequestRegisterContainer.css";
+import "./style/RequestEditor.css";
 
-const RequestRegisterContainer = () => {
+const RequestEditor = () => {
   const { requestId } = useParams();
   const nav = useNavigate();
   const [request, setRequest] = useState({});
@@ -100,7 +18,6 @@ const RequestRegisterContainer = () => {
 
   useEffect(() => {
     if (requestId) {
-      // 기존 내용을 수정하는 경우, 기존 데이터를 가져와서 상태를 업데이트
       const fetchRequest = async () => {
         const existingRequest = await getRequestDetail(Number(requestId));
         setSelected(existingRequest.inquiryType);
@@ -163,7 +80,11 @@ const RequestRegisterContainer = () => {
 
   return (
     <div className="register-container">
-      <Select onSelectChange={handleSelectChange} value={selected} />
+      <Select
+        onSelectChange={handleSelectChange}
+        value={selected}
+        type="REQUEST"
+      />
       <input
         type="text"
         placeholder="제목을 입력하세요"
@@ -194,4 +115,4 @@ const RequestRegisterContainer = () => {
   );
 };
 
-export default RequestRegisterContainer;
+export default RequestEditor;

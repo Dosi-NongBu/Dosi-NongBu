@@ -29,6 +29,7 @@ import RequestPage from "./pages/OfficialPage/RequestPage";
 import RequestDetailPage from "./pages/OfficialPage/RequestDetailPage";
 import RequestRegisterPage from "./pages/OfficialPage/RequestRegisterPage";
 import NotFound from "./layout/NotFound";
+import AdminMainPage from "./pages/AdminPage/AdminMainPage";
 
 function Layout() {
   return (
@@ -94,6 +95,9 @@ function App() {
             <Route path="/myCrop" element={<MyCropPage />} />
             <Route path="/myCrop/:cropId" element={<MyCropDetailPage />} />
           </Route>
+
+          {/* 관리자 페이자 */}
+          <Route path="/admin" element={<AdminMainPage />} />
           {/* 잘못된 경로 */}
           <Route path="*" element={<NotFound />} />
         </Route>

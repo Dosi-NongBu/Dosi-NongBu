@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./style/CropBoxArea.css";
 
+import noPhoto from "../../../public/no-photos.png";
+
 const CropBox = ({ name, image, id, type }) => {
   const navigate = useNavigate();
 
@@ -29,7 +31,7 @@ const MyCropBox = ({ nickname, image, id }) => {
   return (
     <div className="CropBox" onClick={handleClickCrop}>
       <div className="cropBox-container">
-        <img src={image} className="image" />
+        <img src={image ? image : noPhoto} className="image" />
         <p className="name">{nickname}</p>
       </div>
     </div>
@@ -40,6 +42,7 @@ const CropBoxArea = ({ data, type }) => {
   if (!data || data.length === 0) {
     return <h4>등록된 작물이 없습니다.</h4>;
   }
+
   return (
     <div className="CropBoxArea-wrapper">
       <div className="CropBoxArea">

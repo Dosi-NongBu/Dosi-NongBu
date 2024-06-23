@@ -1,5 +1,7 @@
 import React from "react";
-import { FaLeaf } from "react-icons/fa";
+import Lottie from "lottie-react";
+import Plant from "../../assets/lottie/Plant.json";
+
 import "./style/MainBanner.css";
 
 const MainBanner = () => {
@@ -16,7 +18,10 @@ const MainBanner = () => {
           </h1>
         </div>
         <div className="banner-icon">
-          <FaLeaf size={150} />
+          <Lottie
+            animationData={Plant}
+            style={{ width: "300px", height: "300px" }}
+          />
         </div>
       </div>
     </div>

@@ -31,7 +31,7 @@ const InputBox = ({ type, title, select, onChange, onSelect }) => {
 
       {type === "select" && (
         <>
-          <div className="select-container">
+          <div className="input-select-container">
             {select.map((item, index) => (
               <SelectBox
                 key={index}

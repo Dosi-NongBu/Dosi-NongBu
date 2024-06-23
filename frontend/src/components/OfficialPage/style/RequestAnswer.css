@@ -3,7 +3,6 @@
   margin-top: 50px;
   margin-left: 5%;
   border-collapse: collapse;
-  /* margin: 20px 0; */
   font-size: 18px;
   text-align: left;
   box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
@@ -37,4 +36,23 @@
   width: 90%;
   margin-left: 5%;
   margin-top: 50px;
+}
+
+@media (max-width: 600px) {
+  .request-table {
+    width: 90%;
+    margin-left: 5%;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .request-table th,
+  .request-table td {
+    padding: 10px;
+  }
+
+  .request-table th {
+    width: auto;
+    font-size: 14px;
+  }
 }

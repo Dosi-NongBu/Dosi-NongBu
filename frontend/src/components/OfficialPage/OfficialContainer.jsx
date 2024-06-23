@@ -5,7 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import ImageGallery from "react-image-gallery";
 import { getFAQDetail, getNoticeDetail } from "../../util/api";
 
-const OfficialContainer = ({ type }) => {
+const OfficialContainer = ({ type, id }) => {
   const nav = useNavigate();
   const params = useParams();
 
@@ -23,15 +23,16 @@ const OfficialContainer = ({ type }) => {
     let data;
     const fetchData = async () => {
       if (type === "FAQ") {
-        data = await getFAQDetail(Number(params.faqId));
+        data = await getFAQDetail(id);
       } else if (type === "NOTICE") {
-        data = await getNoticeDetail(Number(params.noticeId));
+        // data = await getNoticeDetail(Number(params.noticeId));
+        data = await getNoticeDetail(id);
       }
       console.log("data=", data);
       setDetail(data);
     };
     fetchData();
-  }, [params.faqId, params.noticeId, type]);
+  }, [id, type]);
 
   if (!detail) {
     return <div>Loading...</div>;
