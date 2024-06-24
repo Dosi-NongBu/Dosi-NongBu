@@ -14,7 +14,7 @@ const MyCropActivity = ({ onAddTimeline }) => {
         <div className="myCrop-activity-button">
           <div
             className="myCrop-activity-each"
-            onClick={() => onAddTimeline("물 주기")}
+            onClick={() => onAddTimeline("물주기")}
           >
             <GiWateringCan size={40} />
             <span>물 주기</span>

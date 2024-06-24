@@ -227,7 +227,7 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
       `/api/v1/manages/${userCropId}/${cropLogId}`
     );
     if (response.status === 200 || response.status === 201) {
-      console.log("작물 관리 추가 성공");
+      console.log("작물 관리 삭제 성공");
     }
   } catch (error) {
     console.log(error);
@@ -235,15 +235,21 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
 };
 
 // 사용자 작물 이미지 추가
-export const postUserCropImage = async (userCropId, cropImages) => {
+export const postUserCropImage = async (userCropId, imageURL) => {
   const jwt = localStorage.getItem("accessToken");
-  const sendData = makeSendImage(cropImages);
+  console.log("send data= ", imageURL);
+
+  // const images = [
+  //   { img1URL: "https://example.com/image1.jpg" },
+  //   { img2URL: "https://example.com/image2.jpg" },
+  //   // 최대 5개까지 가능
+  // ];
 
   try {
     const response = await axios.post(
       `/api/v1/images/${userCropId}`,
       {
-        newImageUrls: sendData,
+        imageURL: imageURL,
       },
       {
         headers: {

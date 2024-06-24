@@ -13,7 +13,7 @@ const Toggle = ({ isActive, onChangeToggle }) => {
         <input
           role="switch"
           type="checkbox"
-          checked={isActive}
+          checked={isActive ? isActive : true}
           onChange={onChangeToggle}
         />
       </label>
@@ -31,10 +31,12 @@ const EachAlarm = ({
 }) => {
   return (
     <div className="each-alarm">
-      <h3>{title}</h3>
+      <h3>
+        {title} {isActive}{" "}
+      </h3>
       <input
         type="number"
-        value={value}
+        value={value ? value : 0}
         onChange={onChangeValue}
         disabled={!isActive}
       />
@@ -95,20 +97,28 @@ const Alarm = ({ userCropId, isOpen, onSubmit }) => {
       const updatedAlarms = alarms.map((alarm) => {
         switch (alarm.title) {
           case "물 주기":
-            return { ...alarm, isActive: data.isWaterAlarm, value: data.water };
+            return {
+              ...alarm,
+              isActive: data.isWaterAlarm,
+              value: data.water || 0,
+            };
           case "분갈이":
-            return { ...alarm, isActive: data.isRepotAlarm, value: data.repot };
+            return {
+              ...alarm,
+              isActive: data.isRepotAlarm,
+              value: data.repot || 0,
+            };
           case "환기":
             return {
               ...alarm,
               isActive: data.isVentilationAlarm,
-              value: data.ventilation,
+              value: data.ventilation || 0,
             };
           case "가지치기":
             return {
               ...alarm,
               isActive: data.isPruningAlarm,
-              value: data.pruning,
+              value: data.pruning || 0,
             };
           default:
             return alarm;
