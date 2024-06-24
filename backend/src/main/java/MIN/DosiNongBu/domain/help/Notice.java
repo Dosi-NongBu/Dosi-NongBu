@@ -35,7 +35,7 @@ public class Notice extends BaseTimeEntity {
     private String content;
 
     @ElementCollection
-    @CollectionTable(name = "FAQS_IMAGES", joinColumns = @JoinColumn(name = "faq_id"))
+    @CollectionTable(name = "NOTICES_IMAGES", joinColumns = @JoinColumn(name = "notice_id"))
     @Column(name = "image_url")
     private List<String> imageUrls;
 

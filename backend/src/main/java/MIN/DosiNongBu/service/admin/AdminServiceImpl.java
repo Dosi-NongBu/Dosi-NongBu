@@ -10,7 +10,9 @@ import MIN.DosiNongBu.domain.crop.CropPeriod;
 import MIN.DosiNongBu.domain.help.Faq;
 import MIN.DosiNongBu.domain.help.Inquiry;
 import MIN.DosiNongBu.domain.help.Notice;
+import MIN.DosiNongBu.domain.help.constant.InquiryStatusType;
 import MIN.DosiNongBu.domain.user.User;
+import MIN.DosiNongBu.domain.user.constant.RoleType;
 import MIN.DosiNongBu.repository.crop.CropInformationRepository;
 import MIN.DosiNongBu.repository.crop.CropManagementRepository;
 import MIN.DosiNongBu.repository.crop.CropPeriodRepository;
@@ -95,7 +97,7 @@ public class AdminServiceImpl implements AdminService{
         User entity =  userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
 
-        entity.update(requestDto.getNickname(), requestDto.getProfileImage(), requestDto.getRoleType());
+        entity.update(requestDto.getNickname(), requestDto.getProfileImage(), RoleType.valueOf(requestDto.getRoleType()));
         return entity.getUserId();
     }
 
@@ -105,7 +107,7 @@ public class AdminServiceImpl implements AdminService{
         Inquiry entity = inquiryRepository.findById(inquiryId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 문의입니다. inquiryId=" + inquiryId));
 
-        entity.answer(requestDto.getInquiryStatusType(), requestDto.getAnswer());
+        entity.answer(InquiryStatusType.valueOf(requestDto.getInquiryStatusType().toUpperCase()), requestDto.getAnswer());
         return entity.getInquiryId();
     }
 
