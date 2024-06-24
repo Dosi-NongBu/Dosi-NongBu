@@ -198,7 +198,7 @@ class HelpServiceImplTest {
         Long findInquiryId = inquiry.getInquiryId();
 
         InquiryUpdateRequestDto requestDto = InquiryUpdateRequestDto.builder()
-                .inquiryType(InquiryType.ACCOUNT_ISSUE)
+                .inquiryType("ACCOUNT_ISSUE")
                 .title("수정된 테스트 제목")
                 .content("수정된 테스트 본문")
                 .imageUrls(imageUrls)
