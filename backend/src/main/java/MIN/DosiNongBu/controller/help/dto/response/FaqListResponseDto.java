@@ -12,11 +12,11 @@ public class FaqListResponseDto {
 
     private Long id;
     private String title;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime createdDate;
 
     public FaqListResponseDto(Faq entity) {
         this.id = entity.getFaqId();
         this.title = entity.getFaqQuestion();
-        this.modifiedDate = entity.getModifiedDate();
+        this.createdDate = entity.getCreatedDate();
     }
 }

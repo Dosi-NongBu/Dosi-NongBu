@@ -12,11 +12,11 @@ public class NoticeListResponseDto {
 
     private Long id;
     private String title;
-    private LocalDateTime modifiedDate;
+    private LocalDateTime createdDate;
 
     public NoticeListResponseDto(Notice entity) {
         this.id = entity.getNoticeId();
         this.title = entity.getTitle();
-        this.modifiedDate = entity.getModifiedDate();
+        this.createdDate = entity.getCreatedDate();
     }
 }

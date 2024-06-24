@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "COMMENTS_REPRORTS")
+@Table(name = "COMMENTS_REPORTS")
 public class CommentReport extends BaseTimeEntity {
     /* PK */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,8 @@ public class CommentReport extends BaseTimeEntity {
     private Comment comment;
 
     /* 속성 */
-    @Column(name = "report_type_id")
+    @Column(name = "report_type")
+    @Enumerated(EnumType.STRING)
     private ReportType reportType;
 
     @Builder
