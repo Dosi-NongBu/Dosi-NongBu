@@ -20,7 +20,7 @@ public class AdminController {
 
     // 신규 작물 등록
     @PostMapping("/admins/crops/add")
-    public Long createNewCrop(NewCropRequestDto requestDto){
+    public Long createNewCrop(@RequestBody NewCropRequestDto requestDto){
         return adminService.registerNewCrop(requestDto);
     }
 
@@ -44,13 +44,15 @@ public class AdminController {
 
     // 사용자 정보 수정
     @PutMapping("/admins/users/{userId}")
-    public Long updateUser(@PathVariable Long userId, UserUpdateRequestDto requestDto){
+    public Long updateUser(@PathVariable Long userId,
+                           @RequestBody UserUpdateRequestDto requestDto){
         return adminService.updateUser(userId, requestDto);
     }
 
     // 1:1 문의 답변 등록
     @PutMapping("/admins/inquiries/{inquiryId}")
-    public Long createInquiry(@PathVariable Long inquiryId, InquiryAnswerRequestDto requestDto){
+    public Long createInquiry(@PathVariable Long inquiryId,
+                              @RequestBody InquiryAnswerRequestDto requestDto){
         return adminService.registerInquiryAnswer(inquiryId, requestDto);
     }
 
@@ -62,25 +64,27 @@ public class AdminController {
 
     // 공지사항 등록
     @PostMapping("/admins/notices")
-    public Long createNotice(NoticeSaveRequestDto requestDto){
+    public Long createNotice(@RequestBody NoticeSaveRequestDto requestDto){
         return adminService.registerNotice(requestDto);
     }
 
     // 공지사항 수정
     @PutMapping("/admins/notices/{noticeId}")
-    public Long updateNotice(@PathVariable Long noticeId, NoticeUpdateRequestDto requestDto){
+    public Long updateNotice(@PathVariable Long noticeId,
+                             @RequestBody NoticeUpdateRequestDto requestDto){
         return adminService.updateNotice(noticeId, requestDto);
     }
 
     // FAQ 등록
     @PostMapping("/admins/faqs")
-    public Long createFaq(FaqSaveRequestDto requestDto){
+    public Long createFaq(@RequestBody FaqSaveRequestDto requestDto){
         return adminService.registerFAQ(requestDto);
     }
 
     // FAQ 수정
     @PutMapping("/admins/faqs/{faqId}")
-    public Long updateFaq(@PathVariable Long faqId, FaqUpdateRequestDto requestDto) {
+    public Long updateFaq(@PathVariable Long faqId,
+                          @RequestBody FaqUpdateRequestDto requestDto) {
         return adminService.updateFAQ(faqId, requestDto);
     }
 }

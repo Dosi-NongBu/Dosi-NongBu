@@ -35,8 +35,8 @@ public class PostServiceImpl implements PostService{
 
     // 카테고리별 목록 조회
     @Override
-    public List<PostListResponseDto> viewPostList(PostType postType, Pageable pageable) {
-        Page<Post> entity = postRepository.findByPostType(postType, pageable);
+    public List<PostListResponseDto> viewPostList(String postType, Pageable pageable) {
+        Page<Post> entity = postRepository.findByPostType(PostType.valueOf(postType), pageable);
 
         return entity.stream().map(PostListResponseDto::new).toList();
     }
@@ -44,8 +44,8 @@ public class PostServiceImpl implements PostService{
     // 글 등록
     @Override
     @Transactional
-    public Long registerPost(Long userId, PostType postType, PostSaveRequestDto requestDto) {
-        Post entity= requestDto.toEntity(postType);
+    public Long registerPost(Long userId, String postType, PostSaveRequestDto requestDto) {
+        Post entity= requestDto.toEntity(PostType.valueOf(postType));
 
         User user =  userRepository.findById(userId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 회원입니다. userId=" + userId));
@@ -89,7 +89,7 @@ public class PostServiceImpl implements PostService{
     // 글 반응
     @Override
     @Transactional
-    public Long registerPostReaction(Long userId, Long postId, ReactionType reactionType) {
+    public Long registerPostReaction(Long userId, Long postId, String reactionType) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. postId=" + postId));
 
@@ -101,20 +101,20 @@ public class PostServiceImpl implements PostService{
         // 기존 반응이 없었다면
         if(postReaction == null){
             PostReaction entity = PostReaction.builder()
-                    .reaction(reactionType)
+                    .reaction(ReactionType.valueOf(reactionType))
                     .build();
 
             entity.setUser(user);
             entity.setPost(post);
             postReactionRepository.save(entity);
-            post.addReaction(reactionType);
+            post.addReaction(ReactionType.valueOf(reactionType));
 
             return entity.getPostReactionId();
         }
         // 기존 반응이 있었다면
         else{
-            postReaction.update(reactionType);
-            post.updateReaction(reactionType);
+            postReaction.update(ReactionType.valueOf(reactionType));
+            post.updateReaction(ReactionType.valueOf(reactionType));
 
             return postReaction.getPostReactionId();
         }
@@ -130,7 +130,7 @@ public class PostServiceImpl implements PostService{
     // 글 신고
     @Override
     @Transactional
-    public Long registerPostReport(Long userId, Long postId, ReportType reportType) {
+    public Long registerPostReport(Long userId, Long postId, String reportType) {
         Post post = postRepository.findById(postId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. postId=" + postId));
 
@@ -142,7 +142,7 @@ public class PostServiceImpl implements PostService{
         // 기존 신고가 없었다면
         if(postReport == null){
             PostReport entity = PostReport.builder()
-                    .reportType(reportType)
+                    .reportType(ReportType.valueOf(reportType))
                     .build();
 
             entity.setUser(user);
