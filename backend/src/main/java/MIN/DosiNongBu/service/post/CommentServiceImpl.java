@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class PostCommentServiceImpl implements PostCommentService{
+public class CommentServiceImpl implements CommentService {
 
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -38,7 +38,7 @@ public class PostCommentServiceImpl implements PostCommentService{
     }
 
     @Override
-    public Long registerComment(Long postId, Long userId, CommentSaveRequestDto requestDto) {
+    public Long registerComment(Long userId, Long postId, CommentSaveRequestDto requestDto) {
         Comment entity = requestDto.toEntity();
 
         User user =  userRepository.findById(userId)
@@ -57,7 +57,7 @@ public class PostCommentServiceImpl implements PostCommentService{
     @Override
     public Long updateComment(Long commentId, CommentUpdateRequestDto requestDto) {
         Comment entity = commentRepository.findById(commentId)
-                .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. commentId=" + commentId));
+                .orElseThrow(() -> new IllegalStateException("존재하지 않는 댓글입니다. commentId=" + commentId));
 
         entity.update(requestDto.getContent());
 
@@ -72,7 +72,7 @@ public class PostCommentServiceImpl implements PostCommentService{
     }
 
     @Override
-    public Long registerCommentReaction(Long userId, Long commentId, ReactionType reactionType) {
+    public Long registerCommentReaction(Long userId, Long commentId, String reactionType) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 댓글입니다. commentId=" + commentId));
 
@@ -84,20 +84,20 @@ public class PostCommentServiceImpl implements PostCommentService{
         // 기존 반응이 없었다면
         if(commentReaction == null){
             CommentReaction entity = CommentReaction.builder()
-                    .reaction(reactionType)
+                    .reaction(ReactionType.valueOf(reactionType))
                     .build();
 
             entity.setUser(user);
             entity.setComment(comment);
             commentReactionRepository.save(entity);
-            comment.addReaction(reactionType);
+            comment.addReaction(ReactionType.valueOf(reactionType));
 
             return entity.getCommentReactionId();
         }
         // 기존 반응이 있었다면
         else{
-            commentReaction.update(reactionType);
-            comment.updateReaction(reactionType);
+            commentReaction.update(ReactionType.valueOf(reactionType));
+            comment.updateReaction(ReactionType.valueOf(reactionType));
 
             return commentReaction.getCommentReactionId();
         }
@@ -109,7 +109,7 @@ public class PostCommentServiceImpl implements PostCommentService{
     }
 
     @Override
-    public Long registerPostReport(Long userId, Long commentId, ReportType reportType) {
+    public Long registerCommentReport(Long userId, Long commentId, String reportType) {
         Comment comment = commentRepository.findById(commentId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 댓글입니다. commentId=" + commentId));
 
@@ -121,7 +121,7 @@ public class PostCommentServiceImpl implements PostCommentService{
         // 기존 신고가 없었다면
         if(commentReport == null){
             CommentReport entity = CommentReport.builder()
-                    .reportType(reportType)
+                    .reportType(ReportType.valueOf(reportType))
                     .build();
 
             entity.setUser(user);

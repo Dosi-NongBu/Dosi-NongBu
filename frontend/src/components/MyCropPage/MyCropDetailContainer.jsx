@@ -30,7 +30,6 @@ const MyCropDetailContainer = ({ userCropId }) => {
     setNowPage(page);
     const data = await getUserTimeline(Number(userCropId), page, 5);
     setTimeline(data);
-    console.log("page", page, " fetch timeline ", data);
   }
 
   // 기본 정보 업데이트
@@ -87,7 +86,6 @@ const MyCropDetailContainer = ({ userCropId }) => {
       const newImages = [...cropData.imageUrls, event];
       setCropData({ ...cropData, imageUrls: newImages });
       await postUserCropImage(Number(userCropId), newImages);
-      console.log("new images =", newImages);
     }
   };
 
@@ -149,16 +147,35 @@ const MyCropDetailContainer = ({ userCropId }) => {
           onDeleteImage={handleDeleteImage}
         /> */}
 
-        <Gallery
-          type="WRITE"
-          // setGalleryImages={() => {
-          //   // console.log("event = ", event);
-          //   // handleAddImage(event.target.files[0].name);
-          //   handleAddImage()
-          // }}
-          setGalleryImages={handleAddImage}
-          readImages={cropData.imageUrls}
-        />
+        {/* <div className="myCrop-elements myCrop-gallery">
+          <div className="flex-row tb-margin-20">
+            <h2 className="no-margin">갤러리</h2>
+
+            <Gallery
+              type="WRITE"
+              setGalleryImages={handleAddImage}
+              readImages={cropData.imageUrls}
+            />
+          </div>
+        </div> */}
+
+        <div className="myCrop-elements myCrop-gallery">
+          <div className="flex-row tb-margin-20">
+            <h2 className="no-margin">갤러리</h2>
+          </div>
+
+          {cropData && cropData.imageUrls.length === 0 && (
+            <>
+              <h3>이미지가 없습니다. 이미지를 추가해주세요</h3>
+            </>
+          )}
+
+          <Gallery
+            type="WRITE"
+            setGalleryImages={handleAddImage}
+            readImages={cropData.imageUrls}
+          />
+        </div>
       </div>
     </div>
   );

@@ -14,10 +14,10 @@ import java.util.List;
 public interface PostService {
 
     // 카테고리별 목록 조회
-    List<PostListResponseDto> viewPostList(PostType postType, Pageable pageable);
+    List<PostListResponseDto> viewPostList(String postType, Pageable pageable);
 
     // 글 등록
-    Long registerPost(Long userId, PostType postType, PostSaveRequestDto  requestDto);
+    Long registerPost(Long userId, String postType, PostSaveRequestDto requestDto);
 
     // 글 조회
     PostResponseDto viewPost(Long postId);
@@ -29,11 +29,11 @@ public interface PostService {
     Long deletePost(Long postId);
 
     // 글 반응
-    Long registerPostReaction(Long userId, Long postId, ReactionType reactionType);
+    Long registerPostReaction(Long userId, Long postId, String reactionType);
 
     // 글 반응 취소
     void deletePostReaction();
 
     // 글 신고
-    Long registerPostReport(Long userId, Long postId, ReportType reportType);
+    Long registerPostReport(Long userId, Long postId, String reportType);
 }

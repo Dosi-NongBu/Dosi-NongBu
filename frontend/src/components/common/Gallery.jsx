@@ -11,7 +11,6 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
   // 읽기 전용인 경우 이미지 저장
   useEffect(() => {
     setImages(readImages || []);
-    console.log("read images ", readImages);
   }, [readImages]);
 
   const handleFileChange = (event) => {
@@ -65,19 +64,6 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
         </div>
       )}
 
-      {/* {type === "READ" && mainImage && (
-        <div className="main-image">
-          <img src={`/${mainImage}`} />
-          {type === "WRITE" && (
-            <button
-              className="delete-image"
-              onClick={() => handleDelete(mainImage)}
-            >
-              X
-            </button>
-          )}
-        </div>
-      )} */}
       <div className="thumbnail-container">
         {images &&
           images.map((image, index) => (
@@ -88,18 +74,6 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
               />
             </div>
           ))}
-
-        {/* {type === "READ" &&
-          readImages &&
-          readImages.map((image, index) => (
-            <div className="each-thumbnail" key={index}>
-              <img
-                src={`/${image}`}
-                onClick={() => handleThumbnailClick(image)}
-              />
-              <h2>{image}</h2>
-            </div>
-          ))} */}
       </div>
       {type === "WRITE" && (
         <div className="file-input-container">

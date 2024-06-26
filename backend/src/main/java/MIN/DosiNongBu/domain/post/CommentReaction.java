@@ -29,6 +29,8 @@ public class CommentReaction {
     private Comment comment;
 
     /* 속성 */
+    @Column(name = "reaction_type")
+    @Enumerated(EnumType.STRING)
     private ReactionType reaction;
 
     @Builder

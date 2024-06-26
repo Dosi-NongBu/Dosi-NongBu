@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "POSTS_REPRORTS")
+@Table(name = "POSTS_REPORTS")
 public class PostReport extends BaseTimeEntity {
     /* PK */
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +29,8 @@ public class PostReport extends BaseTimeEntity {
     private Post post;
 
     /* 속성 */
-    @Column(name = "report_type_id")
+    @Column(name = "report_type")
+    @Enumerated(EnumType.STRING)
     private ReportType reportType;
 
     @Builder

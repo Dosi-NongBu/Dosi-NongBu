@@ -4,6 +4,12 @@
   margin-top: 50px;
 }
 
+.community-board-grey {
+  background-color: #fff0ec;
+  border-radius: 10px;
+  padding: 30px;
+}
+
 .community-list {
   display: flex;
   flex-wrap: wrap;

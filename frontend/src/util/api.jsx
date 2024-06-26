@@ -198,7 +198,6 @@ export const getUserTimeline = async (userCropId, page, size) => {
     );
 
     if (response.status === 200 || response.status === 201) {
-      console.log(response);
       return response.data;
     }
   } catch (error) {
@@ -602,7 +601,7 @@ export const postCommunityReaction = async (postId, reactionType) => {
   const jwt = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `/api/v1/reactions/${postId}?reactionType=${reactionType}`,
+      `/api/v1/posts/reactions/${postId}?reactionType=${reactionType}`,
       {
         headers: {
           Authorization: jwt,
@@ -695,7 +694,7 @@ export const postCommentReaction = async (commentId, reactionType) => {
   const jwt = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `/api/v1/reaction/${commentId}?reactionType=${reactionType}`,
+      `/api/v1/reactions/${commentId}?reactionType=${reactionType}`,
       {
         headers: {
           Authorization: jwt,

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import ImageGallery from "react-image-gallery";
 
-import "./style/MyCropGallery.css";
 import Button from "../common/Button";
 
 const MyCropGallery = ({ cropData, onAddImage, onDeleteImage }) => {
@@ -51,11 +50,11 @@ const MyCropGallery = ({ cropData, onAddImage, onDeleteImage }) => {
         )}
         {cropData && cropData.imageUrls.length > 0 && (
           <>
-            <ImageGallery
+            {/* <ImageGallery
               items={cropData.imageUrls}
               autoPlay={false}
               renderItem={customItem}
-            />
+            /> */}
           </>
         )}
       </div>

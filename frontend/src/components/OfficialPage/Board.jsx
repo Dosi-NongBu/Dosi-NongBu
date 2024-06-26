@@ -68,7 +68,7 @@ const Board = ({ type }) => {
               <td className="column-id">{post.id}</td>
               <td className="column-title">{post.title}</td>
               <td className="column-date">
-                {post.modifiedDate && post.modifiedDate.split("T")[0]}
+                {post.createdDate && post.createdDate.split("T")[0]}
               </td>
               {type === "REQUEST" && (
                 <td className="column-author">{post.author}</td>

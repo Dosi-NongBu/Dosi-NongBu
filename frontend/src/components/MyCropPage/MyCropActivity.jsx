@@ -3,7 +3,6 @@ import { GiWateringCan } from "react-icons/gi";
 import { PiPottedPlantDuotone } from "react-icons/pi";
 import { FaWind } from "react-icons/fa6";
 import { IoIosGitBranch } from "react-icons/io";
-import "./style/MyCropActivity.css";
 
 const MyCropActivity = ({ onAddTimeline }) => {
   return (

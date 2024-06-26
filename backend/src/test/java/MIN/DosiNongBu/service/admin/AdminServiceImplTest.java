@@ -290,7 +290,7 @@ class AdminServiceImplTest {
         inquiryRepository.save(inquiry);
 
         InquiryAnswerRequestDto requestDto = InquiryAnswerRequestDto.builder()
-                .inquiryStatusType(InquiryStatusType.COMPLETE)
+                .inquiryStatusType("COMPLETE")
                 .answer("테스트 문의 답변")
                 .build();
 
@@ -315,7 +315,7 @@ class AdminServiceImplTest {
 
         // given
         NoticeSaveRequestDto requestDto = NoticeSaveRequestDto.builder()
-                .noticeType(NoticeType.ANNOUNCEMENT)
+                .noticeType("ANNOUNCEMENT")
                 .title("테스트 공지사항 제목")
                 .content("테스트 공지사항 본문")
                 .build();
@@ -345,7 +345,7 @@ class AdminServiceImplTest {
         noticeRepository.save(notice);
 
         NoticeUpdateRequestDto requestDto = NoticeUpdateRequestDto.builder()
-                .noticeType(NoticeType.MAINTENANCE_NOTICE)
+                .noticeType("MAINTENANCE_NOTICE")
                 .title("수정된 테스트 공지사항 제목")
                 .content("수정된 테스트 본문 제목")
                 .build();
@@ -370,7 +370,7 @@ class AdminServiceImplTest {
 
         // given
         FaqSaveRequestDto requestDto = FaqSaveRequestDto.builder()
-                .faqType(FaqType.ACCOUNT_FAQ)
+                .faqType("ACCOUNT_FAQ")
                 .question("테스트 질문")
                 .answer("테스트 답변")
                 .build();

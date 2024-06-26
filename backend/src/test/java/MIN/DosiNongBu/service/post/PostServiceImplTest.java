@@ -95,8 +95,8 @@ class PostServiceImplTest {
         Pageable pageable = PageRequest.of(0, 2);
 
         // when
-        List<PostListResponseDto> DEFAULT = postService.viewPostList(PostType.DEFAULT, pageable);
-        List<PostListResponseDto> QNA = postService.viewPostList(PostType.QNA, pageable);
+        List<PostListResponseDto> DEFAULT = postService.viewPostList("DEFAULT", pageable);
+        List<PostListResponseDto> QNA = postService.viewPostList("QNA", pageable);
 
         // then
         assertThat(DEFAULT.get(0).getTitle()).isEqualTo("DEFAULT 테스트 제목1");
@@ -135,7 +135,7 @@ class PostServiceImplTest {
                 .imageUrls(imageUrls)
                 .build();
 
-        Long findPostId = postService.registerPost(findUserId, PostType.DEFAULT, requestDto);
+        Long findPostId = postService.registerPost(findUserId, "DEFAULT", requestDto);
 
         Post post = postRepository.findById(findPostId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 글입니다. postId=" + findPostId));
@@ -290,7 +290,7 @@ class PostServiceImplTest {
         Long findUserId = user.getUserId();
         Long findPostId = post.getPostId();
 
-        Long findPostReactionId = postService.registerPostReaction(findUserId, findPostId, ReactionType.GOOD);
+        Long findPostReactionId = postService.registerPostReaction(findUserId, findPostId, "GOOD");
 
         // then
         PostReaction findPostReaction = postReactionRepository.findById(findPostReactionId)
@@ -327,8 +327,8 @@ class PostServiceImplTest {
         Long findUserId = user.getUserId();
         Long findPostId = post.getPostId();
 
-        postService.registerPostReaction(findUserId, findPostId, ReactionType.GOOD);
-        Long findPostReactionId = postService.registerPostReaction(findUserId, findPostId, ReactionType.BAD);
+        postService.registerPostReaction(findUserId, findPostId, "GOOD");
+        Long findPostReactionId = postService.registerPostReaction(findUserId, findPostId, "BAD");
 
         // then
         PostReaction findPostReaction = postReactionRepository.findById(findPostReactionId)
@@ -379,7 +379,7 @@ class PostServiceImplTest {
         Long findUserId = user.getUserId();
         Long findPostId = post.getPostId();
 
-        Long findPostReportId = postService.registerPostReport(findUserId, findPostId, ReportType.OTHER);
+        Long findPostReportId = postService.registerPostReport(findUserId, findPostId, "OTHER");
 
         // then
         PostReport findPostReport = postReportRepository.findById(findPostReportId)
@@ -414,11 +414,11 @@ class PostServiceImplTest {
         Long findUserId = user.getUserId();
         Long findPostId = post.getPostId();
 
-        Long postReportId = postService.registerPostReport(findUserId, findPostId, ReportType.OTHER);
+        Long postReportId = postService.registerPostReport(findUserId, findPostId, "OTHER");
 
         // then
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-            postService.registerPostReport(findUserId, findPostId, ReportType.OTHER);
+            postService.registerPostReport(findUserId, findPostId, "OTHER");
         });
 
         assertThat(exception.getMessage()).isEqualTo("이미 신고했습니다.");

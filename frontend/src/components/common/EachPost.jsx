@@ -7,10 +7,6 @@ import "./style/EachPost.css";
 const EachPost = ({ id, imageUrl, title, author, profileImage }) => {
   const nav = useNavigate();
 
-  useEffect(() => {
-    console.log("url = ", imageUrl);
-  }, [imageUrl]);
-
   return (
     <div
       className="each-community"
