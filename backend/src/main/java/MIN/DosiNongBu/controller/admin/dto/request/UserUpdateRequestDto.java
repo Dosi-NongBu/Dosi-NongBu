@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 public class UserUpdateRequestDto {
     private String nickname;
     private String profileImage;
-    private RoleType roleType;
+    private String roleType;
 
     @Builder
-    public UserUpdateRequestDto(String nickname, String profileImage, RoleType roleType) {
+    public UserUpdateRequestDto(String nickname, String profileImage, String roleType) {
         this.nickname = nickname;
         this.profileImage = profileImage;
         this.roleType = roleType;
