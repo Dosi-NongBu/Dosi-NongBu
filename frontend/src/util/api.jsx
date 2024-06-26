@@ -369,7 +369,6 @@ export const getRequestList = async (page, size) => {
       `/api/v1/inquiries?page=${page}&size=${size}`
     );
     if (response.status === 200 || response.status === 201) {
-      console.log(response.data, " --");
       return response.data;
     }
   } catch (error) {
@@ -396,6 +395,8 @@ export const getRequestDetail = async (inquiryId) => {
 
 // 1:1 문의 작성
 export const postRequest = async (inquiry) => {
+  const jwt = localStorage.getItem("accessToken");
+
   const { inquiryType, title, content, imagesUrls } = inquiry;
   const body = {
     title: title,
@@ -403,10 +404,17 @@ export const postRequest = async (inquiry) => {
     imageUrls: imagesUrls,
   };
 
+  console.log("body = ", body);
+
   try {
     const response = await axios.post(
       `/api/v1/inquiries?inquiryType=${inquiryType}`,
-      body
+      body,
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
     );
     if (response.status === 200 || response.status === 201) {
       console.log("문의 작성 성공");
@@ -636,6 +644,7 @@ export const getComment = async (postId) => {
 // 댓글 작성
 export const postComment = async (postId, content) => {
   const jwt = localStorage.getItem("accessToken");
+  console.log("post id= ", postId);
   try {
     const response = await axios.post(
       `/api/v1/comments/${postId}`,

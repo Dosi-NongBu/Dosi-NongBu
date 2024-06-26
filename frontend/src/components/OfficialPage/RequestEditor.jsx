@@ -62,6 +62,15 @@ const RequestEditor = () => {
     }
   };
 
+  const handleAddImage = (event) => {
+    if (event) {
+      console.log("event = ", event);
+      const newImages = [...images, event];
+      setImages(newImages);
+      console.log("newImages = ", newImages);
+    }
+  };
+
   const validateInput = () => {
     if (!selected) {
       alert("문의 유형을 선택해주세요.");
@@ -102,7 +111,7 @@ const RequestEditor = () => {
 
       <Gallery
         type="WRITE"
-        setGalleryImages={(images) => setImages(images.map((img) => img.name))}
+        setGalleryImages={handleAddImage}
         initialImages={images}
       />
 

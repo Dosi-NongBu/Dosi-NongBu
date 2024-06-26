@@ -15,9 +15,9 @@ const LandingPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getCommunityList("DEFAULT", 0, 3);
+      const data = await getCommunityList("DEFAULT", 0, 6);
       const qnaData = await getCommunityList("QNA", 0, 6);
-      const recommend = await getCropList(0, 6);
+      const recommend = await getRecommendCropList(0, 3);
       setPosts(data);
       setQnaPosts(qnaData);
       setRecommendCrosp(recommend);
