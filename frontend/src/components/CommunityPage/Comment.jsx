@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./style/Comment.css";
 import { postCommentReaction, putComment, deleteComment } from "../../util/api";
+import noPhoto from "../../../public/no-photos.png";
 
 function Comment({
   profileImage,
@@ -33,7 +34,7 @@ function Comment({
     <div className="comment">
       <div className="comment-profile">
         <img
-          src={profileImage}
+          src={profileImage ? profileImage : noPhoto}
           alt="profile"
           className="comment-profile-image"
         />

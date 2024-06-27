@@ -17,20 +17,18 @@ import MyCropInfo from "./MyCropInfo";
 import MyCropActivity from "./MyCropActivity";
 import MyCropTimeline from "./MyCropTimeline";
 import MyCropGallery from "./MyCropGallery";
+import Gallery from "../common/Gallery";
 
 const MyCropDetailContainer = ({ userCropId }) => {
   const [cropData, setCropData] = useState(mockData5());
   const [isModal, setIsModal] = useState(false);
-  const [timeline, setTimeline] = useState([
-    { cropLogId: 1, managedDate: "2024-05-12", cropManageType: "분갈이" },
-    { cropLogId: 2, managedDate: "2024-05-14", cropManageType: "물 주기" },
-    { cropLogId: 3, managedDate: "2024-05-26", cropManageType: "물 주기" },
-    { cropLogId: 4, managedDate: "2024-05-30", cropManageType: "가지치기" },
-  ]);
+  const [timeline, setTimeline] = useState([]);
+  const [nowPage, setNowPage] = useState(0);
 
   // 타임라인
-  async function fetchTimeline() {
-    const data = await getUserTimeline(Number(userCropId), 0, 5);
+  async function fetchTimeline(page) {
+    setNowPage(page);
+    const data = await getUserTimeline(Number(userCropId), page, 5);
     setTimeline(data);
   }
 
@@ -42,25 +40,18 @@ const MyCropDetailContainer = ({ userCropId }) => {
 
   // 로딩 시
   useEffect(() => {
-    fetchTimeline(); // 주석처리 시 타임라인 임시 데이터
+    fetchTimeline(nowPage); // 주석처리 시 타임라인 임시 데이터
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // 활동을 timeline에 추가하는 함수
   const handleAddTimeline = async (activity) => {
-    const newAc = {
-      cropLogId: timeline.length + 1,
-      managedDate: new Date().toISOString().slice(0, 10),
-      cropManageType: activity,
-    };
-    // setTimeline([newAc, ...timeline]);
-
     // 새로운 작물 관리 추가
     await postUserTimeline(userCropId, activity);
 
     // 타임라인
-    fetchTimeline();
+    fetchTimeline(nowPage);
   };
 
   // 활동 timeline에서 삭제하는 함수
@@ -71,20 +62,29 @@ const MyCropDetailContainer = ({ userCropId }) => {
     fetchTimeline();
   };
 
-  // 사진 추가
+  // // 사진 추가
+  // const handleAddImage = async (event) => {
+  //   const file = event.target.files[0];
+  //   if (file) {
+  //     const filePath = URL.createObjectURL(file);
+  //     const newImage = {
+  //       id: cropData.imageUrls.length + 1,
+  //       original: file.name,
+  //       thumbnail: file.name,
+  //     };
+
+  //     const newImages = [...cropData.imageUrls, newImage];
+  //     setCropData({ ...cropData, imageUrls: newImages });
+
+  //     await postUserCropImage(Number(userCropId), newImages);
+  //   }
+  // };
+
+  // 여기서 새 배열 생성
   const handleAddImage = async (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      const filePath = URL.createObjectURL(file);
-      const newImage = {
-        id: cropData.imageUrls.length + 1,
-        original: file.name,
-        thumbnail: file.name,
-      };
-
-      const newImages = [...cropData.imageUrls, newImage];
+    if (event) {
+      const newImages = [...cropData.imageUrls, event];
       setCropData({ ...cropData, imageUrls: newImages });
-
       await postUserCropImage(Number(userCropId), newImages);
     }
   };
@@ -137,14 +137,45 @@ const MyCropDetailContainer = ({ userCropId }) => {
 
         <MyCropTimeline
           timeline={timeline}
+          onMovePage={fetchTimeline}
           onDeleteTimeline={handleDeleteTimeline}
         />
 
-        <MyCropGallery
+        {/* <MyCropGallery
           cropData={cropData}
           onAddImage={handleAddImage}
           onDeleteImage={handleDeleteImage}
-        />
+        /> */}
+
+        {/* <div className="myCrop-elements myCrop-gallery">
+          <div className="flex-row tb-margin-20">
+            <h2 className="no-margin">갤러리</h2>
+
+            <Gallery
+              type="WRITE"
+              setGalleryImages={handleAddImage}
+              readImages={cropData.imageUrls}
+            />
+          </div>
+        </div> */}
+
+        <div className="myCrop-elements myCrop-gallery">
+          <div className="flex-row tb-margin-20">
+            <h2 className="no-margin">갤러리</h2>
+          </div>
+
+          {cropData && cropData.imageUrls.length === 0 && (
+            <>
+              <h3>이미지가 없습니다. 이미지를 추가해주세요</h3>
+            </>
+          )}
+
+          <Gallery
+            type="WRITE"
+            setGalleryImages={handleAddImage}
+            readImages={cropData.imageUrls}
+          />
+        </div>
       </div>
     </div>
   );

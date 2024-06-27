@@ -1,14 +1,13 @@
 // NotFound.js
 import React from "react";
 import { Link } from "react-router-dom";
+import Lottie from "lottie-react";
+import Error404 from "../assets/lottie/Error404.json";
 
 const NotFound = () => {
   return (
     <div style={styles.container}>
-      <h1 style={styles.header}>404 - 페이지를 찾을 수 없습니다</h1>
-      <p style={styles.paragraph}>
-        요청하신 페이지를 찾을 수 없습니다. 주소를 확인해주세요.
-      </p>
+      <Lottie animationData={Error404} />
       <Link to="/" style={styles.link}>
         홈으로 돌아가기
       </Link>

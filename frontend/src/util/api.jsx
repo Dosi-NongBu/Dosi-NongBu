@@ -198,7 +198,6 @@ export const getUserTimeline = async (userCropId, page, size) => {
     );
 
     if (response.status === 200 || response.status === 201) {
-      console.log(response);
       return response.data;
     }
   } catch (error) {
@@ -227,7 +226,7 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
       `/api/v1/manages/${userCropId}/${cropLogId}`
     );
     if (response.status === 200 || response.status === 201) {
-      console.log("작물 관리 추가 성공");
+      console.log("작물 관리 삭제 성공");
     }
   } catch (error) {
     console.log(error);
@@ -235,15 +234,21 @@ export const deleteUserTimeline = async (userCropId, cropLogId) => {
 };
 
 // 사용자 작물 이미지 추가
-export const postUserCropImage = async (userCropId, cropImages) => {
+export const postUserCropImage = async (userCropId, imageURL) => {
   const jwt = localStorage.getItem("accessToken");
-  const sendData = makeSendImage(cropImages);
+  console.log("send data= ", imageURL);
+
+  // const images = [
+  //   { img1URL: "https://example.com/image1.jpg" },
+  //   { img2URL: "https://example.com/image2.jpg" },
+  //   // 최대 5개까지 가능
+  // ];
 
   try {
     const response = await axios.post(
       `/api/v1/images/${userCropId}`,
       {
-        newImageUrls: sendData,
+        imageURL: imageURL,
       },
       {
         headers: {
@@ -364,7 +369,6 @@ export const getRequestList = async (page, size) => {
       `/api/v1/inquiries?page=${page}&size=${size}`
     );
     if (response.status === 200 || response.status === 201) {
-      console.log(response.data, " --");
       return response.data;
     }
   } catch (error) {
@@ -391,6 +395,8 @@ export const getRequestDetail = async (inquiryId) => {
 
 // 1:1 문의 작성
 export const postRequest = async (inquiry) => {
+  const jwt = localStorage.getItem("accessToken");
+
   const { inquiryType, title, content, imagesUrls } = inquiry;
   const body = {
     title: title,
@@ -398,10 +404,17 @@ export const postRequest = async (inquiry) => {
     imageUrls: imagesUrls,
   };
 
+  console.log("body = ", body);
+
   try {
     const response = await axios.post(
       `/api/v1/inquiries?inquiryType=${inquiryType}`,
-      body
+      body,
+      {
+        headers: {
+          Authorization: jwt,
+        },
+      }
     );
     if (response.status === 200 || response.status === 201) {
       console.log("문의 작성 성공");
@@ -596,7 +609,7 @@ export const postCommunityReaction = async (postId, reactionType) => {
   const jwt = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `/api/v1/reactions/${postId}?reactionType=${reactionType}`,
+      `/api/v1/posts/reactions/${postId}?reactionType=${reactionType}`,
       {
         headers: {
           Authorization: jwt,
@@ -631,6 +644,7 @@ export const getComment = async (postId) => {
 // 댓글 작성
 export const postComment = async (postId, content) => {
   const jwt = localStorage.getItem("accessToken");
+  console.log("post id= ", postId);
   try {
     const response = await axios.post(
       `/api/v1/comments/${postId}`,
@@ -689,7 +703,7 @@ export const postCommentReaction = async (commentId, reactionType) => {
   const jwt = localStorage.getItem("accessToken");
   try {
     const response = await axios.post(
-      `/api/v1/reaction/${commentId}?reactionType=${reactionType}`,
+      `/api/v1/reactions/${commentId}?reactionType=${reactionType}`,
       {
         headers: {
           Authorization: jwt,

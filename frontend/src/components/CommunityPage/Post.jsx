@@ -87,7 +87,8 @@ const Post = () => {
         <div className="post-info">
           <h2>{postData.title}</h2>
           <p>
-            {postData.nickname} | {postData.updateDate}
+            {postData.nickname} |{" "}
+            {postData.createdDate ? postData.createdDate.slice(0, 10) : ""}
           </p>
         </div>
       </div>
@@ -127,8 +128,8 @@ const Post = () => {
       {comments &&
         comments.map((comment) => (
           <Comment
-            key={comment.commentId}
-            commentId={comment.commentId}
+            key={comment.id}
+            commentId={comment.id}
             profileImage={comment.profileImage}
             commentContent={comment.content}
             likeCount={comment.good}

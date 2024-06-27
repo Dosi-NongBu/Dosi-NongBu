@@ -73,6 +73,11 @@
   padding: 5px 15px;
   cursor: pointer;
 }
+
+.post-content {
+  white-space: pre-line;
+}
+
 @media (max-width: 767px) {
   .post {
     width: 90%;

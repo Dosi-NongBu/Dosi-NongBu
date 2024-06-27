@@ -3,7 +3,6 @@ import { GiWateringCan } from "react-icons/gi";
 import { PiPottedPlantDuotone } from "react-icons/pi";
 import { FaWind } from "react-icons/fa6";
 import { IoIosGitBranch } from "react-icons/io";
-import "./style/MyCropActivity.css";
 
 const MyCropActivity = ({ onAddTimeline }) => {
   return (
@@ -14,7 +13,7 @@ const MyCropActivity = ({ onAddTimeline }) => {
         <div className="myCrop-activity-button">
           <div
             className="myCrop-activity-each"
-            onClick={() => onAddTimeline("물 주기")}
+            onClick={() => onAddTimeline("물주기")}
           >
             <GiWateringCan size={40} />
             <span>물 주기</span>

@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../../store/thunkFunctions";
 
 import "./style/Navbar.css";
+import useIsAuth from "../../hooks/useIsAuth";
 
 const common = [
   {
@@ -51,9 +52,9 @@ const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state) => state.user?.isAuth);
-  // const isAuth = true;
-  const [bell, setBell] = useState(5);
+  // const isAuth = useSelector((state) => state.user?.isAuth);
+  const isAuth = useIsAuth();
+
   const [menu, setMenu] = useState(false);
 
   useEffect(() => {
@@ -62,11 +63,6 @@ const Navbar = () => {
 
   const handleToggleMenu = () => {
     setMenu(!menu);
-  };
-
-  const handleBellClick = () => {
-    setBell(0);
-    navigate("/myPage");
   };
 
   const handleLogout = () => {
@@ -112,10 +108,10 @@ const Navbar = () => {
                   <Link to={"/"} onClick={handleLogout}>
                     로그아웃
                   </Link>
-                  <div className="alarm-bell" onClick={handleBellClick}>
+                  {/* <div className="alarm-bell" onClick={handleBellClick}>
                     <AiOutlineBell />
                     <span className="bell">{bell}</span>
-                  </div>
+                  </div> */}
                 </>
               )}
               {!isAuth && (
@@ -175,12 +171,12 @@ const Navbar = () => {
                   </Link>
                 </div>
               }
-              {
+              {/* {
                 <div className="alarm-bell" onClick={handleBellClick}>
                   <AiOutlineBell />
                   <span className="bell">{bell}</span>
                 </div>
-              }
+              } */}
             </div>
           )}
         </div>

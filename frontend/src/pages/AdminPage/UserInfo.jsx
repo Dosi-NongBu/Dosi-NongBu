@@ -24,10 +24,9 @@ const UserDetail = ({ userId }) => {
       formData.append(key, editedDetail[key]);
     });
 
-    console.log("edit ", editedDetail);
     const response = await axios.put(
       `/api/v1/admins/users/${userId}`,
-      formData
+      editedDetail
     );
     if (response.status === 200 || response.status === 201) {
       setDetail(response.data);

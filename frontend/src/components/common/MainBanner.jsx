@@ -20,6 +20,7 @@ const MainBanner = () => {
         <div className="banner-icon">
           <Lottie
             animationData={Plant}
+            loop={false}
             style={{ width: "300px", height: "300px" }}
           />
         </div>

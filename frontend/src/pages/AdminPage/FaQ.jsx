@@ -39,7 +39,7 @@ const FaQ = () => {
   const handleSubmitNew = async (data) => {
     console.log("new = ", data);
     try {
-      await axios.post(`/api/v1/admins/faqs?faqType=${data.faqType}`, data);
+      await axios.post(`/api/v1/admins/faqs?faqType=${data.noticeType}`, data);
     } catch (error) {
       console.log(error);
     }

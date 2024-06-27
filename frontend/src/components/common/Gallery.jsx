@@ -15,18 +15,12 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
+
     if (file && images.length < 5) {
-      const newImage = {
-        name: file.name,
-        url: URL.createObjectURL(file),
-      };
-      const updatedImages = Array.isArray(images)
-        ? [...images, newImage]
-        : [newImage];
-      setGalleryImages(updatedImages);
-      setImages(updatedImages);
+      const newImageName = file.name;
+      setGalleryImages(newImageName);
       if (!mainImage) {
-        setMainImage(newImage);
+        setMainImage(newImageName);
       }
     }
   };
@@ -36,7 +30,9 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
   };
 
   const handleDelete = (image) => {
-    const newImages = images.filter((img) => img.url !== image.url);
+    // const newImages = images.filter((img) => img.url !== image.url);
+    const newImages = images.filter((img) => img !== image);
+    console.log(newImages, "is now");
     setImages(newImages);
     setGalleryImages(newImages);
     if (mainImage && mainImage.url === image.url) {
@@ -45,33 +41,35 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
   };
 
   const handleClick = () => {
-    fileInputRef.current.click(); // 숨겨진 파일 입력 요소를 클릭
+    fileInputRef.current.click();
   };
+
+  if (type === "READ" && !readImages) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="gallery">
-      <div>
-        {mainImage && (
-          <div className="main-image">
-            <img src={mainImage.url} alt={mainImage.name} />
-            {type === "WRITE" && (
-              <button
-                className="delete-image"
-                onClick={() => handleDelete(mainImage)}
-              >
-                X
-              </button>
-            )}
-          </div>
-        )}
-      </div>
+      {mainImage && (
+        <div className="main-image">
+          <img src={`/${mainImage}`} />
+          {type === "WRITE" && (
+            <button
+              className="delete-image"
+              onClick={() => handleDelete(mainImage)}
+            >
+              X
+            </button>
+          )}
+        </div>
+      )}
+
       <div className="thumbnail-container">
         {images &&
           images.map((image, index) => (
             <div className="each-thumbnail" key={index}>
               <img
-                src={image.url}
-                alt={image.name}
+                src={`/${image}`}
                 onClick={() => handleThumbnailClick(image)}
               />
             </div>

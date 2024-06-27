@@ -7,6 +7,7 @@ import {
   putCommunityPost,
   getCommunityPost,
 } from "../../util/api";
+import "./style/Post.css";
 
 const CommunityEditorContainer = ({ type }) => {
   const { postId } = useParams();
@@ -57,6 +58,15 @@ const CommunityEditorContainer = ({ type }) => {
     }
   };
 
+  const handleAddImage = (event) => {
+    if (event) {
+      console.log("event = ", event);
+      const newImages = [...images, event];
+      setImages(newImages);
+      console.log("newImages = ", newImages);
+    }
+  };
+
   const validateInput = () => {
     if (!title) {
       alert("제목을 입력해주세요.");
@@ -87,7 +97,9 @@ const CommunityEditorContainer = ({ type }) => {
       />
       <Gallery
         type="WRITE"
-        setGalleryImages={(images) => setImages(images.map((img) => img.name))}
+        // setGalleryImages={(images) => setImages(images.map((img) => img))}
+        setGalleryImages={handleAddImage}
+        readImages={images}
       />
 
       <Button
