@@ -68,7 +68,7 @@ const LoginPage = () => {
         <form className="loginForm" onSubmit={handleSubmit(onSubmit)}>
           <div className="formGroup">
             <label htmlFor="email" className="formLabel">
-              Email
+              이메일
             </label>
             <input
               type="email"
@@ -112,7 +112,7 @@ const LoginPage = () => {
         </form>
       </div>
 
-      <div className="social-login">
+      {/* <div className="social-login">
         <h2>간편 로그인</h2>
         <div className="each-login-container">
           <img
@@ -126,7 +126,7 @@ const LoginPage = () => {
             // onClick={handleGoogleLogin}
           />
         </div>
-      </div>
+      </div> */}
     </section>
   );
 };
