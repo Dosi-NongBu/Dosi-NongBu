@@ -62,7 +62,7 @@ public class AuthController {
         String accessToken = token.get("accessToken");
         String refreshToken = token.get("refreshToken");
 
-        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
+/*        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .path("/")
                 .httpOnly(false)
                 .secure(false)
@@ -72,10 +72,14 @@ public class AuthController {
                 .path("/")
                 .httpOnly(false)
                 .secure(false)
-                .build();
+                .build();*/
 
-        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
-        response.addHeader("Set-Cookie", userCookie.toString());
+        response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; HttpOnly; Path=/;");
+        response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; HttpOnly; Path=/;");
+
+/*        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
+        response.addHeader("Set-Cookie", userCookie.toString());*/
+
         response.addHeader("Authorization", "Bearer " + accessToken);
 
         // 비밀번호 체크
