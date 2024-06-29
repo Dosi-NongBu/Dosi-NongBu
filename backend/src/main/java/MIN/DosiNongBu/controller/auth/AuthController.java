@@ -78,8 +78,8 @@ public class AuthController {
                 //.sameSite("None")
                 .build();
 
-        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
-        response.addHeader("Set-Cookie", userCookie.toString());
+        response.addHeader("Cookie-Token", refreshTokenCookie.toString());
+        response.addHeader("Cookie-User", userCookie.toString());
 
         response.addHeader("Authorization", "Bearer " + accessToken);
 
