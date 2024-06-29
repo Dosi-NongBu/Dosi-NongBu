@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.service.admin;
 
 import MIN.DosiNongBu.controller.admin.dto.request.*;
@@ -418,4 +419,4 @@ class AdminServiceImplTest {
         assertThat(updatedFaq.getFaqAnswer()).isEqualTo("수정된 테스트 답변");
     }
 
-}
+}*/

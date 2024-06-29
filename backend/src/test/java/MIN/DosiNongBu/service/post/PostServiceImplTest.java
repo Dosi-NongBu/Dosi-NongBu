@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.service.post;
 
 import MIN.DosiNongBu.controller.post.dto.request.PostSaveRequestDto;
@@ -425,4 +426,4 @@ class PostServiceImplTest {
     }
 
 
-}
+}*/

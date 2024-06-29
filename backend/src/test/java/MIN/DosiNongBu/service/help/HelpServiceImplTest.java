@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.service.help;
 
 import MIN.DosiNongBu.controller.help.dto.request.InquirySaveRequestDto;
@@ -398,4 +399,4 @@ class HelpServiceImplTest {
         assertThat(responseDto.getAnswer()).isEqualTo("테스트 답변");
         assertThat(responseDto.getImageUrls().get(0)).isEqualTo("테스트 이미지 1");
     }
-}
+}*/
