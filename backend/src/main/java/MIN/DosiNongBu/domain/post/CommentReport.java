@@ -24,7 +24,7 @@ public class CommentReport extends BaseTimeEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    @JoinColumn(name = "commnet_id")
+    @JoinColumn(name = "comment_id")
     @ManyToOne(fetch = FetchType.LAZY)
     private Comment comment;
 

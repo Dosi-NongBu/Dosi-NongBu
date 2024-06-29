@@ -32,6 +32,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
+	compileOnly 'org.springframework.session:spring-session-jdbc'
 
 	// Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -60,9 +61,13 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
+jar {
+	enabled = false
+}
 
-/* 리액트 빌드 및 뷰 적용 자동화 */
-/* Spring 실행하여 서버 킬 때마다 리액트를 자동으로 빌드해서 static 폴도로 옮겨줌 */
+/* 리액트 빌드 및 뷰 적용 자동화
+ Spring 실행하여 서버 킬 때마다 리액트를 자동으로 빌드해서 static 폴도로 옮겨줌 */
+/*
 def frontendDir = "../frontend"
 
 sourceSets {
@@ -103,3 +108,4 @@ task copyReactBuildFiles(type: Copy) {
 	from "$frontendDir/dist"
 	into "$projectDir/src/main/resources/static"
 }
+*/
