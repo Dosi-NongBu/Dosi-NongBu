@@ -12,7 +12,7 @@ import Modal from "react-modal";
 Modal.setAppElement("#root");
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <HashRouter>
+  <BrowserRouter>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         {/* <StrictMode> */}
@@ -20,5 +20,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         {/* </StrictMode> */}
       </PersistGate>
     </Provider>
-  </HashRouter>
+  </BrowserRouter>
 );
