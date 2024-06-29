@@ -62,30 +62,24 @@ public class AuthController {
         String accessToken = token.get("accessToken");
         String refreshToken = token.get("refreshToken");
 
-        Cookie refreshTokenCookie = new Cookie("refresh_token",  refreshToken);
-
-        Cookie userCookie = new Cookie("User", user.getUserId().toString());
-
-        response.addCookie(refreshTokenCookie);
-        response.addCookie(userCookie);
-
-/*        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .path("/")
                 .httpOnly(false)
                 .secure(false)
+                //.domain(".compute.amazonaws.com")
+                //.sameSite("None")
                 .build();
 
         ResponseCookie userCookie = ResponseCookie.from("User", user.getUserId().toString())
                 .path("/")
                 .httpOnly(false)
                 .secure(false)
-                .build();*/
+                //.domain(".compute.amazonaws.com")
+                //.sameSite("None")
+                .build();
 
-/*        response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; Path=/;");
-        response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; Path=/;");*/
-
-/*      response.addHeader("Set-Cookie", refreshTokenCookie.toString());
-        response.addHeader("Set-Cookie", userCookie.toString());*/
+        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
+        response.addHeader("Set-Cookie", userCookie.toString());
 
         response.addHeader("Authorization", "Bearer " + accessToken);
 
