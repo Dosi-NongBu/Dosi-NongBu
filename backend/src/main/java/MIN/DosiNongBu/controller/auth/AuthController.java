@@ -74,8 +74,8 @@ public class AuthController {
                 .secure(false)
                 .build();*/
 
-        response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; HttpOnly; Path=/;");
-        response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; HttpOnly; Path=/;");
+        response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; Path=/;");
+        response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; Path=/;");
 
 /*        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
         response.addHeader("Set-Cookie", userCookie.toString());*/
