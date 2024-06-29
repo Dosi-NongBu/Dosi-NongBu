@@ -12,6 +12,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -61,25 +62,22 @@ public class AuthController {
         String accessToken = token.get("accessToken");
         String refreshToken = token.get("refreshToken");
 
-        Cookie refreshTokenCookie  = new Cookie("refresh_token", refreshToken);
-        refreshTokenCookie .setHttpOnly(true);
-        //cookie.setSecure(true);
-        refreshTokenCookie.setPath("/");
-        refreshTokenCookie.setDomain(".compute.amazonaws.com");
+        ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
+                .path("/")
+                .httpOnly(true)
+                .domain(".compute.amazonaws.com")
+                .sameSite("None")
+                .build();
 
-        response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; HttpOnly; Path=/; SameSite=None");
+        ResponseCookie userCookie = ResponseCookie.from("User", user.getUserId().toString())
+                .path("/")
+                .httpOnly(true)
+                .domain(".compute.amazonaws.com")
+                .sameSite("None")
+                .build();
 
-        Cookie userCookie  = new Cookie("User", user.getUserId().toString());
-        userCookie .setHttpOnly(true);
-        //cookie2.setSecure(true);
-        userCookie.setPath("/");
-        userCookie.setDomain(".compute.amazonaws.com");
-
-        response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; HttpOnly; Path=/; SameSite=None");
-
-        response.addCookie(refreshTokenCookie );
-        response.addCookie(userCookie );
-
+        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
+        response.addHeader("Set-Cookie", userCookie.toString());
         response.addHeader("Authorization", "Bearer " + accessToken);
 
         // 비밀번호 체크
