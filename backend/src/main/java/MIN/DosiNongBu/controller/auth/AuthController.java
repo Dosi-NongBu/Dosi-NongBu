@@ -65,6 +65,7 @@ public class AuthController {
         ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .path("/")
                 .httpOnly(false)
+                .secure(false)
                 .domain(".compute.amazonaws.com")
                 .sameSite("None")
                 .build();
@@ -72,6 +73,7 @@ public class AuthController {
         ResponseCookie userCookie = ResponseCookie.from("User", user.getUserId().toString())
                 .path("/")
                 .httpOnly(false)
+                .secure(false)
                 .domain(".compute.amazonaws.com")
                 .sameSite("None")
                 .build();
