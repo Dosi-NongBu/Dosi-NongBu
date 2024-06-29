@@ -64,14 +64,14 @@ public class AuthController {
 
         ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .path("/")
-                .httpOnly(true)
+                //.httpOnly(true)
                 .domain(".compute.amazonaws.com")
                 .sameSite("None")
                 .build();
 
         ResponseCookie userCookie = ResponseCookie.from("User", user.getUserId().toString())
                 .path("/")
-                .httpOnly(true)
+                //.httpOnly(true)
                 .domain(".compute.amazonaws.com")
                 .sameSite("None")
                 .build();
