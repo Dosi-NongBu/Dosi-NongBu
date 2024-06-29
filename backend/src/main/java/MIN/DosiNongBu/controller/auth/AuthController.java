@@ -61,17 +61,22 @@ public class AuthController {
         String accessToken = token.get("accessToken");
         String refreshToken = token.get("refreshToken");
 
-        Cookie cookie = new Cookie("refresh_token", refreshToken);
-        cookie.setHttpOnly(true);
+        Cookie refreshTokenCookie  = new Cookie("refresh_token", refreshToken);
+        refreshTokenCookie .setHttpOnly(true);
         //cookie.setSecure(true);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        refreshTokenCookie .setPath("/");
 
-        Cookie cookie2 = new Cookie("User", user.getUserId().toString());
-        cookie2.setHttpOnly(true);
+        response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; HttpOnly; Path=/; SameSite=None");
+
+        Cookie userCookie  = new Cookie("User", user.getUserId().toString());
+        userCookie .setHttpOnly(true);
         //cookie2.setSecure(true);
-        cookie2.setPath("/");
-        response.addCookie(cookie2);
+        userCookie .setPath("/");
+
+        response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; HttpOnly; Path=/; SameSite=None");
+
+        response.addCookie(refreshTokenCookie );
+        response.addCookie(userCookie );
 
         response.addHeader("Authorization", "Bearer " + accessToken);
 
