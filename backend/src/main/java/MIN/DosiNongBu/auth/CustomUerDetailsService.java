@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.auth;
 
 import MIN.DosiNongBu.domain.user.User;
@@ -26,3 +27,4 @@ public class CustomUerDetailsService implements UserDetailsService {
                 .build();
     }
 }
+*/
