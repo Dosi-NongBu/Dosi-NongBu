@@ -66,16 +66,12 @@ public class AuthController {
                 .path("/")
                 .httpOnly(false)
                 .secure(false)
-                .domain(".compute.amazonaws.com")
-                .sameSite("None")
                 .build();
 
         ResponseCookie userCookie = ResponseCookie.from("User", user.getUserId().toString())
                 .path("/")
                 .httpOnly(false)
                 .secure(false)
-                .domain(".compute.amazonaws.com")
-                .sameSite("None")
                 .build();
 
         response.addHeader("Set-Cookie", refreshTokenCookie.toString());
