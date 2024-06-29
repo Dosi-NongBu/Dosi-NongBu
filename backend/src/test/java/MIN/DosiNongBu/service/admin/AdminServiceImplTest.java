@@ -253,7 +253,7 @@ class AdminServiceImplTest {
         UserUpdateRequestDto requestDto = UserUpdateRequestDto.builder()
                 .nickname("수정된 테스트 계정 2")
                 .profileImage("수정된 이미지 2")
-                .roleType(RoleType.ADMIN)
+                .roleType("ADMIN")
                 .build();
 
         Long updatedUserId = adminService.updateUser(findUserId, requestDto);
@@ -400,7 +400,7 @@ class AdminServiceImplTest {
         faqRepository.save(faq);
 
         FaqUpdateRequestDto requestDto = FaqUpdateRequestDto.builder()
-                .faqType(FaqType.BILLING_FAQ)
+                .faqType("BILLING_FAQ")
                 .question("수정된 테스트 질문")
                 .answer("수정된 테스트 답변")
                 .build();

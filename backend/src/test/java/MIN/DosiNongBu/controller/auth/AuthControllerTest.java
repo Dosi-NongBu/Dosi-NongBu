@@ -52,7 +52,7 @@ class AuthControllerTest {
                 .password("password123")
                 .build();
 
-        String url = "http://localhost:" + port + "/auth/join";
+        String url = "http://localhost:" + port + "/api/v1/auth/join";
 
         //when
         ResponseEntity<String> responseEntity=restTemplate.postForEntity(url, joinRequestDto, String.class);

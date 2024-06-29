@@ -156,7 +156,7 @@ class HelpServiceImplTest {
                 .imageUrls(imageUrls)
                 .build();
         // when
-        Long saveInquiryId = helpService.registerInquiry(findUserId, InquiryType.GENERAL_INQUIRY, requestDto);
+        Long saveInquiryId = helpService.registerInquiry(findUserId, "GENERAL_INQUIRY", requestDto);
 
         // then
         Inquiry inquiry = inquiryRepository.findById(saveInquiryId)
