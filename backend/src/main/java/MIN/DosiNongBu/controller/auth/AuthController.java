@@ -64,14 +64,16 @@ public class AuthController {
         Cookie refreshTokenCookie  = new Cookie("refresh_token", refreshToken);
         refreshTokenCookie .setHttpOnly(true);
         //cookie.setSecure(true);
-        refreshTokenCookie .setPath("/");
+        refreshTokenCookie.setPath("/");
+        refreshTokenCookie.setDomain(".compute.amazonaws.com");
 
         response.setHeader("Set-Cookie", "refresh_token=" + refreshToken + "; HttpOnly; Path=/; SameSite=None");
 
         Cookie userCookie  = new Cookie("User", user.getUserId().toString());
         userCookie .setHttpOnly(true);
         //cookie2.setSecure(true);
-        userCookie .setPath("/");
+        userCookie.setPath("/");
+        userCookie.setDomain(".compute.amazonaws.com");
 
         response.setHeader("Set-Cookie", "User=" + user.getUserId().toString() + "; HttpOnly; Path=/; SameSite=None");
 
