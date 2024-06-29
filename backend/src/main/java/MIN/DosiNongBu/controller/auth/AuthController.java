@@ -63,13 +63,13 @@ public class AuthController {
 
         Cookie cookie = new Cookie("refresh_token", refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setSecure(true);
+        //cookie.setSecure(true);
         cookie.setPath("/");
         response.addCookie(cookie);
 
         Cookie cookie2 = new Cookie("User", user.getUserId().toString());
         cookie2.setHttpOnly(true);
-        cookie2.setSecure(true);
+        //cookie2.setSecure(true);
         cookie2.setPath("/");
         response.addCookie(cookie2);
 
