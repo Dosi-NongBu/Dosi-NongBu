@@ -1,15 +1,18 @@
-// import axios from "axios";
+import axios from "axios";
 
 // const axiosInstance = axios.create({
 //   baseURL: import.meta.env.PROD ? " " : "http://localhost:8080",
 // });
 
+const axiosInstance = axios.create({
+  withCredentials: false,
+  baseURL: import.meta.env.PROD ? " " : "http://localhost:8080",
+});
+
 // axiosInstance.interceptors.request.use(
 //   function (config) {
 //     // 요청 보내기 전에 어떤 일을 하고싶을 때.
-//     config.headers.Authorization =
-//       "Bearer " + localStorage.getItem("accessToken");
-//     return config;
+//     config.withCredentials = true; // withCredentials 옵션 추가
 //   },
 //   function (error) {
 //     return Promise.reject(error);
@@ -28,4 +31,4 @@
 //     return Promise.reject(error);
 //   }
 // );
-// export default axiosInstance;
+export default axiosInstance;
