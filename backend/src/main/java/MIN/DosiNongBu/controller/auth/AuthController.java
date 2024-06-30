@@ -64,8 +64,8 @@ public class AuthController {
 
         ResponseCookie refreshTokenCookie = ResponseCookie.from("refresh_token", refreshToken)
                 .path("/")
-                //.httpOnly(false)
-                //.secure(false)
+                .httpOnly(false)
+                .secure(false)
                 //.domain(".compute.amazonaws.com")
                 //.sameSite("None")
                 .build();
@@ -78,8 +78,8 @@ public class AuthController {
                 //.sameSite("None")
                 .build();
 
-        response.addHeader("Cookie-Token", refreshTokenCookie.toString());
-        response.addHeader("Cookie-User", userCookie.toString());
+        response.addHeader("Set-Cookie", refreshTokenCookie.toString());
+        response.addHeader("Set-Cookie", userCookie.toString());
 
         response.addHeader("Authorization", "Bearer " + accessToken);
 

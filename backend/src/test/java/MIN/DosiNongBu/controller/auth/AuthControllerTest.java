@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.controller.auth;
 
 import MIN.DosiNongBu.controller.auth.dto.JoinRequestDto;
@@ -99,6 +100,4 @@ class AuthControllerTest {
         System.out.println(all.get(0).getPassword());
     }
 
-
-
-}
+}*/

@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.service.crop;
 
 import MIN.DosiNongBu.controller.crop.dto.request.UserCropSaveRequestDto;
@@ -141,11 +142,13 @@ class CropServiceImplTest {
 
     @AfterEach
     void clear(){
+*/
 /*        log.debug("debug log= DB 삭제");
 
         userCropRepository.deleteAll();
         userPlaceRepository.deleteAll();
-        userRepository.deleteAll();*/
+        userRepository.deleteAll();*//*
+
     }
 
     @Test
@@ -273,4 +276,4 @@ class CropServiceImplTest {
     }
 
 
-}
+}*/

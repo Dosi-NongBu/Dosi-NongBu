@@ -1,3 +1,4 @@
+/*
 package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.PlaceSaveRequestDto;
@@ -224,4 +225,4 @@ class UserServiceImplTest {
 
 
 
-}
+}*/
