@@ -29,7 +29,7 @@ const DetailSumContainer = () => {
     <section className="detailSumContainer">
       <div className="basic-info-container">
         <div className="basic-image">
-          <img src={cropData.cropImage} />
+          <img src={cropData.imageUrl} />
         </div>
         <div className="basic-info">
           <h2>{cropData.name}</h2>

@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { useCookies } from "react-cookie"; // react-cookie에서 useCookies 불러오기
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
@@ -25,6 +26,14 @@ export const loginUser = createAsyncThunk(
       const response = await axios.post("/api/v1/auth/login", body);
       if (response.status === 200 || response.status === 201) {
         const accessToken = response.headers.authorization;
+        // const refreshToken = response.headers["cookie-token"];
+        // console.log("header = ", accessToken);
+
+        // const [, setCookie] = useCookies(["refreshToken"]); // useCookies hook 사용
+
+        // // accessToken 쿠키로 저장
+        // setCookie("refreshToken", refreshToken, { path: "/" });
+
         return { ...response.data, accessToken };
       }
     } catch (error) {

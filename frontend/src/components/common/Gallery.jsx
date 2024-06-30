@@ -30,9 +30,7 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
   };
 
   const handleDelete = (image) => {
-    // const newImages = images.filter((img) => img.url !== image.url);
     const newImages = images.filter((img) => img !== image);
-    console.log(newImages, "is now");
     setImages(newImages);
     setGalleryImages(newImages);
     if (mainImage && mainImage.url === image.url) {
@@ -52,7 +50,7 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
     <div className="gallery">
       {mainImage && (
         <div className="main-image">
-          <img src={`/${mainImage}`} />
+          <img src={mainImage} />
           {type === "WRITE" && (
             <button
               className="delete-image"
@@ -68,10 +66,7 @@ const Gallery = ({ type, setGalleryImages, readImages }) => {
         {images &&
           images.map((image, index) => (
             <div className="each-thumbnail" key={index}>
-              <img
-                src={`/${image}`}
-                onClick={() => handleThumbnailClick(image)}
-              />
+              <img src={image} onClick={() => handleThumbnailClick(image)} />
             </div>
           ))}
       </div>
