@@ -39,16 +39,17 @@ const Board = ({ type, mode, posts }) => {
       )}
 
       <div className="community-list">
-        {posts.map((post, index) => (
-          <EachPost
-            key={post.id}
-            id={post.id}
-            imageUrl={post.imageUrl}
-            title={post.title}
-            author={post.author}
-            profileImage={post.profileImage}
-          />
-        ))}
+        {posts &&
+          posts.map((post, index) => (
+            <EachPost
+              key={post.id}
+              id={post.id}
+              imageUrl={post.imageUrl}
+              title={post.title}
+              author={post.author}
+              profileImage={post.profileImage}
+            />
+          ))}
       </div>
     </div>
   );

@@ -1,13 +1,10 @@
 import axios from "axios";
 import { makeOriginalThumbnail, makeSendImage } from "./gallaryImage";
-import axiosInstance from "./axios";
 
 // 전체 작물 목록 조회
 export const getCropList = async (page, size) => {
   try {
-    const response = await axiosInstance.get(
-      `/api/v1/crops?page=${page}&size=${size}`
-    );
+    const response = await axios.get(`/api/v1/crops?page=${page}&size=${size}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -19,7 +16,7 @@ export const getCropList = async (page, size) => {
 // 추천 작물 목록 조회
 export const getRecommendCropList = async (page, size) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/crops/recommend?page=${page}&size=${size}`
     );
     if (response.status === 200) {
@@ -33,7 +30,7 @@ export const getRecommendCropList = async (page, size) => {
 // 검색어를 통한 작물 목록 조회
 export const getSearchCropList = async (keyword, lastIndex) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/crops/${keyword}?lastIndex=${lastIndex}`
     );
     if (response.status === 200) {
@@ -47,7 +44,7 @@ export const getSearchCropList = async (keyword, lastIndex) => {
 // cropId 에 해당하는 기본정보 조회
 export const getCropBasicInfo = async (cropId) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/crops/${cropId}`);
+    const response = await axios.get(`/api/v1/crops/${cropId}`);
     if (response.status === 200) {
       return response.data;
     }
@@ -59,7 +56,7 @@ export const getCropBasicInfo = async (cropId) => {
 //cropId 에 해당하는 메인 정보 조회
 export const getCropMainInfo = async (cropId) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/crops/${cropId}/main`);
+    const response = await axios.get(`/api/v1/crops/${cropId}/main`);
 
     if (response.status === 200 || response.status === 201) {
       return response.data;
@@ -72,7 +69,7 @@ export const getCropMainInfo = async (cropId) => {
 // cropId에 해당하는 상세정보 조회
 export const getCropDetailInfo = async (cropId) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/crops/${cropId}/info`);
+    const response = await axios.get(`/api/v1/crops/${cropId}/info`);
     if (response.status === 200) {
       return response.data;
     }
@@ -85,7 +82,7 @@ export const getCropDetailInfo = async (cropId) => {
 export const getExistingUserSpace = async (page, size) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/userplaces?page=${page}&size=${size}`,
       {
         headers: {
@@ -116,7 +113,7 @@ export const postNewUserPlace = async (newPlace) => {
   console.log("새 공간 :", newPlace);
   console.log("jwt : ", jwt);
   try {
-    const response = await axiosInstance.post(`/api/v1/userplaces`, newPlace, {
+    const response = await axios.post(`/api/v1/userplaces`, newPlace, {
       headers: {
         Authorization: jwt,
       },
@@ -133,9 +130,7 @@ export const postNewUserPlace = async (newPlace) => {
 // 사용자 공간 삭제 함수
 export const deleteUserSpace = async (placeId) => {
   try {
-    const response = await axiosInstance.delete(
-      `/api/v1/userplaces/${placeId}`
-    );
+    const response = await axios.delete(`/api/v1/userplaces/${placeId}`);
 
     if (response.status === 200 || response.status === 201) {
       console.log("사용자 공간 삭제 성공");
@@ -148,10 +143,7 @@ export const deleteUserSpace = async (placeId) => {
 // 최종 사용자 작물 전송
 export const postMyCrop = async (cropInfo, cropId) => {
   try {
-    const response = await axiosInstance.post(
-      `/api/v1/crops/${cropId}/grow`,
-      cropInfo
-    );
+    const response = await axios.post(`/api/v1/crops/${cropId}/grow`, cropInfo);
     if (response.status === 200 || response.status === 201) {
       console.log("작물 등록 성공");
     }
@@ -166,7 +158,7 @@ export const postMyCrop = async (cropInfo, cropId) => {
 export const getUserCropAll = async () => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get("/api/v1/usercrops", {
+    const response = await axios.get("/api/v1/usercrops", {
       headers: {
         Authorization: jwt,
       },
@@ -184,14 +176,11 @@ export const getUserCropAll = async () => {
 export const getUserCropDetail = async (userCropId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get(
-      `/api/v1/usercrops/${userCropId}`,
-      {
-        headers: {
-          Authorization: jwt,
-        },
-      }
-    );
+    const response = await axios.get(`/api/v1/usercrops/${userCropId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
 
     if (response.status === 201 || response.status === 200) {
       return response.data;
@@ -204,7 +193,7 @@ export const getUserCropDetail = async (userCropId) => {
 // 사용자 작물 타임라인 조회
 export const getUserTimeline = async (userCropId, page, size) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/manages/${userCropId}?page=${page}&size=${size}`
     );
 
@@ -219,7 +208,7 @@ export const getUserTimeline = async (userCropId, page, size) => {
 // 사용자 작물 타임라인 추가
 export const postUserTimeline = async (userCropId, cropManageType) => {
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/manages/${userCropId}?cropManageType=${cropManageType}`
     );
     if (response.status === 200 || response.status === 201) {
@@ -233,7 +222,7 @@ export const postUserTimeline = async (userCropId, cropManageType) => {
 // 사용자 작물 타임라인 삭제
 export const deleteUserTimeline = async (userCropId, cropLogId) => {
   try {
-    const response = await axiosInstance.delete(
+    const response = await axios.delete(
       `/api/v1/manages/${userCropId}/${cropLogId}`
     );
     if (response.status === 200 || response.status === 201) {
@@ -256,7 +245,7 @@ export const postUserCropImage = async (userCropId, imageURL) => {
   // ];
 
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/images/${userCropId}`,
       {
         imageURL: imageURL,
@@ -276,7 +265,7 @@ export const postUserCropImage = async (userCropId, imageURL) => {
 export const getCropNotification = async (userCropId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get(`/api/v1/alarms/${userCropId}`, {
+    const response = await axios.get(`/api/v1/alarms/${userCropId}`, {
       headers: {
         Authorization: jwt,
       },
@@ -294,7 +283,7 @@ export const getCropNotification = async (userCropId) => {
 export const putCropNotification = async (userCropId, notification) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.put(
+    const response = await axios.put(
       `/api/v1/alarms/${userCropId}`,
       {
         notification,
@@ -320,7 +309,7 @@ export const putCropNotification = async (userCropId, notification) => {
 export const getUserProfile = async () => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get("/api/v1/users", {
+    const response = await axios.get("/api/v1/users", {
       headers: {
         Authorization: jwt,
       },
@@ -337,7 +326,7 @@ export const getUserProfile = async () => {
 export const putUserProfile = async (data) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.put("/api/v1/users", data, {
+    const response = await axios.put("/api/v1/users", data, {
       headers: {
         Authorization: jwt,
       },
@@ -355,7 +344,7 @@ export const getUserPost = async (page, size) => {
   const jwt = localStorage.getItem("accessToken");
 
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/userposts?page=${page}&size=${size}`,
       {
         headers: {
@@ -376,7 +365,7 @@ export const getUserPost = async (page, size) => {
 // 1:1 문의 목록 조회
 export const getRequestList = async (page, size) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/inquiries?page=${page}&size=${size}`
     );
     if (response.status === 200 || response.status === 201) {
@@ -391,7 +380,7 @@ export const getRequestList = async (page, size) => {
 export const getRequestDetail = async (inquiryId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get(`/api/v1/inquiries/${inquiryId}`, {
+    const response = await axios.get(`/api/v1/inquiries/${inquiryId}`, {
       headers: {
         Authorization: jwt,
       },
@@ -418,7 +407,7 @@ export const postRequest = async (inquiry) => {
   console.log("body = ", body);
 
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/inquiries?inquiryType=${inquiryType}`,
       body,
       {
@@ -447,7 +436,7 @@ export const putRequest = async (inquiryId, inquiry) => {
   console.log(body, "수정");
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.put(`/api/v1/inquiries/${inquiryId}`, {
+    const response = await axios.put(`/api/v1/inquiries/${inquiryId}`, {
       headers: {
         Authorization: jwt,
       },
@@ -464,14 +453,11 @@ export const putRequest = async (inquiryId, inquiry) => {
 export const deleteRequest = async (inquiryId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.delete(
-      `/api/v1/inquiries/${inquiryId}`,
-      {
-        headers: {
-          Authorization: jwt,
-        },
-      }
-    );
+    const response = await axios.delete(`/api/v1/inquiries/${inquiryId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
     if (response.status === 200 || response.status === 201) {
       console.log("문의 삭제 성공");
     }
@@ -483,7 +469,7 @@ export const deleteRequest = async (inquiryId) => {
 // 공지사항 목록 조회
 export const getNoticeList = async (page, size) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/notices?page=${page}&size=${size}`
     );
     if (response.status === 200 || response.status === 201) {
@@ -497,7 +483,7 @@ export const getNoticeList = async (page, size) => {
 // 공지사항 내용 조회
 export const getNoticeDetail = async (noticeId) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/notices/${noticeId}`);
+    const response = await axios.get(`/api/v1/notices/${noticeId}`);
     if (response.status === 200 || response.status === 201) {
       return response.data;
     }
@@ -509,9 +495,7 @@ export const getNoticeDetail = async (noticeId) => {
 // FAQ 목록 조회
 export const getFAQList = async (page, size) => {
   try {
-    const response = await axiosInstance.get(
-      `/api/v1/faqs?page=${page}&size=${size}`
-    );
+    const response = await axios.get(`/api/v1/faqs?page=${page}&size=${size}`);
     if (response.status === 200 || response.status === 201) {
       return response.data;
     }
@@ -523,7 +507,7 @@ export const getFAQList = async (page, size) => {
 // FAQ 내용 조회
 export const getFAQDetail = async (faqId) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/faqs/${faqId}`);
+    const response = await axios.get(`/api/v1/faqs/${faqId}`);
     if (response.status === 200 || response.status === 201) {
       return response.data;
     }
@@ -537,7 +521,7 @@ export const getFAQDetail = async (faqId) => {
 // 자유/질문 게시판 목록 조회
 export const getCommunityList = async (postType, page, size) => {
   try {
-    const response = await axiosInstance.get(
+    const response = await axios.get(
       `/api/v1/posts?postType=${postType}&page=${page}&size=${size}`
     );
     if (response.status === 200 || response.status === 201) {
@@ -557,7 +541,7 @@ export const postCommunityPost = async (postType, send) => {
   };
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/posts?postType=${postType}`,
       body,
       {
@@ -577,7 +561,7 @@ export const postCommunityPost = async (postType, send) => {
 // 자유/질문 게시판 글 조회
 export const getCommunityPost = async (postId) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/posts/${postId}`);
+    const response = await axios.get(`/api/v1/posts/${postId}`);
     if (response.status === 200 || response.status === 201) {
       return response.data;
     }
@@ -590,7 +574,7 @@ export const getCommunityPost = async (postId) => {
 export const putCommunityPost = async (postId, body) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.put(`/api/v1/posts/${postId}`, body, {
+    const response = await axios.put(`/api/v1/posts/${postId}`, body, {
       headers: {
         Authorization: jwt,
       },
@@ -607,7 +591,7 @@ export const putCommunityPost = async (postId, body) => {
 export const deleteCommunityPost = async (postId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.delete(`/api/v1/posts/${postId}`, {
+    const response = await axios.delete(`/api/v1/posts/${postId}`, {
       headers: {
         Authorization: jwt,
       },
@@ -624,7 +608,7 @@ export const deleteCommunityPost = async (postId) => {
 export const postCommunityReaction = async (postId, reactionType) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/posts/reactions/${postId}?reactionType=${reactionType}`,
       {
         headers: {
@@ -644,7 +628,7 @@ export const postCommunityReaction = async (postId, reactionType) => {
 export const getComment = async (postId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.get(`/api/v1/comments/${postId}`, {
+    const response = await axios.get(`/api/v1/comments/${postId}`, {
       headers: {
         Authorization: jwt,
       },
@@ -662,7 +646,7 @@ export const postComment = async (postId, content) => {
   const jwt = localStorage.getItem("accessToken");
   console.log("post id= ", postId);
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/comments/${postId}`,
       { content },
 
@@ -684,15 +668,11 @@ export const postComment = async (postId, content) => {
 export const putComment = async (commentId, content) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.put(
-      `/api/v1/comments/${commentId}`,
-      content,
-      {
-        headers: {
-          Authorization: jwt,
-        },
-      }
-    );
+    const response = await axios.put(`/api/v1/comments/${commentId}`, content, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
     if (response.status === 200 || response.status === 201) {
       console.log("댓글 수정 성공");
     }
@@ -705,14 +685,11 @@ export const putComment = async (commentId, content) => {
 export const deleteComment = async (commentId) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.delete(
-      `/api/v1/comments/${commentId}`,
-      {
-        headers: {
-          Authorization: jwt,
-        },
-      }
-    );
+    const response = await axios.delete(`/api/v1/comments/${commentId}`, {
+      headers: {
+        Authorization: jwt,
+      },
+    });
     if (response.status === 200 || response.status === 201) {
       console.log("댓글 삭제 성공");
     }
@@ -725,7 +702,7 @@ export const deleteComment = async (commentId) => {
 export const postCommentReaction = async (commentId, reactionType) => {
   const jwt = localStorage.getItem("accessToken");
   try {
-    const response = await axiosInstance.post(
+    const response = await axios.post(
       `/api/v1/reactions/${commentId}?reactionType=${reactionType}`,
       {
         headers: {

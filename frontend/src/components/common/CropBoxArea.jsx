@@ -47,10 +47,12 @@ const CropBoxArea = ({ data, type }) => {
     <div className="CropBoxArea-wrapper">
       <div className="CropBoxArea">
         {type === "CROP" &&
+          data &&
           data.map(({ name, imageUrl, id }) => (
             <CropBox key={id} name={name} image={imageUrl} id={id} />
           ))}
         {type === "MY" &&
+          data &&
           data.map(({ nickname, imageUrl, id }) => (
             <MyCropBox key={id} nickname={nickname} image={imageUrl} id={id} />
           ))}
