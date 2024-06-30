@@ -12,6 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class CropMainResponseDto {
 
+    private String imageUrl;
     private String name;
     private Integer difficulty;
     private Integer maxTemperature;
@@ -25,6 +26,12 @@ public class CropMainResponseDto {
     private Integer pruning;
 
     public CropMainResponseDto(Crop cropEntity) {
+        if (cropEntity.getImageUrls() != null && !cropEntity.getImageUrls().isEmpty()) {
+            this.imageUrl = cropEntity.getImageUrls().get(0);
+        } else {
+            this.imageUrl = null;
+        }
+
         this.name = cropEntity.getName();
         this.difficulty = cropEntity.getDifficulty();
         this.maxTemperature = cropEntity.getMaxTemperature();

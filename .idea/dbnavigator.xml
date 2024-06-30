@@ -99,12 +99,13 @@ CREATE TABLE SPRING_SESSION_ATTRIBUTES (
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
-    <open-files>
-      <object connection-id="1fae5f82-cda8-4e71-bfb6-0c55f124d105" object-ref="consoles/Dosi-NongBu" />
-    </open-files>
+    <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
     <connection id="1fae5f82-cda8-4e71-bfb6-0c55f124d105" />
+  </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="1fae5f82-cda8-4e71-bfb6-0c55f124d105" dataset="dosinongbu.users" active-filter-id="" />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
