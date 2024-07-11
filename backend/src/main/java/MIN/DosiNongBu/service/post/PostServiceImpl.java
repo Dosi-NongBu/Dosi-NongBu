@@ -111,12 +111,21 @@ public class PostServiceImpl implements PostService{
 
             return entity.getPostReactionId();
         }
-        // 기존 반응이 있었다면
-        else{
-            postReaction.update(ReactionType.valueOf(reactionType));
-            post.updateReaction(ReactionType.valueOf(reactionType));
+        // 다른 반응으로 변경
+        else if(ReactionType.valueOf(reactionType) != postReaction.getReaction()){
+                postReaction.update(ReactionType.valueOf(reactionType));
+                post.updateReaction(ReactionType.valueOf(reactionType));
 
             return postReaction.getPostReactionId();
+        }
+        // 같은 반응이 들어왔을 때
+        else{
+            if(ReactionType.valueOf(reactionType) == ReactionType.GOOD){
+                throw new IllegalStateException("이미 좋아요를 눌렀습니다.");
+            }
+            else {
+                throw new IllegalStateException("이미 싫어요를 눌렀습니다.");
+            }
         }
     }
 
