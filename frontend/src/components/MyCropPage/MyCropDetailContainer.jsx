@@ -48,6 +48,16 @@ const MyCropDetailContainer = ({ userCropId }) => {
   // 활동을 timeline에 추가하는 함수
   const handleAddTimeline = async (activity) => {
     // 새로운 작물 관리 추가
+
+    if (activity === "물주기") {
+      activity = "water";
+    } else if (activity === "환기") {
+      activity = "ventilantion";
+    } else if (activity === "분갈이") {
+      activity = "repot";
+    } else if (activity === "가지치기") {
+      activity = "pruning";
+    }
     await postUserTimeline(userCropId, activity);
 
     // 타임라인
@@ -140,24 +150,6 @@ const MyCropDetailContainer = ({ userCropId }) => {
           onMovePage={fetchTimeline}
           onDeleteTimeline={handleDeleteTimeline}
         />
-
-        {/* <MyCropGallery
-          cropData={cropData}
-          onAddImage={handleAddImage}
-          onDeleteImage={handleDeleteImage}
-        /> */}
-
-        {/* <div className="myCrop-elements myCrop-gallery">
-          <div className="flex-row tb-margin-20">
-            <h2 className="no-margin">갤러리</h2>
-
-            <Gallery
-              type="WRITE"
-              setGalleryImages={handleAddImage}
-              readImages={cropData.imageUrls}
-            />
-          </div>
-        </div> */}
 
         <div className="myCrop-elements myCrop-gallery">
           <div className="flex-row tb-margin-20">
