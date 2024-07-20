@@ -3,11 +3,7 @@ import { useParams } from "react-router-dom";
 
 import { IoStar } from "react-icons/io5";
 
-import {
-  mockData2,
-  getCropBasicInfo,
-  getCropMainInfo,
-} from "../../util/api.jsx";
+import { getCropMainInfo } from "../../util/api.jsx";
 import "./style/DetailSumContainer.css";
 
 const DetailSumContainer = () => {
@@ -16,7 +12,6 @@ const DetailSumContainer = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      // const response = mockData2(cropId);
       const response = await getCropMainInfo(Number(cropId));
       if (response) {
         setCropData(response);
