@@ -4,7 +4,7 @@ import Post from "../../components/CommunityPage/Post";
 const CommunityDetailPage = () => {
   return (
     <div>
-      <Post />
+      <Post type="DEFAULT" />
     </div>
   );
 };

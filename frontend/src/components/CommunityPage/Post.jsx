@@ -13,7 +13,7 @@ import Gallery from "../common/Gallery";
 
 import noPhoto from "../../../public/no-photos.png";
 
-const Post = () => {
+const Post = ({ type }) => {
   const { postId } = useParams();
   const nav = useNavigate();
 
@@ -49,8 +49,8 @@ const Post = () => {
   }, [fetchComment]);
 
   // 글 좋아요 / 싫어요
-  const handleReaction = async (type) => {
-    await postCommunityReaction(Number(postId), type);
+  const handleReaction = async (reactType) => {
+    await postCommunityReaction(Number(postId), reactType);
     fetchData();
   };
 
@@ -64,7 +64,11 @@ const Post = () => {
 
   // 글 수정
   const handleEdit = () => {
-    nav(`/community/edit/${Number(postId)}`);
+    if (type === "DEFAULT") {
+      nav(`/community/edit/${Number(postId)}`);
+    } else {
+      nav(`/question/edit/${Number(postId)}`);
+    }
   };
 
   // 글 삭제
@@ -73,7 +77,11 @@ const Post = () => {
       return;
     }
     await deleteCommunityPost(Number(postId));
-    nav("/community");
+    if (type === "DEFAULT") {
+      nav(`/community`);
+    } else {
+      nav(`/questionCommunity`);
+    }
   };
 
   return (

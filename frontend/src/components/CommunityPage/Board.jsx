@@ -25,7 +25,11 @@ const Board = ({ type, mode, posts }) => {
           title="새 글 등록"
           type={"negative"}
           onClick={() => {
-            nav("/community/register");
+            if (type === "DEFAULT") {
+              nav("/community/register");
+            } else {
+              nav("/question/register");
+            }
           }}
         />
       )}
@@ -48,6 +52,7 @@ const Board = ({ type, mode, posts }) => {
               title={post.title}
               author={post.author}
               profileImage={post.profileImage}
+              type={type}
             />
           ))}
       </div>

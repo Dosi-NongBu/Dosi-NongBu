@@ -66,7 +66,7 @@ function App() {
           <Route path="/questionCommunity" element={<QuestionPage />} />
           <Route path="/question/register" element={<QuestionEditorPage />} />
           <Route
-            path="/quesetion/edit/:postId"
+            path="/question/edit/:postId"
             element={<QuestionEditorPage />}
           />
           <Route path="/question/:postId" element={<QuestionDetailPage />} />

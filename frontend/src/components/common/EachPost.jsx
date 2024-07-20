@@ -4,14 +4,18 @@ import noPhoto from "../../../public/no-photos.png";
 
 import "./style/EachPost.css";
 
-const EachPost = ({ id, imageUrl, title, author, profileImage }) => {
+const EachPost = ({ id, imageUrl, title, author, profileImage, type }) => {
   const nav = useNavigate();
 
   return (
     <div
       className="each-community"
       onClick={() => {
-        nav(`/community/${id}`);
+        if (type === "DEFAULT") {
+          nav(`/community/${id}`);
+        } else {
+          nav(`/question/${id}`);
+        }
       }}
     >
       <img src={imageUrl} />

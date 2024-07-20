@@ -50,11 +50,19 @@ const CommunityEditorContainer = ({ type }) => {
     if (isEditMode) {
       // 수정 모드일 때
       await putCommunityPost(Number(postId), newRequest);
-      nav(`/community/${postId}`);
+      if (type === "DEFAULT") {
+        nav(`/community/${postId}`);
+      } else {
+        nav(`/question/${postId}`);
+      }
     } else {
       // 새 글 작성 모드일 때
       await postCommunityPost(type, newRequest);
-      nav("/community");
+      if (type === "DEFAULT") {
+        nav("/community");
+      } else {
+        nav("/questionCommunity");
+      }
     }
   };
 

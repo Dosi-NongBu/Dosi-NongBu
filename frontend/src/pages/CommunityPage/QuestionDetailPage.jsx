@@ -4,7 +4,7 @@ import Post from "../../components/CommunityPage/Post";
 const QuestionDetailPage = () => {
   return (
     <div>
-      <Post />
+      <Post type="QNA" />
     </div>
   );
 };

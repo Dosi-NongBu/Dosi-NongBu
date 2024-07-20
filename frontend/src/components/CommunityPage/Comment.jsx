@@ -20,6 +20,7 @@ function Comment({
 
   // 댓글 수정
   const handleUpdateComment = async () => {
+    console.log("in funct");
     await putComment(Number(commentId), newCommentContent);
     setIsEditing(false);
   };
