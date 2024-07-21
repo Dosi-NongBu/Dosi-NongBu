@@ -142,8 +142,15 @@ export const deleteUserSpace = async (placeId) => {
 
 // 최종 사용자 작물 전송
 export const postMyCrop = async (cropInfo, cropId) => {
+  const modifiedCropInfo = { ...cropInfo, period: 3, prePeriod: 3 };
+
+  // alert("name=", modifiedCropInfo.name);
+  // //console.log("name=", modifiedCropInfo.name);
   try {
-    const response = await axios.post(`/api/v1/crops/${cropId}/grow`, cropInfo);
+    const response = await axios.post(
+      `/api/v1/crops/${cropId}/grow`,
+      modifiedCropInfo
+    );
     if (response.status === 200 || response.status === 201) {
       console.log("작물 등록 성공");
     }

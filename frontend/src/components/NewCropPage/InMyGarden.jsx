@@ -45,8 +45,8 @@ const InMyGarden = ({ cropId, name }) => {
     const send = {
       ...cropInfo,
       name: name,
-      period: 10,
-      perPeriod: 10,
+      period: 3,
+      perPeriod: 3,
       maxTemperature: 40,
       minTemperature: 20,
       humidity: 50,
