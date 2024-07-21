@@ -52,7 +52,7 @@ const MyCropDetailContainer = ({ userCropId }) => {
     if (activity === "물주기") {
       activity = "water";
     } else if (activity === "환기") {
-      activity = "ventilantion";
+      activity = "ventilation ";
     } else if (activity === "분갈이") {
       activity = "repot";
     } else if (activity === "가지치기") {

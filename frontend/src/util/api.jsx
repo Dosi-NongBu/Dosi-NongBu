@@ -666,9 +666,7 @@ export const postComment = async (postId, content) => {
 
 // 댓글 수정
 export const putComment = async (commentId, content) => {
-  console.log("init");
   const jwt = localStorage.getItem("accessToken");
-  alert(content);
   console.log("new comment => ", content);
   try {
     const response = await axios.put(`/api/v1/comments/${commentId}`, content, {
@@ -679,7 +677,6 @@ export const putComment = async (commentId, content) => {
     });
     if (response.status === 200 || response.status === 201) {
       console.log("댓글 수정 성공");
-      alert("댓글 수정");
     }
   } catch (error) {
     console.log(error);
