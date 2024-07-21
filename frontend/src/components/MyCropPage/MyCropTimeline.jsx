@@ -26,7 +26,17 @@ const MyCropTimeline = ({ timeline, onMovePage, onDeleteTimeline }) => {
                     <span>{item.date.slice(0, 10)}</span>
                   </div>
                   <div className="timeline-item-type">
-                    <span>{item.manage}</span>
+                    <span>
+                      {item.manage === "water"
+                        ? "물주기"
+                        : item.manage === "ventilation"
+                        ? "환기하기"
+                        : item.manage === "repot"
+                        ? "분갈이"
+                        : item.manage === "pruning"
+                        ? "가지치기"
+                        : item.manage}
+                    </span>
                   </div>
                 </div>
                 <Button

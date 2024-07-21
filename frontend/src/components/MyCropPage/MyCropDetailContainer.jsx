@@ -29,6 +29,7 @@ const MyCropDetailContainer = ({ userCropId }) => {
   async function fetchTimeline(page) {
     setNowPage(page);
     const data = await getUserTimeline(Number(userCropId), page, 5);
+
     setTimeline(data);
   }
 
@@ -51,7 +52,7 @@ const MyCropDetailContainer = ({ userCropId }) => {
 
     if (activity === "물주기") {
       activity = "water";
-    } else if (activity === "환기") {
+    } else if (activity === "환기하기") {
       activity = "ventilation ";
     } else if (activity === "분갈이") {
       activity = "repot";
