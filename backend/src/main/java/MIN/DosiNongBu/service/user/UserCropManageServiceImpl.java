@@ -2,7 +2,6 @@ package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropLogSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropLogListResponseDto;
@@ -99,11 +98,13 @@ public class UserCropManageServiceImpl implements UserCropManageService{
     // 내 작물 관리 추가
     @Override
     @Transactional
-    public Long registerUserCropLog(Long userCropId, UserCropLogSaveRequestDto requestDto) {
+    public Long registerUserCropLog(Long userCropId, String manageType) {
         UserCrop userCrop = userCropRepository.findById(userCropId)
                 .orElseThrow(() -> new IllegalStateException("존재하지 않는 작물입니다. userCropId=" + userCropId));
 
-        UserCropLog userCropLog = requestDto.toEntity();
+        UserCropLog userCropLog = UserCropLog.builder()
+                .manageType(CropManageType.valueOf(manageType.toUpperCase()))
+                .build();
 
         userCropLog.setUserCrop(userCrop);
         userCropLogRepository.save(userCropLog);

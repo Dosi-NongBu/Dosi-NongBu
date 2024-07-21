@@ -2,7 +2,6 @@ package MIN.DosiNongBu.service.user;
 
 import MIN.DosiNongBu.controller.user.dto.request.UserCropAlarmUpdateRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.UserCropImageSaveRequestDto;
-import MIN.DosiNongBu.controller.user.dto.request.UserCropLogSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropAlarmResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropListResponseDto;
 import MIN.DosiNongBu.controller.user.dto.response.UserCropLogListResponseDto;
@@ -29,7 +28,7 @@ public interface UserCropManageService {
     List<UserCropLogListResponseDto> viewUserCropLogList(Long userCropId, Pageable pageable);
 
     //내 작물 관리 추가
-    Long registerUserCropLog(Long userCropId, UserCropLogSaveRequestDto requestDto);
+    Long registerUserCropLog(Long userCropId, String manageType);
 
     //내 작물 관리 삭제
     Long deleteUserCropLog(Long cropLogId);
