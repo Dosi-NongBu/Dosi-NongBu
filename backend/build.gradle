@@ -68,6 +68,7 @@ jar {
 
 /* 리액트 빌드 및 뷰 적용 자동화
  Spring 실행하여 서버 킬 때마다 리액트를 자동으로 빌드해서 static 폴도로 옮겨줌 */
+/*
 def frontendDir = "../frontend"
 
 sourceSets {
@@ -108,3 +109,4 @@ task copyReactBuildFiles(type: Copy) {
 	from "$frontendDir/dist"
 	into "$projectDir/src/main/resources/static"
 }
+*/
