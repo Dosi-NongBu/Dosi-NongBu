@@ -1,5 +1,6 @@
 package MIN.DosiNongBu.controller.user;
 
+import MIN.DosiNongBu.auth.jwt.JwtUtil;
 import MIN.DosiNongBu.controller.user.dto.request.PlaceSaveRequestDto;
 import MIN.DosiNongBu.controller.user.dto.request.ProfileUpdateRequestDto;
 import MIN.DosiNongBu.controller.user.dto.response.PlaceListResponseDto;
@@ -26,6 +27,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final JwtUtil jwtUtil;
 
     public Long UserCookie(String cookie){
         Long userId = null;

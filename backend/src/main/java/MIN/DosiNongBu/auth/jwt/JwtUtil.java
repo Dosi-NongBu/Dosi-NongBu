@@ -80,6 +80,9 @@ public class JwtUtil {
         return extractClaim(token, Claims::getSubject);
     }
 
+    // role 추출 하기
+    public String extractRole(String token){return extractClaim(token, claims -> claims.get("role", String.class));}
+
     public boolean isTokenValid(String token){
         return !isTokenExpired(token);
     }
