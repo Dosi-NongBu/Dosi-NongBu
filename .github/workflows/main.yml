@@ -40,9 +40,7 @@ jobs:
 
       # 빌드 파일을 zip 형식으로 압축
       - name: Make zip file
-        run: |
-          cd ../
-          zip -r ./$GITHUB_SHA.zip .
+        run: zip -r ./$GITHUB_SHA.zip .
         shell: bash
 
       # AWS 권한 설정
