@@ -2,7 +2,7 @@
 
 REPOSITORY=/home/ec2-user/web
 PROJECT_NAME=backend
-BUILD_JAR=$(ls /home/ec2-user/web/build/libs/*.jar)
+BUILD_JAR=$(ls /home/ec2-user/web/zip/backend/build/libs/*.jar)
 
 echo "> Build 파일 복사"
 cp $BUILD_JAR $REPOSITORY/
