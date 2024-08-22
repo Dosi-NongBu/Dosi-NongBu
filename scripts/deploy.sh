@@ -2,9 +2,10 @@
 
 REPOSITORY=/home/ec2-user/web
 PROJECT_NAME=backend
+BUILD_JAR=$(ls /home/ec2-user/web/build/libs/*.jar)
 
 echo "> Build 파일 복사"
-cp $REPOSITORY/zip/*.jar $REPOSITORY/
+cp $BUILD_JAR $REPOSITORY/
 
 echo ">>> 현재 실행중인 애플리케이션 pid 확인 후 일괄 종료"
 sudo ps -ef | grep java | awk '{print $2}' | xargs kill -15
