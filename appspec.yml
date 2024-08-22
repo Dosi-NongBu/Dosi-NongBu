@@ -3,7 +3,7 @@ os: linux
 
 files:
   - source: /
-    destination: /home/ec2-user/web
+    destination: /home/ec2-user/web/zip
     overwrite: yes
 
 #permissions:

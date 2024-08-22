@@ -28,7 +28,9 @@ jobs:
 
       # 권한 부여
       - name: Grant execute permission for gradlew
-        run: chmod +x ./gradlew
+        run: |
+          cd backend
+          chmod +x ./gradlew
         shell: bash
 
       - name: Build and Test
@@ -36,8 +38,17 @@ jobs:
 
       # 빌드 파일을 zip 형식으로 압축
       - name: Make zip file
-        run: zip -r ./$GITHUB_SHA.zip .
+        run: |
+          cd ../
+          zip -r ./$GITHUB_SHA.zip .
         shell: bash
+
+      # npm 설치
+      - name: Set up npm
+        uses: actions/setup-node@v2
+        run: |
+          npm install
+          npm run build
 
       # AWS 권한 설정
       - name: AWS credential 설정
@@ -49,8 +60,11 @@ jobs:
 
       # S3에 빌드 파일 업로드
       - name: Upload to S3
-        run: aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$AWS_S3_BUCKET/$GITHUB_SHA.zip
+        run: |
+          aws s3 cp --region ap-northeast-2 ./build s3://$AWS_S3_BUCKET/build
+          aws s3 cp --region ap-northeast-2 ./$GITHUB_SHA.zip s3://$AWS_S3_BUCKET/$GITHUB_SHA.zip
 
       # EC2에 배포
       - name: EC2에 배포
         run: aws deploy create-deployment --application-name ${{ env.AWS_CODE_DEPLOY_APPLICATION }} --deployment-config-name CodeDeployDefault.AllAtOnce --deployment-group-name ${{ env.AWS_CODE_DEPLOY_GROUP }} --s3-location bucket=$AWS_S3_BUCKET,key=$GITHUB_SHA.zip,bundleType=zip
+        
